@@ -1,0 +1,40 @@
+@startwbs PathFinder
+*[#BlueViolet] PathFinder
+**[#green] 1. Analyser les besoins du client (Product Owner)
+***[#lightgreen] 1.1. Recueillir la description des besoins
+***[#lightgreen] 1.2. Établir WBS, GANTT, PERT
+***[#lightgreen] 1.3. Rédiger un rapport d'analyse initiale
+***[#lightgreen] 1.4. Maquetter et schématiser le projet
+**[#coral] 2. Développer les applications
+***[#LightSalmon] 2.1. Créer une application WEB
+***[#LightSalmon] 2.2. Créer une application Mobile
+***[#LightSalmon] 2.3. Mettre en place un système de monitoring
+***[#LightSalmon] 2.4. Configurer le réseau (Docker)
+***[#LightSalmon] 2.5. Développer l'interface WebAdmin (Blazor)
+**[#moccasin] 3. Analyser et itérer
+***[#oldlace] 3.1. Définir le contexte du projet
+***[#oldlace] 3.2. Créer le diagramme de cas d'utilisation
+***[#oldlace] 3.3. Créer le diagramme de flux
+***[#oldlace] 3.4. Réaliser les maquettes
+***[#oldlace] 3.5. Identifier les personas
+***[#oldlace] 3.6. Élaborer des storyboards
+***[#oldlace] 3.7. Créer des wireframes
+***[#oldlace] 3.8. Réaliser des tests utilisateurs
+***[#oldlace] 3.9. Itérer sur les conceptions selon les retours
+**[#lightseagreen] 4. Concevoir la base de données
+***[#mediumaquamarine] 4.1. Concevoir la structure de la base de données
+***[#mediumaquamarine] 4.2. Établir MCD
+***[#mediumaquamarine] 4.3. Établir MLD
+***[#mediumaquamarine] 4.4. Mettre en place l'infrastructure ORM
+***[#mediumaquamarine] 4.5. Créer les tables de la base de données
+***[#mediumaquamarine] 4.6. Implémenter les données
+***[#mediumaquamarine] 4.7. Concevoir l'API
+**[#PaleVioletRed] 5. Tester le projet
+***[#LightPink] 5.1. Mettre en place Sonar pour analyse de code
+***[#LightPink] 5.2. Écrire et exécuter les tests unitaires
+***[#LightPink] 5.3. Réaliser les tests fonctionnels
+**[#SteelBlue] 6. Suivre le projet et rédiger les rapports
+***[#LightBlue] 6.1. Produire des rapports périodiques légers
+***[#LightBlue] 6.2. Évaluer le projet post-livraison
+***[#LightBlue] 6.3. Livrer l'application finale (WEB et mobile)
+@endwbs
