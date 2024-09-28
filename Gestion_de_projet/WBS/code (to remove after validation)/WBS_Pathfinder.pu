@@ -29,12 +29,15 @@
 ***[#mediumaquamarine] 4.5. Créer les tables de la base de données
 ***[#mediumaquamarine] 4.6. Implémenter les données
 ***[#mediumaquamarine] 4.7. Concevoir l'API
-**[#PaleVioletRed] 5. Tester le projet
-***[#LightPink] 5.1. Mettre en place Sonar pour analyse de code
-***[#LightPink] 5.2. Écrire et exécuter les tests unitaires
-***[#LightPink] 5.3. Réaliser les tests fonctionnels
-**[#SteelBlue] 6. Suivre le projet et rédiger les rapports
-***[#LightBlue] 6.1. Produire des rapports périodiques légers
-***[#LightBlue] 6.2. Évaluer le projet post-livraison
+**[#Crimson] 5. Déployer l'infrastructure
+***[#IndianRed] 5.1 Établir le serveur WEB
+***[#IndianRed] 5.2 Mettre en place le serveur MySQL
+**[#PaleVioletRed] 6. Tester le projet
+***[#LightPink] 6.1. Mettre en place Sonar pour analyse de code
+***[#LightPink] 6.2. Écrire et exécuter les tests unitaires
+***[#LightPink] 6.3. Réaliser les tests fonctionnels
+**[#SteelBlue] 7. Suivre le projet et rédiger les rapports
+***[#LightBlue] 7.1. Produire des rapports périodiques légers
+***[#LightBlue] 7.2. Évaluer le projet post-livraison
 ***[#LightBlue] 6.3. Livrer l'application finale (WEB et mobile)
 @endwbs
