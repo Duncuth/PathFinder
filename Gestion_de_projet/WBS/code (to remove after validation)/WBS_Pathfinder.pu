@@ -25,7 +25,7 @@
 ***[#LightSalmon] 3.4. Configurer le réseau (Docker)
 ***[#LightSalmon] 3.5. Développer l'interface WebAdmin (Blazor)
 
-**[#lightseagreen] 4. Conception d’une base de données
+**[#lightseagreen] 4. Base de données
 ***[#mediumaquamarine] 4.1. Concevoir la structure de la base de données
 ***[#mediumaquamarine] 4.2. Établir MCD
 ***[#mediumaquamarine] 4.3. Établir MLD
@@ -34,7 +34,7 @@
 ***[#mediumaquamarine] 4.6. Implémenter les données
 ***[#mediumaquamarine] 4.7. Concevoir l'API
 
-**[#PaleVioletRed] 5. Réalisation de Tests
+**[#PaleVioletRed] 5. Réalisation des Tests
 ***[#LightPink] 5.1. Mettre en place Sonar pour analyse de code
 ***[#LightPink] 5.2. Écrire et exécuter les tests unitaires
 ***[#LightPink] 5.3. Réaliser les tests fonctionnels
