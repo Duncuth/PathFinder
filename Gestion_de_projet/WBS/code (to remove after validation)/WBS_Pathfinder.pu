@@ -1,12 +1,12 @@
 @startwbs PathFinder
 *[#BlueViolet] PathFinder
 
-**[#green] 1. Analyser les besoins du client (Product Owner)
+**[#green] 1. Rapport d’analyse de gestion de projet
 ***[#lightgreen] 1.1. Recueillir la description des besoins
 ***[#lightgreen] 1.2. Établir WBS, GANTT, PERT
 ***[#lightgreen] 1.3. Rédiger un rapport d'analyse initiale
 
-**[#moccasin] 2. Analyser et itérer
+**[#moccasin] 2. Dossier d'analyse et de conception du projet
 ***[#oldlace] 2.1. Définir le contexte du projet
 ***[#oldlace] 2.2. Créer le diagramme de cas d'utilisation
 ***[#oldlace] 2.3. Créer le diagramme de flux
@@ -18,14 +18,14 @@
 ***[#oldlace] 2.9. Appliquer les principes S.O.L.I.D
 ***[#oldlace] 2.10. Réaliser des patrons de conception
 
-**[#coral] 3. Développer les applications
+**[#coral] 3. applications WEB, Mobile et Backoffice
 ***[#LightSalmon] 3.1. Créer une application WEB
 ***[#LightSalmon] 3.2. Créer une application Mobile
 ***[#LightSalmon] 3.3. Mettre en place un système de monitoring
 ***[#LightSalmon] 3.4. Configurer le réseau (Docker)
 ***[#LightSalmon] 3.5. Développer l'interface WebAdmin (Blazor)
 
-**[#lightseagreen] 4. Concevoir la base de données
+**[#lightseagreen] 4. Conception d’une base de données
 ***[#mediumaquamarine] 4.1. Concevoir la structure de la base de données
 ***[#mediumaquamarine] 4.2. Établir MCD
 ***[#mediumaquamarine] 4.3. Établir MLD
@@ -34,7 +34,7 @@
 ***[#mediumaquamarine] 4.6. Implémenter les données
 ***[#mediumaquamarine] 4.7. Concevoir l'API
 
-**[#PaleVioletRed] 5. Tester le projet
+**[#PaleVioletRed] 5. Réalisation de Tests
 ***[#LightPink] 5.1. Mettre en place Sonar pour analyse de code
 ***[#LightPink] 5.2. Écrire et exécuter les tests unitaires
 ***[#LightPink] 5.3. Réaliser les tests fonctionnels
