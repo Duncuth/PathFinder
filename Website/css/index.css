@@ -1,6 +1,8 @@
-body {
-    background-image: ("/Website/media/fond.png");
-}
+/*body {*/
+/*    background-image: ("/Website/media/fond.png");*/
+/*}*/
+
+
 .center-content {
     display: flex;
     justify-content: center;

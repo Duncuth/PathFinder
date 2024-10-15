@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des graphes acceptés - Administrateur</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/administrator/accepted_graph_management.css">
+    <!-- Assure-toi que Bootstrap Icons est bien inclus -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body class="bg-dark text-white">
 <div class="container vh-100 d-flex justify-content-center align-items-center">
@@ -13,7 +14,9 @@
 
         <!-- Bouton retour -->
         <div class="d-flex justify-content-start mb-3">
-            <a href="page_precedente.html" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Retour</a>
+            <a href="page_precedente.html" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Retour
+            </a>
         </div>
 
         <h3 class="mb-4 text-center">Gestion des graphes acceptés</h3>
@@ -25,8 +28,12 @@
                 <span>Graph 1</span>
                 <!-- Action buttons -->
                 <span>
-                        <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></button>
-                        <button class="btn btn-outline-danger btn-sm"><i class="bi bi-x"></i></button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-x"></i>
+                        </button>
                     </span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -34,8 +41,12 @@
                 <span>Graph 2</span>
                 <!-- Action buttons -->
                 <span>
-                        <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></button>
-                        <button class="btn btn-outline-danger btn-sm"><i class="bi bi-x"></i></button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-x"></i>
+                        </button>
                     </span>
             </li>
             <!-- Répéter pour d'autres graphes -->
@@ -44,6 +55,6 @@
 </div>
 
 <!-- Optional Bootstrap Icons CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.js"></script>
 </body>
 </html>
