@@ -7,16 +7,16 @@ trigger:
     - push
 
 steps:
-    - name: code-check
-        image: php:8.3-cli
-        commands:
-        - php -l -d display_errors=On -d log_errors=Off -d error_reporting=E_ALL $(find . -name '*.php')
-        - echo "Code verification completed."
-        
-    - name: code-analysis
-        image: aosapps/drone-sonar-plugin
-        settings:
-        sonar_host:
-            from_secret: PathFinder_sonar_host
-        sonar_token:
-            from_secret: PathFinder_sonar_token
+  - name: code-check
+    image: php:8.3-cli
+    commands:
+      - php -l -d display_errors=On -d log_errors=Off -d error_reporting=E_ALL $(find . -name '*.php')
+      - echo "Code verification completed."
+
+  - name: code-analysis
+    image: aosapps/drone-sonar-plugin
+    settings:
+      sonar_host:
+        from_secret: PathFinder_sonar_host
+      sonar_token:
+        from_secret: PathFinder_sonar_token
