@@ -1,0 +1,39 @@
+body {
+    background-image: ("/Website/media/fond.png");
+}
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+.logo {
+    width: 500px;
+    height: auto;
+}
+
+
+.icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.settings {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+.trophy {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    margin-top: 20px;
+    width: 200px;
+    height: 50px;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des comptes - Administrateur</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styleGestionComptesAdmin.css">
+</head>
+<body class="bg-dark text-white">
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card p-5 shadow-lg bg-light text-dark" style="max-width: 800px; width: 100%;">
+
+        <!-- Bouton de déconnexion aligné à droite -->
+        <div class="d-flex justify-content-between mb-3">
+            <h3>Gestion des comptes</h3>
+            <form action="logout.php" method="post">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Déconnexion</button>
+            </form>
+        </div>
+
+        <!-- Gestion des comptes -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-person-circle"></i> Utilisateur 1</span>
+                        <span>
+                                <button class="btn btn-outline-primary btn-sm">Modifier</button>
+                                <button class="btn btn-outline-danger btn-sm">Supprimer</button>
+                            </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-person-circle"></i> Utilisateur 2</span>
+                        <span>
+                                <button class="btn btn-outline-primary btn-sm">Modifier</button>
+                                <button class="btn btn-outline-danger btn-sm">Supprimer</button>
+                            </span>
+                    </li>
+                    <!-- Répéter pour d'autres utilisateurs -->
+                </ul>
+            </div>
+
+            <!-- Gestion des graphes -->
+            <div class="col-md-4 d-grid">
+                <button class="btn btn-secondary">Gestion des graphes</button>
+            </div>
+        </div>
+
+        <!-- Ajout d'administrateurs -->
+        <h4 class="mb-3">Ajout d'administrateurs</h4>
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" class="form-control" placeholder="Nom d'utilisateur">
+            </div>
+            <div class="col-md-4 d-grid">
+                <button class="btn btn-primary">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional Bootstrap Icons CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.js"></script>
+</body>
+</html>
+

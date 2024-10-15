@@ -1,0 +1,35 @@
+body {
+    background-color: #343a40; /* Fond sombre */
+}
+
+.card {
+    border-radius: 10px;
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.table {
+    background-color: #f8f9fa;
+}
+
+.btn-outline-primary, .btn-outline-success, .btn-outline-danger {
+    margin-right: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}

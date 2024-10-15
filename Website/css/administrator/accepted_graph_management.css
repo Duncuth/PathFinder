@@ -1,0 +1,28 @@
+body {
+    background-color: #343a40; /* Couleur de fond sombre */
+}
+
+.card {
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.list-group-item {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
