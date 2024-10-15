@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres du compte - PathFinder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleParametresCompte.css">
+    <!-- Lien pour inclure les icônes Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white">
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card p-5 shadow-lg bg-light text-dark" style="max-width: 600px;">
+        <h3 class="mb-4 text-center">Paramètres du compte</h3>
+
+        <!-- Image de profil -->
+        <div class="d-flex justify-content-center mb-4">
+            <img src="../media/profileicon.png" alt="Image Profil" class="rounded-circle me-2" style="width: 100px; height: 100px;">
+        </div>
+
+        <!-- Modifier le mot de passe -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="password" readonly>
+                <button class="btn btn-outline-secondary" id="editPassword">
+                    <i class="bi bi-pencil"></i> <!-- Icône de crayon Bootstrap -->
+                </button>
+            </div>
+        </div>
+
+        <!-- Supprimer le compte -->
+        <div class="mb-3">
+            <button class="btn btn-danger w-100" id="deleteAccount">Supprimer son compte</button>
+        </div>
+
+        <!-- Sauvegarder -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

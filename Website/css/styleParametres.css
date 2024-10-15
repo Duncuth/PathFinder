@@ -1,0 +1,58 @@
+body {
+    background-color: #343a40; /* Fond sombre */
+}
+
+.card {
+    border-radius: 10px;
+    max-width: 400px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Personnalisation de la barre du slider (paramètre 1 et 2) */
+.form-range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px; /* Hauteur de la barre du slider */
+    background-color: #007bff; /* Couleur de la barre visible */
+    border-radius: 5px; /* Arrondi de la barre */
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.form-range:hover {
+    opacity: 1; /* Changement de l'opacité au survol pour une meilleure visibilité */
+}
+
+/* Personnalisation du curseur (bouton du slider) */
+.form-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px; /* Taille du curseur */
+    height: 20px;
+    background: #ffffff; /* Couleur du curseur */
+    border: 2px solid #007bff; /* Bordure bleue autour du curseur */
+    border-radius: 50%; /* Curseur rond */
+    cursor: pointer; /* Le curseur devient une main */
+}
+
+.form-range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+}
