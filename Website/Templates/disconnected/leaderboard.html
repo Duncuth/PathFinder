@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classement des joueurs - PathFinder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white">
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card p-5 shadow-lg bg-light text-dark" style="max-width: 600px; width: 100%; position: relative;">
+
+        <!-- Bouton retour -->
+        <a href="index.html" class="btn btn-outline-secondary position-absolute" style="top: 10px; left: 10px;">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+
+        <h3 class="mb-4 text-center">Top Scores</h3>
+
+        <!-- Tableau des scores -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                // Exemple de code PHP pour afficher le classement
+                // foreach ($classement as $index => $joueur) {
+                //     echo "<tr>
+                    //             <th scope='row'>" . ($index + 1) . "</th>
+                    //             <td>" . $joueur['pseudo'] . "</td>
+                    //             <td>" . $joueur['score'] . "</td>
+                    //           </tr>";
+                // }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
