@@ -26,21 +26,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                        // Exemple de code PHP pour afficher les graphes en attente
-                        // foreach ($graphes as $index => $graphe) {
-                //     echo "<tr>
-                    //             <th scope='row'>" . ($index + 1) . "</th>
-                    //             <td>" . $graphe['titre'] . "</td>
-                    //             <td><img src='" . $graphe['apercu'] . "' alt='Aperçu' style='width: 50px; height: 50px;'></td>
-                    //             <td>
-                    //                 <button class='btn btn-sm btn-outline-primary'><i class='bi bi-eye'></i></button>
-                    //                 <button class='btn btn-sm btn-outline-success'><i class='bi bi-check'></i></button>
-                    //                 <button class='btn btn-sm btn-outline-danger'><i class='bi bi-x'></i></button>
-                    //             </td>
-                    //           </tr>";
-                // }
-                ?>
+                {% for index, graphe in graphes %}
+                <tr>
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ graphe.titre }}</td>
+                    <td><img src="{{ graphe.apercu }}" alt="Aperçu" style="width: 50px; height: 50px;"></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></button>
+                        <button class="btn btn-sm btn-outline-success"><i class="bi bi-check"></i></button>
+                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>

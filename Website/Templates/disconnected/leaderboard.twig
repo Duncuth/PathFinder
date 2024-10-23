@@ -12,7 +12,7 @@
     <div class="card p-5 shadow-lg bg-light text-dark" style="max-width: 600px; width: 100%; position: relative;">
 
         <!-- Bouton retour -->
-        <a href="index.html" class="btn btn-outline-secondary position-absolute" style="top: 10px; left: 10px;">
+        <a href="index.twig" class="btn btn-outline-secondary position-absolute" style="top: 10px; left: 10px;">
             <i class="bi bi-arrow-left"></i> Retour
         </a>
 
@@ -29,16 +29,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                // Exemple de code PHP pour afficher le classement
-                // foreach ($classement as $index => $joueur) {
-                //     echo "<tr>
-                    //             <th scope='row'>" . ($index + 1) . "</th>
-                    //             <td>" . $joueur['pseudo'] . "</td>
-                    //             <td>" . $joueur['score'] . "</td>
-                    //           </tr>";
-                // }
-                ?>
+                {% for index, joueur in classement %}
+                <tr>
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ joueur.pseudo }}</td>
+                    <td>{{ joueur.score }}</td>
+                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>

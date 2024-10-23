@@ -24,20 +24,20 @@ class PlayerGateway
         return $this->connection->executeQuery($query, $parameters);
     }
 
-    public function getPlayer(int $id): ?Player
-    {
-        $query = "SELECT * FROM players WHERE id = :id";
-        $parameters = [':id' => [$id, \PDO::PARAM_INT]];
-        $this->connection->executeQuery($query, $parameters);
-        $result = $this->connection->getResults();
-
-        if (count($result) === 0) {
-            return null;
-        }
-
-        $row = $result[0];
-        return new Player($row['id'], $row['nickname'], $row['pass']);
-    }
+//    public function getPlayer(int $id): ?Player
+//    {
+//        $query = "SELECT * FROM players WHERE id = :id";
+//        $parameters = [':id' => [$id, \PDO::PARAM_INT]];
+//        $this->connection->executeQuery($query, $parameters);
+//        $result = $this->connection->getResults();
+//
+//        if (count($result) === 0) {
+//            return null;
+//        }
+//
+//        $row = $result[0];
+//        return new Player($row['id'], $row['nickname'], $row['pass']);
+//    }
 
     public function updatePlayer(Player $player): bool
     {
