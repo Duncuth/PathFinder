@@ -20,7 +20,7 @@ class FrontController
             // Define routes
             $router->map('GET', '/', 'ControllerPlayer#home'); // Route pour la page d'accueil
             $router->map('GET', '/error', 'ControllerPlayer#error'); // Route pour la page d'erreur
-
+            $router->map('GET', '/error', 'ControllerPlayer#error'); // Route pour la page d'erreur
             // Match the current request
             $match = $router->match();
 
