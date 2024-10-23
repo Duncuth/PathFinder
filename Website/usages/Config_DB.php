@@ -4,6 +4,6 @@ namespace usages;
 
 $rep = __DIR__ . '/../';
 
-$dsn='mysql:host=localhost;dbname=tiaubry';
+$dsn='mysql:host=londres.uca.local;dbname=tiaubry';
 $user='tiaubry';
-$pass='Lolotte1008';
+$pass='achanger';
