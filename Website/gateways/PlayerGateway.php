@@ -11,11 +11,11 @@ class PlayerGateway
 
     public function __construct()
     {
-        global $dns, $user, $pass;
-        if($dns == NULL || $user == NULL || $pass == NULL){
+        global $dsn, $user, $pass;
+        if($dsn == NULL || $user == NULL || $pass == NULL){
             require_once(__DIR__ . '/../usages/Config_DB.php');
         }
-        $this->connection = new Connection($dns, $user, $pass);
+        $this->connection = new Connection($dsn, $user, $pass);
     }
 
     public function createPlayer(string $nickname, string $pass): bool
@@ -61,4 +61,5 @@ class PlayerGateway
         $parameters = [':id' => [$id, \PDO::PARAM_INT]];
         return $this->connection->executeQuery($query, $parameters);
     }
+
 }

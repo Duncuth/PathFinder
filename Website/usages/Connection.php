@@ -1,6 +1,7 @@
 <?php
 
 namespace usages;
+use PDO;
 
 
 class Connection extends PDO {
