@@ -9,9 +9,13 @@ class PlayerGateway
 {
     private Connection $connection;
 
-    public function __construct(Connection $connection)
+    public function __construct()
     {
-        $this->connection = $connection;
+        global $dns, $user, $pass;
+        if($dns == NULL || $user == NULL || $pass == NULL){
+            require_once(__DIR__ . '/../usages/Config_DB.php');
+        }
+        $this->connection = new Connection($dns, $user, $pass);
     }
 
     public function createPlayer(string $nickname, string $pass): bool
