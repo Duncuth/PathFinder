@@ -20,17 +20,17 @@ Lien vers le <a href="https://codefirst.iut.uca.fr/git/timothee.aubry/PathFinder
 
 Convention de nommage des commits :
 
-build : changements qui affectent le système de build ou des dépendances externes (npm, make…)
-ci : changements concernant les fichiers et scripts d'intégration ou de configuration (Travis, Ansible, BrowserStack…)
-feat : ajout d'une nouvelle fonctionnalité
-fix : correction d'un bug
-perf : amélioration des performances
-refactor : modification qui n'apporte ni nouvelle fonctionalité ni d'amélioration de performances (Lisibilité du code ou principe SOLID par exemple)
-style : changement qui n'apporte aucune altération fonctionnelle ou sémantique (indentation, mise en forme, ajout d'espace, renommage d'une variable…)
-docs : rédaction ou mise à jour de la documentation
-test : ajout ou modification de tests
+    build : changements qui affectent le système de build ou des dépendances externes (npm, make…)
+    ci : changements concernant les fichiers et scripts d'intégration ou de configuration (Travis, Ansible, BrowserStack…)
+    feat : ajout d'une nouvelle fonctionnalité
+    fix : correction d'un bug
+    perf : amélioration des performances
+    refactor : modification qui n'apporte ni nouvelle fonctionalité ni d'amélioration de performances (Lisibilité du code ou principe SOLID par exemple)
+    style : changement qui n'apporte aucune altération fonctionnelle ou sémantique (indentation, mise en forme, ajout d'espace, renommage d'une variable…)
+    docs : rédaction ou mise à jour de la documentation
+    test : ajout ou modification de tests
 
-Exemple :
-feat : ajout de la possibilité de se connecter
-perf : optimisation de requête SQL
-...Etc...
+    Exemple :
+    feat : ajout de la possibilité de se connecter
+    perf : optimisation de requête SQL
+    ...Etc...
