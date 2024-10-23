@@ -14,7 +14,7 @@
 
         <!-- Bouton retour -->
         <div class="d-flex justify-content-start mb-3">
-            <a href="page_precedente.html" class="btn btn-outline-secondary">
+            <a href="{{ path('page_precedente') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left"></i> Retour
             </a>
         </div>
@@ -23,33 +23,21 @@
 
         <!-- Liste des graphes acceptés -->
         <ul class="list-group">
+            {% for graph in graphs %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <!-- Graph info -->
-                <span>Graph 1</span>
+                <span>{{ graph.name }}</span>
                 <!-- Action buttons -->
                 <span>
-                        <button class="btn btn-outline-secondary btn-sm">
-                            <i class="bi bi-eye"></i>
-                        </button>
-                        <button class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-x"></i>
-                        </button>
-                    </span>
+                    <button class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </span>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <!-- Graph info -->
-                <span>Graph 2</span>
-                <!-- Action buttons -->
-                <span>
-                        <button class="btn btn-outline-secondary btn-sm">
-                            <i class="bi bi-eye"></i>
-                        </button>
-                        <button class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-x"></i>
-                        </button>
-                    </span>
-            </li>
-            <!-- Répéter pour d'autres graphes -->
+            {% endfor %}
         </ul>
     </div>
 </div>
