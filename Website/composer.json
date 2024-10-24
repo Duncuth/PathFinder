@@ -6,11 +6,11 @@
     "autoload": {
         "psr-4": {
             "Website\\": "",
-            "controllers\\": "controllers/",
-            "models\\": "models/",
-            "usages\\": "usages/",
-            "classes\\": "classes/",
-            "gateways\\": "gateways/"
+            "controllers\\": "controllers",
+            "models\\": "models",
+            "usages\\": "usages",
+            "classes\\": "classes",
+            "gateways\\": "gateways"
         }
     },
     "require-dev": {

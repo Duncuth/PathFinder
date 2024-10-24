@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__ . '/usages/Config.php');
 require_once(__DIR__ . '/usages/Config_DB.php');
 
 require __DIR__ . '/vendor/autoload.php';

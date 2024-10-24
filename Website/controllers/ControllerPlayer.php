@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use Exception;
 
 class ControllerPlayer
 {
@@ -9,10 +10,16 @@ class ControllerPlayer
     private $twig;
     public function __construct()
     {
-        global $vues;
-        $this->vues = $vues;
-        global $twig;
-        $this->twig = $twig;
+        global $vues, $twig;
+        session_start();
+        try {
+            $this->vues = $vues;
+            $this->twig = $twig;
+        } catch (Exception $e) {
+
+        }
+
+
     }
 
     public function home() : void
