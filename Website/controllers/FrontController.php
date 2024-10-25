@@ -28,9 +28,9 @@ class FrontController
                 die;
             }
 
-            if ($match) {
+            else {
                 $controller = $match['target'];
-                if (strpos($controller, "#") !== false) {
+                if (str_contains($controller, "#")) {
                     list($controller, $action) = explode("#", $controller);
                 } else {
                     $action = $match['params']['action'];
