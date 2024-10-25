@@ -34,9 +34,10 @@ class FrontController
                     $action = $match['params']['action'] ?? null;
                     $id = $match['params']['id'] ?? null;
                 }
-                $controller = new ("\\controllers\\" . $controller)();
-                if (is_callable(array($controller, $action))) {
-                    call_user_func_array(array($controller, $action), array($match['params']));
+                $controllerClass = "\\controllers\\" . $controller;
+                $controllerInstance = new $controllerClass();
+                if (is_callable(array($controllerInstance, $action))) {
+                    call_user_func_array(array($controllerInstance, $action), array($match['params']));
                 }
             }
         } catch (Exception $e) {
