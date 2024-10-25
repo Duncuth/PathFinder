@@ -18,30 +18,28 @@ class FrontController
             $router->setBasePath('/');
 
             // Define routes
-            $router->map('GET', '/', 'ControllerPlayer#home'); // Route pour la page d'accueil
-            $router->map('GET', '/error', 'ControllerPlayer#error'); // Route pour la page d'erreur
+            $router->map('GET', '/', 'ControllerPlayer#home'); // Route for the home page
+            $router->map('GET', '/error', 'ControllerPlayer#error'); // Route for the error page
             // Match the current request
             $match = $router->match();
 
             if (!$match) {
-                echo "404"; // Redirige vers une page d'erreur 404
+                echo "404"; // Redirect to a 404 error page
                 die;
-            }
-
-            else {
+            } else {
                 $controller = $match['target'];
                 if (str_contains($controller, "#")) {
                     list($controller, $action) = explode("#", $controller);
                 } else {
-                    $action = $match['params']['action'];
-                    $id = $match['params']['id'];
+                    $action = $match['params']['action'] ?? null;
+                    $id = $match['params']['id'] ?? null;
                 }
-                $controller = new ("controllers\\".$controller)();
+                $controller = new ("\\controllers\\" . $controller)();
                 if (is_callable(array($controller, $action))) {
-                    call_user_func_array(array($controller,    $action), array($match['params']));
+                    call_user_func_array(array($controller, $action), array($match['params']));
                 }
             }
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             header("Location:" . $vues["error"]);
         }
     }
