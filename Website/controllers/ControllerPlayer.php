@@ -13,8 +13,8 @@ class ControllerPlayer
         global $vues, $twig;
         session_start();
         try {
-            $this->vues = $vues;
             $this->twig = $twig;
+            $this->vues = $vues;
         } catch (Exception $e) {
 
         }
@@ -30,6 +30,11 @@ class ControllerPlayer
     public function error() : void
     {
         echo $this->twig->render($this->vues["error"]);
+    }
+
+    public function connexion() : void
+    {
+        echo $this->twig->render($this->vues["connexion"]);
     }
 
 }

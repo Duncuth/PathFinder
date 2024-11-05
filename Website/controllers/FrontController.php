@@ -15,18 +15,21 @@ class FrontController
             // Initialize AltoRouter
             $router = new AltoRouter();
 
-            $router->setBasePath('/');
+            //$router->setBasePath('/');
 
             // Define routes
             $router->map('GET', '/', 'ControllerPlayer#home'); // Route for the home page
             $router->map('GET', '/error', 'ControllerPlayer#error'); // Route for the error page
+            $router->map('GET|POST', '/[a:action]', 'ControllerPlayer'); // Route for the deconnexion page
             // Match the current request
             $match = $router->match();
 
             if (!$match) {
-                echo "404"; // Redirect to a 404 error page
+                echo "404 oui"; // Redirect to a 404 error page
                 die;
-            } else {
+            } 
+            
+            if ($match) {
                 $controller = $match['target'];
                 if (str_contains($controller, "#")) {
                     list($controller, $action) = explode("#", $controller);
