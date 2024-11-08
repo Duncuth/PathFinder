@@ -1,40 +1,53 @@
 <?php
 
-namespace controllers;
+namespace Website\controllers;
 
-use Exception;
+use Twig\Environment;
 
 class ControllerPlayer
 {
-    private $vues;
-    private $twig;
-    public function __construct()
+    private Environment $twig;
+    private array $vues;
+
+    public function __construct(array $vues, Environment $twig)
     {
-        global $vues, $twig;
-        session_start();
-        try {
-            $this->twig = $twig;
-            $this->vues = $vues;
-        } catch (Exception $e) {
-
-        }
-
-
+        $this->twig = $twig;
+        $this->vues = $vues;
     }
 
-    public function home() : void
+    // Home page method
+    public function index(): void
     {
-        echo $this->twig->render($this->vues["homeDisconnected"]);
+        echo $this->twig->render($this->vues['indexDisconnected']);
     }
 
-    public function error() : void
+    // Error page method
+    public function error(): void
     {
-        echo $this->twig->render($this->vues["error"]);
+        echo $this->twig->render($this->vues['error'], ['errorMessage' => 'An error occurred.']);
     }
 
-    public function connexion() : void
+    // Game mode choice page method
+    public function gameModeChoice(): void
     {
-        echo $this->twig->render($this->vues["connexion"]);
+        echo $this->twig->render($this->vues['gameModeChoice']);
     }
 
+    // Connexion page method
+    public function connexion(): void
+    {
+        echo $this->twig->render($this->vues['connexion']);
+    }
+
+    // Settings page method
+    public function settings(): void
+    {
+        echo $this->twig->render($this->vues['settings']);
+    }
+
+    // Leaderboard page method
+    public function leaderboard(): void
+    {
+        echo $this->twig->render($this->vues['leaderboard']);
+    }
 }

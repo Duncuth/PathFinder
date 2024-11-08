@@ -20,23 +20,6 @@ class ComposerStaticInitb4bb8681840e04b95eadcbf20f7f0c5c
     );
 
     public static $prefixLengthsPsr4 = array (
-        'u' => 
-        array (
-            'usages\\' => 7,
-        ),
-        'm' => 
-        array (
-            'models\\' => 7,
-        ),
-        'g' => 
-        array (
-            'gateways\\' => 9,
-        ),
-        'c' => 
-        array (
-            'controllers\\' => 12,
-            'classes\\' => 8,
-        ),
         'W' => 
         array (
             'Website\\' => 8,
@@ -63,26 +46,6 @@ class ComposerStaticInitb4bb8681840e04b95eadcbf20f7f0c5c
     );
 
     public static $prefixDirsPsr4 = array (
-        'usages\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/usages',
-        ),
-        'models\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/models',
-        ),
-        'gateways\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/gateways',
-        ),
-        'controllers\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/controllers',
-        ),
-        'classes\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/classes',
-        ),
         'Website\\' => 
         array (
             0 => __DIR__ . '/../..' . '/',

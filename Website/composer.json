@@ -5,12 +5,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Website\\": "",
-            "controllers\\": "controllers",
-            "models\\": "models",
-            "usages\\": "usages",
-            "classes\\": "classes",
-            "gateways\\": "gateways"
+            "Website\\": ""
         }
     },
     "require-dev": {

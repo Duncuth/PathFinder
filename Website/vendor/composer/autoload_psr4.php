@@ -6,11 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'usages\\' => array($baseDir . '/usages'),
-    'models\\' => array($baseDir . '/models'),
-    'gateways\\' => array($baseDir . '/gateways'),
-    'controllers\\' => array($baseDir . '/controllers'),
-    'classes\\' => array($baseDir . '/classes'),
     'Website\\' => array($baseDir . '/'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Symfony\\Polyfill\\Php81\\' => array($vendorDir . '/symfony/polyfill-php81'),

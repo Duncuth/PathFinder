@@ -1,3 +1,17 @@
-RewriteEngine on
+RewriteEngine On
+RewriteBase /Website/  # Adjust based on your actual directory
+
+# Route all requests to index.php if not a file or directory
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Allow access to media and css folders
+<Directory "/home/UCA/tobiard/public_html/Website/css">
+    Allow from all
+</Directory>
+
+<Directory "/home/UCA/tobiard/public_html/Website/media">
+    Allow from all
+</Directory>
+

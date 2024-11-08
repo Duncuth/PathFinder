@@ -1,15 +1,32 @@
 <?php
-
-require_once(__DIR__ . '/usages/Config.php');
-require_once(__DIR__ . '/usages/Config_DB.php');
-var_dump(__DIR__);
-echo 0;
 require __DIR__ . '/vendor/autoload.php';
-echo 1;
-//twig
-$loader = new \Twig\Loader\FilesystemLoader('templates');
-$twig   = new \Twig\Environment($loader, [
-    'cache' => false,
+
+use Twig\TwigFunction;
+use Website\controllers\FrontController;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
+// Set up Twig
+$loader = new FilesystemLoader(__DIR__ . '/templates');
+$twig = new Environment($loader, [
+    'cache' => false,  // Set to false for development; set a path for production caching
+    'debug' => true,
 ]);
-echo 3;
-$controller = new controllers\FrontController();
+
+$vues = [
+    'indexDisconnected' => 'indexDisconnected.twig',
+    'error' => 'error.twig',
+    'gameModeChoice' => 'gamemode_choice.twig',
+    'connexion' => 'connexion.twig',
+    'settings' => 'settings.twig',
+    'leaderboard' => 'leaderboard.twig',
+];
+
+$router = new AltoRouter();
+
+try {
+    $controller = new FrontController($vues, $twig, $router);
+    $controller->handleRequest();
+} catch (Exception $e) {
+    echo $twig->render($vues['error'], ['errorMessage' => $e->getMessage()]);
+}

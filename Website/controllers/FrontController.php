@@ -1,50 +1,62 @@
 <?php
 
-namespace controllers;
+namespace Website\controllers;
 
-use Exception;
 use AltoRouter;
+use Twig\Environment;
+use Exception;
 
 class FrontController
 {
-    function __construct()
+    private AltoRouter $router;
+    private Environment $twig;
+    private array $vues;
+
+    public function __construct(array $vues, Environment $twig, AltoRouter $router)
     {
-        global $vues;
+        $this->twig = $twig;
+        $this->vues = $vues;
+        $this->router = $router;
 
+        // Define routes
+        $this->initializeRoutes();
+    }
+
+    private function initializeRoutes(): void
+    {
+        $this->router->map('GET', '/', 'ControllerPlayer#index', 'home');
+        $this->router->map('GET', '/error', 'ControllerPlayer#error', 'error');
+        $this->router->map('GET', '/gameModeChoice', 'ControllerPlayer#gameModeChoice', 'game_mode_choice');
+        $this->router->map('GET', '/connexion', 'ControllerPlayer#connexion', 'connexion');
+        $this->router->map('GET', '/settings', 'ControllerPlayer#settings', 'settings');
+        $this->router->map('GET', '/leaderboard', 'ControllerPlayer#leaderboard', 'leaderboard');
+    }
+
+    public function handleRequest(): void
+    {
         try {
-            // Initialize AltoRouter
-            $router = new AltoRouter();
+            $match = $this->router->match();
 
-            //$router->setBasePath('/');
-
-            // Define routes
-            $router->map('GET', '/', 'ControllerPlayer#home'); // Route for the home page
-            $router->map('GET', '/error', 'ControllerPlayer#error'); // Route for the error page
-            $router->map('GET|POST', '/[a:action]', 'ControllerPlayer'); // Route for the deconnexion page
-            // Match the current request
-            $match = $router->match();
-
-            if (!$match) {
-                echo "404 oui"; // Redirect to a 404 error page
-                die;
-            } 
-            
             if ($match) {
-                $controller = $match['target'];
-                if (str_contains($controller, "#")) {
-                    list($controller, $action) = explode("#", $controller);
+                error_log("Matched route: " . json_encode($match)); // Log matched route
+                list($controllerName, $action) = explode('#', $match['target']);
+                $controllerClass = 'Website\\controllers\\' . $controllerName;
+
+                if (class_exists($controllerClass) && method_exists($controllerClass, $action)) {
+                    $controller = new $controllerClass($this->vues, $this->twig);
+                    call_user_func_array([$controller, $action], $match['params']);
                 } else {
-                    $action = $match['params']['action'] ?? null;
-                    $id = $match['params']['id'] ?? null;
+                    error_log("Error: Cannot call $controllerClass#$action"); // Log if class/method not found
+                    throw new Exception("Error: Cannot call $controllerClass#$action");
                 }
-                $controllerClass = "\\controllers\\" . $controller;
-                $controllerInstance = new $controllerClass();
-                if (is_callable(array($controllerInstance, $action))) {
-                    call_user_func_array(array($controllerInstance, $action), array($match['params']));
-                }
+            } else {
+                error_log("No route matched."); // Log when no route matches
+                header("HTTP/1.0 404 Not Found");
+                echo $this->twig->render($this->vues['error'], ['errorMessage' => 'Page not found']);
             }
         } catch (Exception $e) {
-            header("Location:" . $vues["error"]);
+            error_log("Exception caught in handleRequest: " . $e->getMessage()); // Log exception details
+            echo $this->twig->render($this->vues['error'], ['errorMessage' => $e->getMessage()]);
         }
     }
 }
