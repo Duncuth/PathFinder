@@ -18,12 +18,12 @@ class PlayerGateway
         $this->connection = new Connection($dsn, $user, $pass);
     }
 
-    public function createPlayer(string $nickname, string $pass): bool
+    public function createPlayer(string $nickname, string $password): bool
     {
-        $query = "INSERT INTO players (nickname, pass) VALUES (:nickname, :pass)";
+        $query = "INSERT INTO Players (nickname, pass) VALUES (:nickname, :password)";
         $parameters = [
             ':nickname' => [$nickname, \PDO::PARAM_STR],
-            ':pass' => [$pass, \PDO::PARAM_STR]
+            ':password' => [md5($password), \PDO::PARAM_STR]
         ];
         return $this->connection->executeQuery($query, $parameters);
     }
