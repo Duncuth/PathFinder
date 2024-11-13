@@ -18,48 +18,49 @@ class PlayerGateway
         $this->connection = new Connection($dsn, $user, $pass);
     }
 
-    public function createPlayer(string $nickname, string $password): bool
+    public function createPlayer($player)
     {
-        $query = "INSERT INTO Players (nickname, pass) VALUES (:nickname, :password)";
-        $parameters = [
-            ':nickname' => [$nickname, \PDO::PARAM_STR],
-            ':password' => [md5($password), \PDO::PARAM_STR]
-        ];
-        return $this->connection->executeQuery($query, $parameters);
+        $query = "INSERT INTO Players (username, password, email) VALUES (:username, :password, :email)";
+        $this->connection->executeQuery($query, array(
+                ':username' => array($player['username'], PDO::PARAM_STR),
+                ':password' => array(md5($player['password']), PDO::PARAM_STR),
+                ':email' => array($player['email'], PDO::PARAM_STR)
+                ));
     }
 
-//    public function getPlayer(int $id): ?Player
-//    {
-//        $query = "SELECT * FROM players WHERE id = :id";
-//        $parameters = [':id' => [$id, \PDO::PARAM_INT]];
-//        $this->connection->executeQuery($query, $parameters);
-//        $result = $this->connection->getResults();
-//
-//        if (count($result) === 0) {
-//            return null;
-//        }
-//
-//        $row = $result[0];
-//        return new Player($row['id'], $row['nickname'], $row['pass']);
-//    }
-
-    public function updatePlayer(Player $player): bool
+    public function getPlayerByUsername(string $username)
     {
-        $query = "UPDATE players SET nickname = :nickname, pass = :pass, score = :score WHERE id = :id";
-        $parameters = [
-            ':nickname' => [$player->getNickname(), \PDO::PARAM_STR],
-            ':pass' => [$player->getPass(), \PDO::PARAM_STR],
-            ':score' => [$player->getScore(), \PDO::PARAM_INT],
-            ':id' => [$player->getId(), \PDO::PARAM_INT]
-        ];
-        return $this->connection->executeQuery($query, $parameters);
+        $query = "SELECT * FROM Players WHERE username = :username;";
+        $this->con->executeQuery($query, array(':username' => array($username, PDO::PARAM_STR)));
+        $results = $this->con->getResults();
+        if ($results == NULL) {
+            return false;
+        }
+        return $results[0];
+
     }
 
-    public function deletePlayer(int $id): bool
+    public function getPlayerByID(int $id)
     {
-        $query = "DELETE FROM players WHERE id = :id";
-        $parameters = [':id' => [$id, \PDO::PARAM_INT]];
-        return $this->connection->executeQuery($query, $parameters);
+        $query = "SELECT * FROM Players WHERE id = :id;";
+        $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
+        $results = $this->con->getResults();
+        if ($results == NULL) {
+            return false;
+        }
+        return $results[0];
     }
+
+    public function deletePlayerByID(int $id)
+    {
+        $query = "DELETE FROM Players WHERE id = :id;";
+        $this->con->executeQuery(
+            $query,
+            array(
+                ':id' => array($id, PDO::PARAM_INT)
+            )
+        );
+    }
+
 
 }
