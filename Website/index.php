@@ -14,12 +14,14 @@ $twig = new Environment($loader, [
 ]);
 
 $vues = [
-    'home' => 'home.twig',
+    'account' => 'account.twig',
     'error' => 'error.twig',
-    'gameModeChoice' => 'gamemode_choice.twig',
-    'connexion' => 'connexion.twig',
-    'settings' => 'settings.twig',
+    'gamemode' => 'gamemode.twig',
+    'home' => 'home.twig',
     'leaderboard' => 'leaderboard.twig',
+    'login' => 'login.twig',
+    'register' => 'register.twig',
+    'settings' => 'settings.twig',
 ];
 
 $router = new AltoRouter();
