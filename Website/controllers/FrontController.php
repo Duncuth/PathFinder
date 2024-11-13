@@ -3,85 +3,50 @@
 namespace Website\controllers;
 
 use AltoRouter;
-use Twig\Environment;
-use Exception;
+use \Website\controllers\UserController;
+use \Exception;
 
 class FrontController
 {
-    private AltoRouter $router;
-    private Environment $twig;
-    private array $vues;
-
-    public function __construct(array $vues, Environment $twig, AltoRouter $router)
+    function __construct()
     {
-        $this->twig = $twig;
-        $this->vues = $vues;
-        $this->router = $router;
-        $this->initializeRoutes();
-        session_start();
-    }
+        global $vues;
 
-    private function initializeRoutes(): void
-    {
-        // General routes
-        $this->router->map('GET', '/', 'UserController#home', 'home');
-        $this->router->map('GET', '/error', 'UserController#error', 'error');
-        $this->router->map('GET', '/login', 'UserController#login', 'login');
-
-        // User and Admin roles handling different actions
-        $this->router->map('GET|POST', '/user/[i:id]/[a:action]?', 'UserController#userAction');
-        $this->router->map('GET|POST', '/admin/[a:action]?', 'AdminController#adminAction');
-    }
-
-    public function handleRequest(): void
-    {
         try {
-            $match = $this->router->match();
+            // Initialize AltoRouter
+            $router = new AltoRouter();
 
-            if ($match && isset($match['target'])) {
-                list($controllerName, $action) = explode('#', $match['target']);
-                $controllerClass = 'Website\\controllers\\' . $controllerName;
+            // Basic routes
+            $router->map('GET', '/', 'UserController#home');
+            $router->map('GET', '/error', 'UserController#error');
 
-                if ($this->hasAccess($controllerName, $action)) {
-                    $this->callController($controllerClass, $action, $match['params']);
+            $router->map('GET|POST', '/[a:action]', 'UserController');
+            //$router->map('GET', '/admin', 'ControllerAdminAdministrators');
+            $router->map('POST', '/login/[a:action]', 'UserController');
+
+            // Match the current request
+            $match = $router->match();
+
+            if (!$match) {
+                echo $this->render($vues['error']);
+                die;
+            }
+
+            if ($match) {
+                $controller = $match['target'];
+                if (strpos($controller, "#") !== false) {
+                    list($controller, $action) = explode("#", $controller);
                 } else {
-                    echo $this->twig->render($this->vues['error'], ['errorMessage' => 'Access Denied']);
+                    $action = $match['params']['action'];
+                    $id = $match['params']['id'];
                 }
-            } else {
-                echo $this->twig->render($this->vues['error'], ['errorMessage' => 'Page Not Found']);
+                $controller = new ("\\Website\\controllers\\" . $controller)();
+                if (is_callable(array($controller, $action))) {
+                    call_user_func_array(array($controller,$action), array($match['params']));
+                }
             }
         } catch (Exception $e) {
-            echo $this->twig->render($this->vues['error'], ['errorMessage' => $e->getMessage()]);
-        }
-    }
-
-    private function hasAccess(string $controller, string $action): bool
-    {
-        if ($controller === 'AdminController' && !$this->isAdmin()) {
-            return false;
-        }
-        return true;
-    }
-
-    private function isAdmin(): bool
-    {
-        return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function callController(string $controllerClass, string $action, array $params): void
-    {
-        if (class_exists($controllerClass)) {
-            $controller = new $controllerClass($this->vues, $this->twig);
-            if (method_exists($controller, $action) && is_callable([$controller, $action])) {
-                call_user_func_array([$controller, $action], $params);
-            } else {
-                throw new Exception("Method $action is not callable in $controllerClass.");
-            }
-        } else {
-            throw new Exception("Class $controllerClass does not exist.");
+            header("Location:" . $vues["erreur"]);
         }
     }
 }
