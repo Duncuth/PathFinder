@@ -6,4 +6,4 @@ use gateways\PlayerGateway;
 
 
 $playerGateway = new PlayerGateway();
-$playerGateway->createPlayer("azarka", "test");
+$playerGateway->createPlayer(array('username' => 'Kyllian', 'password' => 'mdp', 'email' => 'bgdu18@gmail.com'));
