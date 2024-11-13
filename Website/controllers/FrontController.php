@@ -27,7 +27,7 @@ class FrontController
         $this->router->map('GET', '/', 'UserController#home', 'home');
         $this->router->map('GET', '/error', 'UserController#error', 'error');
         $this->router->map('GET', '/login', 'UserController#login', 'login');
-
+        $this->router->map('GET', '/register', 'UserController#register', 'register');
         // User and Admin roles handling different actions
         $this->router->map('GET|POST', '/user/[i:id]/[a:action]?', 'UserController#userAction');
         $this->router->map('GET|POST', '/admin/[a:action]?', 'AdminController#adminAction');

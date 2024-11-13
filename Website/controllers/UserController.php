@@ -35,7 +35,10 @@ class UserController
     {
         echo $this->twig->render($this->vues['login']);
     }
-
+    public function register(): void
+    {
+        echo $this->twig->render($this->vues['register']);
+    }
     public function logout(): void
     {
         session_destroy();

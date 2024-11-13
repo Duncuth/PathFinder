@@ -16,19 +16,31 @@
     <!-- Logo -->
     <img src="/media/logo.png" alt="PathFinder Logo" class="logo">
 
-    <!-- Username input -->
-    <div class="mb-3 w-50 mx-auto">
-        <input type="text" class="form-control text-center" id="username" placeholder="Enter your username" aria-label="Username Input">
-    </div>
+    {% if isPlayer %}
+        <!-- Profile Icon (Top-right) -->
+        <a href="/" class="position-absolute top-0 end-0 m-3">
+            <img src="/media/icon_profile.png" alt="Profile Icon" class="icon" width="40">
+        </a>
+            <!-- New Game Button -->
+        <a href="/gameModeChoice">
+            <button type="button" class="btn btn-new-game">New Game</button>
+        </a>
+
+    {% else %}
+        <!-- Username input -->
+        <div class="mb-3 w-50 mx-auto">
+            <input type="text" class="form-control text-center" id="username" placeholder="Enter your username" aria-label="Username Input">
+        </div>
+
+        <a href="/login" role="button" class="btn btn-secondary btn-lg position-absolute  top-0 end-0 m-3" style=" width: 150px; height: 40px; background-color: #acacac;">
+            CONNEXION
+        </a>
+
+    {% endif %}
 
     <!-- New Game Button -->
     <a href="/gameModeChoice">
         <button type="button" class="btn btn-new-game">New Game</button>
-    </a>
-
-    <!-- Profile Icon (Top-right) -->
-    <a href="/login" class="position-absolute top-0 end-0 m-3">
-        <img src="/media/icon_profile.png" alt="Profile Icon" class="icon" width="40">
     </a>
 
     <!-- Settings Icon (Bottom-right) -->
