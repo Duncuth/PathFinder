@@ -14,7 +14,7 @@ $twig = new Environment($loader, [
 ]);
 
 $vues = [
-    'indexDisconnected' => 'indexDisconnected.twig',
+    'home' => 'home.twig',
     'error' => 'error.twig',
     'gameModeChoice' => 'gamemode_choice.twig',
     'connexion' => 'connexion.twig',

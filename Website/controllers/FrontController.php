@@ -17,19 +17,19 @@ class FrontController
         $this->twig = $twig;
         $this->vues = $vues;
         $this->router = $router;
-
-        // Define routes
         $this->initializeRoutes();
+        session_start();
     }
 
     private function initializeRoutes(): void
     {
-        $this->router->map('GET', '/', 'ControllerPlayer#index', 'home');
-        $this->router->map('GET', '/error', 'ControllerPlayer#error', 'error');
-        $this->router->map('GET', '/gameModeChoice', 'ControllerPlayer#gameModeChoice', 'game_mode_choice');
-        $this->router->map('GET', '/connexion', 'ControllerPlayer#connexion', 'connexion');
-        $this->router->map('GET', '/settings', 'ControllerPlayer#settings', 'settings');
-        $this->router->map('GET', '/leaderboard', 'ControllerPlayer#leaderboard', 'leaderboard');
+        // General routes
+        $this->router->map('GET', '/', 'UserController#home', 'home');
+        $this->router->map('GET', '/error', 'UserController#error', 'error');
+
+        // User and Admin roles handling different actions
+        $this->router->map('GET|POST', '/user/[i:id]/[a:action]?', 'UserController#userAction');
+        $this->router->map('GET|POST', '/admin/[a:action]?', 'AdminController#adminAction');
     }
 
     public function handleRequest(): void
@@ -37,26 +37,50 @@ class FrontController
         try {
             $match = $this->router->match();
 
-            if ($match) {
-                error_log("Matched route: " . json_encode($match)); // Log matched route
+            if ($match && isset($match['target'])) {
                 list($controllerName, $action) = explode('#', $match['target']);
                 $controllerClass = 'Website\\controllers\\' . $controllerName;
 
-                if (class_exists($controllerClass) && method_exists($controllerClass, $action)) {
-                    $controller = new $controllerClass($this->vues, $this->twig);
-                    call_user_func_array([$controller, $action], $match['params']);
+                if ($this->hasAccess($controllerName, $action)) {
+                    $this->callController($controllerClass, $action, $match['params']);
                 } else {
-                    error_log("Error: Cannot call $controllerClass#$action"); // Log if class/method not found
-                    throw new Exception("Error: Cannot call $controllerClass#$action");
+                    echo $this->twig->render($this->vues['error'], ['errorMessage' => 'Access Denied']);
                 }
             } else {
-                error_log("No route matched."); // Log when no route matches
-                header("HTTP/1.0 404 Not Found");
-                echo $this->twig->render($this->vues['error'], ['errorMessage' => 'Page not found']);
+                echo $this->twig->render($this->vues['error'], ['errorMessage' => 'Page Not Found']);
             }
         } catch (Exception $e) {
-            error_log("Exception caught in handleRequest: " . $e->getMessage()); // Log exception details
             echo $this->twig->render($this->vues['error'], ['errorMessage' => $e->getMessage()]);
+        }
+    }
+
+    private function hasAccess(string $controller, string $action): bool
+    {
+        if ($controller === 'AdminController' && !$this->isAdmin()) {
+            return false;
+        }
+        return true;
+    }
+
+    private function isAdmin(): bool
+    {
+        return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function callController(string $controllerClass, string $action, array $params): void
+    {
+        if (class_exists($controllerClass)) {
+            $controller = new $controllerClass($this->vues, $this->twig);
+            if (method_exists($controller, $action) && is_callable([$controller, $action])) {
+                call_user_func_array([$controller, $action], $params);
+            } else {
+                throw new Exception("Method $action is not callable in $controllerClass.");
+            }
+        } else {
+            throw new Exception("Class $controllerClass does not exist.");
         }
     }
 }
