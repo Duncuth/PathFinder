@@ -20,7 +20,7 @@ class PlayerGateway
 
     public function createPlayer($player)
     {
-        $query = "INSERT INTO Players (username, password, email) VALUES (:username, :password, :email)";
+        $query = "INSERT INTO Player (username, password, email) VALUES (:username, :password, :email)";
         $this->connection->executeQuery($query, array(
                 ':username' => array($player['username'], PDO::PARAM_STR),
                 ':password' => array(md5($player['password']), PDO::PARAM_STR),
@@ -30,7 +30,7 @@ class PlayerGateway
 
     public function getPlayerByUsername(string $username)
     {
-        $query = "SELECT * FROM Players WHERE username = :username;";
+        $query = "SELECT * FROM Player WHERE username = :username;";
         $this->con->executeQuery($query, array(':username' => array($username, PDO::PARAM_STR)));
         $results = $this->con->getResults();
         if ($results == NULL) {
@@ -42,7 +42,7 @@ class PlayerGateway
 
     public function getPlayerByID(int $id)
     {
-        $query = "SELECT * FROM Players WHERE id = :id;";
+        $query = "SELECT * FROM Player WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
         $results = $this->con->getResults();
         if ($results == NULL) {
@@ -53,7 +53,7 @@ class PlayerGateway
 
     public function deletePlayerByID(int $id)
     {
-        $query = "DELETE FROM Players WHERE id = :id;";
+        $query = "DELETE FROM Player WHERE id = :id;";
         $this->con->executeQuery(
             $query,
             array(
