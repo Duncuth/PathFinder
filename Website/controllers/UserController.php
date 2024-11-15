@@ -39,6 +39,11 @@ class UserController
     {
         echo $this->twig->render($this->vues['register']);
     }
+     public function gamemode(): void
+    {
+        echo $this->twig->render($this->vues['gamemode']);
+    }
+
     public function logout(): void
     {
         session_destroy();
