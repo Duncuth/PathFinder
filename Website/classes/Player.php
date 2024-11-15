@@ -5,15 +5,15 @@ namespace classes;
 class Player
 {
     private int $id;
-    private string $nickname;
-    private string $pass;
+    private string $username;
+    private string $password;
     private int $score;
 
-    private function __construct(int $id, string $nickname, string $pass)
+    private function __construct(int $id, string $username, string $password)
     {
         $this->id = $id;
-        $this->nickname = $nickname;
-        $this->pass = $pass;
+        $this->username = $username;
+        $this->password = $password;
     }
 
     public function getId(): int
@@ -21,20 +21,20 @@ class Player
         return $this->id;
     }
 
-    public function getNickname(): string
+    public function getUsername(): string
     {
-        return $this->nickname;
+        return $this->username;
     }
 
 
-    public function getPass(): string
+    public function getPassword(): string
     {
-        return $this->pass;
+        return $this->password;
     }
 
-    public function setPass(string $pass): void
+    public function setPassword(string $password): void
     {
-        $this->pass = $pass;
+        $this->password = $password;
     }
 
     public function getScore(): int
