@@ -5,10 +5,14 @@ namespace usages;
 $rep = __DIR__ . '/../';
 
 //Vues
-$vues["homeDisconnected"] = "indexDisconnected.twig";
-$vues["connexion"] = "connexion.twig";
+$vues["home"] = "home.twig";
+$vues["login"] = "login.twig";
 $vues["error"] = "error.twig";
 $vues["homeConnected"] = "indexConnected.twig";
 $vues["settings"] = "settings.twig";
-$vues["gameModeChoice"] = "gamemode_choice.twig";
-$vues[""] = "";
+$vues["leaderboard"] = "leaderboard.twig";
+$vues["gamemode"] = "gamemode.twig";
+$vues["register"] = "register.twig";
+$vues["joinGame"] = "joinGame.twig";
+$vues["adminUser"] = "adminUser.twig";
+$vues["adminAdministrators"] = "adminAdministrators.twig";

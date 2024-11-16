@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathFinder</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body style="background-color: #f0f0e9">
+    <div class="container-fluid center-content text-center">
+        <!-- Logo -->
+        <img src="/media/logo.png" alt="PathFinder Logo" class="logo">
+
+        {% if isPlayer %}
+            <!-- Profile Icon (Top-right) -->
+            <a href="/" class="position-absolute top-0 end-0 m-3">
+                <img src="/media/icon_profile.png" alt="Profile Icon" class="icon" width="40">
+            </a>
+            <!-- New Game Button -->
+            <a href="/gameModeChoice">
+                <button type="button" class="btn btn-Class btn-new-game">New Game</button>
+            </a>
+
+        {% else %}
+            <!-- Username input -->
+            <div class="mb-3 w-50 mx-auto">
+                <input type="text" class="form-control text-center" style="height: 39px;" id="username" placeholder="Enter your username" aria-label="Username Input">
+            </div>
+
+            <a href="/login" role="button" style=" width: 150px; height: 40px;" class="btn btn-secondary btn-lg position-absolute top-0 end-0 m-3 d-flex justify-content-center align-items-center">
+                CONNEXION
+            </a>
+
+        {% endif %}
+
+        <!-- New Game Button -->
+        <a href="/gameModeChoice">
+            <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game ">New Game</button>
+        </a>
+
+        <!-- Settings Icon (Bottom-right) -->
+        <a href="/settings" class="position-absolute bottom-0 end-0 m-3">
+            <img src="/media/icon_settings.png" alt="Settings Icon" class="settings" width="40">
+        </a>
+
+        <!-- Trophy Icon (Bottom-left) -->
+        <a href="/leaderboard" class="position-absolute bottom-0 start-0 m-3">
+            <img src="/media/icon_trophy.png" alt="Trophy Icon" class="trophy" width="40">
+        </a>
+    </div>
+</body>
+</html>

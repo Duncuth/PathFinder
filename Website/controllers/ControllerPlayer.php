@@ -24,7 +24,7 @@ class ControllerPlayer
 
     public function home() : void
     {
-        echo $this->twig->render($this->vues["homeDisconnected"]);
+        echo $this->twig->render($this->vues["home"]);
     }
 
     public function error() : void
@@ -32,9 +32,45 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["error"]);
     }
 
-    public function connexion() : void
+    public function login() : void
     {
-        echo $this->twig->render($this->vues["connexion"]);
+        echo $this->twig->render($this->vues["login"]);
     }
+
+    public function register() : void
+    {
+        echo $this->twig->render($this->vues["register"]);
+    }
+
+    public function settings() : void
+    {
+        echo $this->twig->render($this->vues["settings"]);
+    }
+
+    public function leaderboard() : void
+    {
+        echo $this->twig->render($this->vues["leaderboard"]);
+    }   
+
+    public function joinGame() : void
+    {
+        echo $this->twig->render($this->vues["joinGame"]);
+    }
+
+    public function adminUser() : void
+    {
+        echo $this->twig->render($this->vues["adminUser"]);
+    }
+
+    public function adminAdministrators() : void
+    {
+        echo $this->twig->render($this->vues["adminAdministrators"]);
+    }
+
+    public function gamemode() : void
+    {
+        echo $this->twig->render($this->vues["gamemode"]);
+    }   
+
 
 }
