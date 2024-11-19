@@ -14,58 +14,94 @@
         <i class="bi bi-arrow-left"></i> Retour
     </a>
 
+    <a href="/logout" class="btn btn-outline-danger btn-lg px-3 py-2 position-absolute top-0 end-0 m-3">
+        <i class="bi bi-box-arrow-right"></i> Déconnexion
+    </a>
+
     <!-- Contenu principal -->
     <div class="container vh-100 d-flex justify-content-center align-items-center">
-    <div class="card p-5 shadow-lg text-dark col-md-8 col-lg-6">
-        <h2 class="mb-4 text-center fw-bold">Profil Utilisateur</h2>
+        <div class="card pt-4 px-5 shadow-lg text-dark col-md-8 col-lg-8" style="min-height: 610px;">
+            <h2 class="mb-4 text-center fw-bold">Profil</h2>
 
-        <!-- Onglets -->
-        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
-            <li class="nav-item">
-                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Informations</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">Historique</button>
-            </li>
-        </ul>
+            <!-- Onglets -->
+            <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Informations</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">Historique</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="options-tab" data-bs-toggle="tab" data-bs-target="#options" type="button" role="tab" aria-controls="options" aria-selected="false">Options du compte</button>
+                </li>
+            </ul>
 
-        <!-- Contenu des onglets -->
-        <div class="tab-content mt-4" id="profileTabsContent">
-            <!-- Informations -->
-            <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
-                <form>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="username" placeholder="Entrez votre nom" value="{{ user.pseudo }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Entrez votre email" value="{{ user.email }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                        <button type="submit" class="btn btn-primary w-45">Sauvegarder</button>
-                        <button type="button" class="btn btn-danger w-45">Supprimer le compte</button>
-                    </div>
-                </form>
-            </div>
-            <!-- Historique -->
-            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                <h5 class="mb-3 fw-bold">Historique des parties</h5>
-                <div class="history-list" style="max-height: 200px; overflow-y: auto;">
-                    <ul class="list-group">
-                        {% for partie in historique %}
-                            <li class="list-group-item">{{ partie }}</li>
-                        {% endfor %}
-                    </ul>
+            <!-- Contenu des onglets -->
+            <div class="tab-content mt-4" id="profileTabsContent" style="height: 100%; overflow-y: auto;">
+                <!-- Informations -->
+                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                    <h5 class="mb-4 fw-bold text-center">Informations sur le compte</h5>
+                    <form>
+                            <!-- Nom -->
+                            <div class="mb-4 d-flex flex-column align-items-center">
+                                <label for="username" class="form-label w-75 text-start">Nom</label>
+                                <input type="text" class="form-control w-75" id="username" placeholder="" value={{ player.pseudo }}>
+                            </div>
+                            <!-- Email -->
+                            <div class="mb-4 d-flex flex-column align-items-center">
+                                <label for="email" class="form-label w-75 text-start">Email</label>
+                                <input type="email" class="form-control w-75" id="email" placeholder="" value={{ player.email }}>
+                            </div>
+                            <!-- Mot de passe -->
+                            <div class="mb-5 d-flex flex-column align-items-center">
+                                <label for="password" class="form-label w-75 text-start">Mot de passe</label>
+                                <div class="d-flex w-75">
+                                    <input type="password" class="form-control" id="password" placeholder="{{player.password}}" readonly>
+                                    <button type="button" class="btn btn-secondary ms-2">
+                                        Modifier
+                                    </button>
+                                </div>
+                            </div>
+                        <!-- Bouton Sauvegarder -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-primary w-50">Sauvegarder</button>
+                        </div>
+                    </form>
                 </div>
+
+
+                <!-- Historique -->
+                <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                    <h5 class="mb-3 fw-bold">Historique des parties</h5>
+                    <div class="history-list" style="max-height: 400px; overflow-y: auto;">
+                        <ul class="list-group">
+                            {% for partie in historique %}
+                                <li class="list-group-item">{{ partie }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Options du compte -->
+                <div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options-tab">
+                    <h5 class="mb-5 fw-bold text-center">Options du compte</h5>
+                    <div class="d-flex flex-column align-items-center gap-3">
+                        <!-- Politique de confidentialité -->
+                        <a href="/politique-confidentialite" class="btn btn-outline-secondary mb-4 px-4 py-2 w-50 text-center">
+                            <i class="bi bi-file-earmark-text"></i> Politique de confidentialité
+                        </a>
+                        <!-- Supprimer le compte -->
+                        <button type="button" class="btn btn-danger px-4 py-2 w-50">
+                            <i class="bi bi-trash"></i> Supprimer le compte
+                        </button>
+                    </div>
+                </div>
+
             </div>
+            
         </div>
     </div>
-</div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
