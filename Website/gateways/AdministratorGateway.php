@@ -5,10 +5,22 @@ namespace gateways;
 use usages\Connection;
 use \PDO;
 
+/**
+ * Class AdministratorGateway
+ *
+ * This class provides methods to interact with the administrators in the database.
+ */
 class AdministratorGateway
 {
+    /**
+     * @var Connection $con The database connection instance.
+     */
     private $con;
 
+    /**
+     * AdministratorGateway constructor.
+     * Initializes the database connection using global configuration variables.
+     */
     public function __construct()
     {
         global $dsn, $user, $pass;
@@ -18,7 +30,12 @@ class AdministratorGateway
         $this->con = new Connection($dsn, $user, $pass);
     }
 
-    // Ajouter un administrateur
+    /**
+     * Adds a new administrator to the database.
+     *
+     * @param array $admin An associative array containing administrator details.
+     * @return void
+     */
     public function addAdministrator($admin): void
     {
         $query = "INSERT INTO admin (username, password) 
@@ -32,7 +49,12 @@ class AdministratorGateway
         );
     }
 
-    // Récupérer un administrateur par ID
+    /**
+     * Retrieves an administrator by ID.
+     *
+     * @param int $id The ID of the administrator.
+     * @return array|null An associative array of administrator details or null if not found.
+     */
     public function getAdministratorById(int $id): ?array
     {
         $query = "SELECT * FROM admin WHERE id = :id;";
@@ -41,7 +63,12 @@ class AdministratorGateway
         return $results ? $results[0] : null;
     }
 
-    // Récupérer un administrateur par username
+    /**
+     * Retrieves an administrator by username.
+     *
+     * @param string $username The username of the administrator.
+     * @return array|null An associative array of administrator details or null if not found.
+     */
     public function getAdministratorByUsername(string $username): ?array
     {
         $query = "SELECT * FROM admin WHERE username = :username;";
@@ -50,7 +77,13 @@ class AdministratorGateway
         return $results ? $results[0] : null;
     }
 
-    // Mettre à jour un administrateur
+    /**
+     * Updates an administrator in the database.
+     *
+     * @param int $id The ID of the administrator.
+     * @param array $admin An associative array containing updated administrator details.
+     * @return void
+     */
     public function updateAdministrator($id, $admin): void
     {
         $query = "UPDATE admin 
@@ -66,14 +99,24 @@ class AdministratorGateway
         );
     }
 
-    // Supprimer un administrateur par ID
+    /**
+     * Deletes an administrator by ID.
+     *
+     * @param int $id The ID of the administrator.
+     * @return void
+     */
     public function deleteAdministrator(int $id): void
     {
         $query = "DELETE FROM admin WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
     }
 
-    // Vérifier un administrateur (connexion)
+    /**
+     * Verifies an administrator's credentials.
+     *
+     * @param array $admin An associative array containing administrator credentials.
+     * @return int|null The ID of the administrator if credentials are valid, null otherwise.
+     */
     public function verifyAdministrator($admin): ?int
     {
         $query = "SELECT admin.id FROM admin 

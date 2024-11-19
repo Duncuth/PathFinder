@@ -2,36 +2,68 @@
 
 namespace models;
 
-use gateways\GatewayPlayer;
+use gateways\PlayerGateway;
 use gateways\PlayerStatsGateway;
 use classes\Player;
 use classes\PlayerStats;
 
+/**
+ * Class PlayerModel
+ *
+ * Provides methods to manage players and their statistics, including adding, verifying, retrieving, updating, and deleting players and their stats.
+ */
 class PlayerModel
 {
+    /**
+     * @var PlayerGateway $gwPlayer The gateway for player data operations.
+     */
     private $gwPlayer;
+
+    /**
+     * @var PlayerStatsGateway $gwPlayerStats The gateway for player statistics data operations.
+     */
     private $gwPlayerStats;
 
+    /**
+     * PlayerModel constructor.
+     *
+     * Initializes the PlayerGateway and PlayerStatsGateway.
+     */
     public function __construct()
     {
-        $this->gwPlayer = new GatewayPlayer();
+        $this->gwPlayer = new PlayerGateway();
         $this->gwPlayerStats = new PlayerStatsGateway();
     }
 
-    // Ajouter un joueur
+    /**
+     * Add a new player.
+     *
+     * @param array $playerData The data of the player to add.
+     * @return void
+     */
     public function addPlayer($playerData)
     {
         $this->gwPlayer->addPlayer($playerData);
     }
 
-    // Vérifier les identifiants d'un joueur
+    /**
+     * Verify the credentials of a player.
+     *
+     * @param array $playerData The credentials of the player to verify.
+     * @return int|null The ID of the player if verified, null otherwise.
+     */
     public function verifyPlayer($playerData)
     {
         $playerId = $this->gwPlayer->verifyPlayer($playerData);
         return $playerId;
     }
 
-    // Récupérer un joueur par ID
+    /**
+     * Retrieve a player by ID.
+     *
+     * @param int $id The ID of the player to retrieve.
+     * @return Player|null The player object if found, null otherwise.
+     */
     public function getPlayerByID($id): ?Player
     {
         $playerData = $this->gwPlayer->getPlayerByID($id);
@@ -48,31 +80,58 @@ class PlayerModel
         return null;
     }
 
-    // Mettre à jour un joueur
+    /**
+     * Update a player.
+     *
+     * @param int $id The ID of the player to update.
+     * @param array $playerData The new data for the player.
+     * @return void
+     */
     public function updatePlayer($id, $playerData)
     {
         $this->gwPlayer->updatePlayer($id, $playerData);
     }
 
-    // Mettre à jour le mot de passe d'un joueur
+    /**
+     * Update the password of a player.
+     *
+     * @param int $id The ID of the player to update.
+     * @param string $password The new password for the player.
+     * @return void
+     */
     public function updatePlayerPassword($id, $password)
     {
         $this->gwPlayer->updatePlayerPassword($id, $password);
     }
 
-    // Supprimer un joueur par ID
+    /**
+     * Delete a player by ID.
+     *
+     * @param int $id The ID of the player to delete.
+     * @return void
+     */
     public function deletePlayerByID($id)
     {
         $this->gwPlayer->deletePlayerByID($id);
     }
 
-    // Ajouter des statistiques pour un joueur
+    /**
+     * Add statistics for a player.
+     *
+     * @param array $statsData The data of the statistics to add.
+     * @return void
+     */
     public function addPlayerStats($statsData)
     {
         $this->gwPlayerStats->addPlayerStats($statsData);
     }
 
-    // Récupérer les statistiques d'un joueur par ID
+    /**
+     * Retrieve the statistics of a player by player ID.
+     *
+     * @param int $playerId The ID of the player whose statistics to retrieve.
+     * @return PlayerStats|null The player statistics object if found, null otherwise.
+     */
     public function getPlayerStatsByPlayerId($playerId): ?PlayerStats
     {
         $statsData = $this->gwPlayerStats->getPlayerStatsByPlayerId($playerId);
@@ -88,13 +147,24 @@ class PlayerModel
         return null;
     }
 
-    // Mettre à jour les statistiques d'un joueur
+    /**
+     * Update the statistics of a player.
+     *
+     * @param int $playerId The ID of the player whose statistics to update.
+     * @param array $statsData The new data for the statistics.
+     * @return void
+     */
     public function updatePlayerStats($playerId, $statsData)
     {
         $this->gwPlayerStats->updatePlayerStats($playerId, $statsData);
     }
 
-    // Supprimer les statistiques d'un joueur par ID
+    /**
+     * Delete the statistics of a player by player ID.
+     *
+     * @param int $playerId The ID of the player whose statistics to delete.
+     * @return void
+     */
     public function deletePlayerStatsByPlayerId($playerId)
     {
         $this->gwPlayerStats->deletePlayerStatsByPlayerId($playerId);

@@ -5,10 +5,19 @@ namespace gateways;
 use usages\Connection;
 use \PDO;
 
-class GatewayPlayer
+/**
+ * Class PlayerGateway
+ *
+ * This class provides methods to interact with the players table in the database.
+ */
+class PlayerGateway
 {
     private $con;
 
+    /**
+     * PlayerGateway constructor.
+     * Initializes the database connection.
+     */
     public function __construct()
     {
         global $dsn, $user, $pass;
@@ -18,6 +27,11 @@ class GatewayPlayer
         $this->con = new Connection($dsn, $user, $pass);
     }
 
+    /**
+     * Adds a new player to the database.
+     *
+     * @param array $player Associative array containing player details.
+     */
     public function addPlayer($player)
     {
         $query = "INSERT INTO players (username, email, password, avatar_url, is_moderator) 
@@ -34,6 +48,12 @@ class GatewayPlayer
         );
     }
 
+    /**
+     * Retrieves a player by their username.
+     *
+     * @param string $username The username of the player.
+     * @return array|false The player details or false if not found.
+     */
     public function getPlayerByUsername(string $username)
     {
         $query = "SELECT * FROM players WHERE username = :username;";
@@ -45,6 +65,12 @@ class GatewayPlayer
         return $results[0];
     }
 
+    /**
+     * Retrieves a player by their ID.
+     *
+     * @param int $id The ID of the player.
+     * @return array|false The player details or false if not found.
+     */
     public function getPlayerByID(int $id)
     {
         $query = "SELECT * FROM players WHERE id = :id;";
@@ -56,6 +82,11 @@ class GatewayPlayer
         return $results[0];
     }
 
+    /**
+     * Retrieves all players from the database.
+     *
+     * @return array The list of all players.
+     */
     public function getPlayers()
     {
         $query = "SELECT * FROM players;";
@@ -65,6 +96,12 @@ class GatewayPlayer
         return $results;
     }
 
+    /**
+     * Updates a player's details in the database.
+     *
+     * @param int $id The ID of the player.
+     * @param array $player Associative array containing updated player details.
+     */
     public function updatePlayer($id, $player)
     {
         $query = "UPDATE players 
@@ -83,6 +120,12 @@ class GatewayPlayer
         );
     }
 
+    /**
+     * Updates a player's password in the database.
+     *
+     * @param int $id The ID of the player.
+     * @param string $password The new password of the player.
+     */
     public function updatePlayerPassword($id, $password)
     {
         $query = "UPDATE players SET password = :password WHERE id = :id;";
@@ -95,6 +138,11 @@ class GatewayPlayer
         );
     }
 
+    /**
+     * Deletes a player from the database by their ID.
+     *
+     * @param int $id The ID of the player.
+     */
     public function deletePlayerByID($id)
     {
         $query = "DELETE FROM players WHERE id = :id;";
@@ -106,6 +154,12 @@ class GatewayPlayer
         );
     }
 
+    /**
+     * Verifies a player's credentials.
+     *
+     * @param array $player Associative array containing player credentials.
+     * @return int|null The ID of the player if credentials are valid, null otherwise.
+     */
     public function verifyPlayer($player)
     {
         $query = "SELECT players.id FROM players 
