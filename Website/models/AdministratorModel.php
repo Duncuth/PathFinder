@@ -5,28 +5,56 @@ namespace models;
 use gateways\AdministratorGateway;
 use classes\Administrator;
 
+/**
+ * Class AdministratorModel
+ *
+ * Provides methods to manage administrators, including adding, verifying, retrieving, updating, and deleting administrators.
+ */
 class AdministratorModel
 {
+    /**
+     * @var AdministratorGateway $gwAdministrator The gateway for administrator data operations.
+     */
     private $gwAdministrator;
 
+    /**
+     * AdministratorModel constructor.
+     *
+     * Initializes the AdministratorGateway.
+     */
     public function __construct()
     {
         $this->gwAdministrator = new AdministratorGateway();
     }
 
-    // Ajouter un administrateur
+    /**
+     * Add a new administrator.
+     *
+     * @param array $adminData The data of the administrator to add.
+     * @return void
+     */
     public function addAdministrator($adminData)
     {
         $this->gwAdministrator->addAdministrator($adminData);
     }
 
-    // Vérifier les identifiants d'un administrateur
+    /**
+     * Verify the credentials of an administrator.
+     *
+     * @param array $adminData The credentials of the administrator to verify.
+     * @return int|null The ID of the administrator if verified, null otherwise.
+     */
     public function verifyAdministrator($adminData): ?int
     {
         return $this->gwAdministrator->verifyAdministrator($adminData);
     }
 
-    // Récupérer un administrateur par ID
+    /**
+     * Retrieve an administrator by ID.
+     *
+     * @param int $id The ID of the administrator to retrieve.
+     * @return Administrator|null The administrator object if found, null otherwise.
+     */
     public function getAdministratorById($id): ?Administrator
     {
         $adminData = $this->gwAdministrator->getAdministratorById($id);
@@ -40,7 +68,12 @@ class AdministratorModel
         return null;
     }
 
-    // Récupérer un administrateur par username
+    /**
+     * Retrieve an administrator by username.
+     *
+     * @param string $username The username of the administrator to retrieve.
+     * @return Administrator|null The administrator object if found, null otherwise.
+     */
     public function getAdministratorByUsername($username): ?Administrator
     {
         $adminData = $this->gwAdministrator->getAdministratorByUsername($username);
@@ -54,13 +87,24 @@ class AdministratorModel
         return null;
     }
 
-    // Mettre à jour un administrateur
+    /**
+     * Update an administrator.
+     *
+     * @param int $id The ID of the administrator to update.
+     * @param array $adminData The new data for the administrator.
+     * @return void
+     */
     public function updateAdministrator($id, $adminData)
     {
         $this->gwAdministrator->updateAdministrator($id, $adminData);
     }
 
-    // Supprimer un administrateur par ID
+    /**
+     * Delete an administrator by ID.
+     *
+     * @param int $id The ID of the administrator to delete.
+     * @return void
+     */
     public function deleteAdministrator($id)
     {
         $this->gwAdministrator->deleteAdministrator($id);
