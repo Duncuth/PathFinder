@@ -34,19 +34,21 @@ class PlayerGateway
      */
     public function addPlayer($player)
     {
-        $query = "INSERT INTO players (username, email, password, avatar_url, is_moderator) 
+            $query = "INSERT INTO Player (username, email, password, avatar_url, is_moderator) 
                   VALUES (:username, :email, :password, :avatar_url, :is_moderator);";
-        $this->con->executeQuery(
-            $query,
-            array(
-                ':username' => array($player['username'], PDO::PARAM_STR),
-                ':email' => array($player['email'], PDO::PARAM_STR),
-                ':password' => array(md5($player['password']), PDO::PARAM_STR), // À améliorer avec password_hash
-                ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
-                ':is_moderator' => array($player['is_moderator'], PDO::PARAM_BOOL)
-            )
-        );
+
+            $this->con->executeQuery(
+                $query,
+                array(
+                    ':username' => array($player['username'], PDO::PARAM_STR),
+                    ':email' => array($player['email'], PDO::PARAM_STR),
+                    ':password' => array(password_hash($player['password'], PASSWORD_DEFAULT), PDO::PARAM_STR),
+                    ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
+                    ':is_moderator' => array((int)$player['is_moderator'], PDO::PARAM_INT)
+                )
+            );
     }
+
 
     /**
      * Retrieves a player by their username.
@@ -56,7 +58,7 @@ class PlayerGateway
      */
     public function getPlayerByUsername(string $username)
     {
-        $query = "SELECT * FROM players WHERE username = :username;";
+        $query = "SELECT * FROM Player WHERE username = :username;";
         $this->con->executeQuery($query, array(':username' => array($username, PDO::PARAM_STR)));
         $results = $this->con->getResults();
         if ($results == NULL) {
@@ -73,7 +75,7 @@ class PlayerGateway
      */
     public function getPlayerByID(int $id)
     {
-        $query = "SELECT * FROM players WHERE id = :id;";
+        $query = "SELECT * FROM Player WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
         $results = $this->con->getResults();
         if ($results == NULL) {
@@ -89,7 +91,7 @@ class PlayerGateway
      */
     public function getPlayers()
     {
-        $query = "SELECT * FROM players;";
+        $query = "SELECT * FROM Player;";
         $this->con->executeQuery($query);
         $results = $this->con->getResults();
 
@@ -104,7 +106,7 @@ class PlayerGateway
      */
     public function updatePlayer($id, $player)
     {
-        $query = "UPDATE players 
+        $query = "UPDATE Player 
                   SET username = :username, email = :email, password = :password, avatar_url = :avatar_url, is_moderator = :is_moderator 
                   WHERE id = :id;";
         $this->con->executeQuery(
@@ -128,7 +130,7 @@ class PlayerGateway
      */
     public function updatePlayerPassword($id, $password)
     {
-        $query = "UPDATE players SET password = :password WHERE id = :id;";
+        $query = "UPDATE Player SET password = :password WHERE id = :id;";
         $this->con->executeQuery(
             $query,
             array(
@@ -145,7 +147,7 @@ class PlayerGateway
      */
     public function deletePlayerByID($id)
     {
-        $query = "DELETE FROM players WHERE id = :id;";
+        $query = "DELETE FROM Player WHERE id = :id;";
         $this->con->executeQuery(
             $query,
             array(
@@ -162,16 +164,20 @@ class PlayerGateway
      */
     public function verifyPlayer($player)
     {
-        $query = "SELECT players.id FROM players 
-                  WHERE username = :username AND password = :password;";
+        $query = "SELECT id, password FROM Player WHERE username = :username;";
         $this->con->executeQuery(
             $query,
             array(
-                ':username' => array($player['username'], PDO::PARAM_STR),
-                ':password' => array(md5($player['password']), PDO::PARAM_STR) // À améliorer avec password_verify
+                ':username' => array($player['username'], PDO::PARAM_STR)
             )
         );
+
         $results = $this->con->getResults();
-        return $results ? $results[0]['id'] : null;
+        if ($results && password_verify($player['password'], $results[0]['password'])) {
+            return $results[0]['id']; // Retourne l'ID du joueur en cas de succès
+        }
+
+        return null;
     }
+
 }
