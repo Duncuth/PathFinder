@@ -44,6 +44,12 @@ class UserController
         echo $this->twig->render($this->vues['gamemode']);
     }
 
+    public function playerVSplayer()
+    {
+        header("Location: /gamemode/playerVSplayer"); // Replace with the actual destination
+        exit();
+    }
+
     public function logout(): void
     {
         session_destroy();
