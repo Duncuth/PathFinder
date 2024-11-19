@@ -2,64 +2,122 @@
 
 namespace gateways;
 
-use classes\Player;
 use usages\Connection;
+use \PDO;
 
-class PlayerGateway
+class GatewayPlayer
 {
-    private Connection $connection;
+    private $con;
 
     public function __construct()
     {
         global $dsn, $user, $pass;
-        if($dsn == NULL || $user == NULL || $pass == NULL){
+        if ($dsn == NULL || $user == NULL || $pass == NULL) {
             require_once(__DIR__ . '/../usages/Config_DB.php');
         }
-        $this->connection = new Connection($dsn, $user, $pass);
+        $this->con = new Connection($dsn, $user, $pass);
     }
 
-    public function createPlayer(string $nickname, string $pass): bool
+    public function addPlayer($player)
     {
-        $query = "INSERT INTO players (nickname, pass) VALUES (:nickname, :pass)";
-        $parameters = [
-            ':nickname' => [$nickname, \PDO::PARAM_STR],
-            ':pass' => [$pass, \PDO::PARAM_STR]
-        ];
-        return $this->connection->executeQuery($query, $parameters);
+        $query = "INSERT INTO players (username, email, password, avatar_url, is_moderator) 
+                  VALUES (:username, :email, :password, :avatar_url, :is_moderator);";
+        $this->con->executeQuery(
+            $query,
+            array(
+                ':username' => array($player['username'], PDO::PARAM_STR),
+                ':email' => array($player['email'], PDO::PARAM_STR),
+                ':password' => array(md5($player['password']), PDO::PARAM_STR), // À améliorer avec password_hash
+                ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
+                ':is_moderator' => array($player['is_moderator'], PDO::PARAM_BOOL)
+            )
+        );
     }
 
-//    public function getPlayer(int $id): ?Player
-//    {
-//        $query = "SELECT * FROM players WHERE id = :id";
-//        $parameters = [':id' => [$id, \PDO::PARAM_INT]];
-//        $this->connection->executeQuery($query, $parameters);
-//        $result = $this->connection->getResults();
-//
-//        if (count($result) === 0) {
-//            return null;
-//        }
-//
-//        $row = $result[0];
-//        return new Player($row['id'], $row['nickname'], $row['pass']);
-//    }
-
-    public function updatePlayer(Player $player): bool
+    public function getPlayerByUsername(string $username)
     {
-        $query = "UPDATE players SET nickname = :nickname, pass = :pass, score = :score WHERE id = :id";
-        $parameters = [
-            ':nickname' => [$player->getNickname(), \PDO::PARAM_STR],
-            ':pass' => [$player->getPass(), \PDO::PARAM_STR],
-            ':score' => [$player->getScore(), \PDO::PARAM_INT],
-            ':id' => [$player->getId(), \PDO::PARAM_INT]
-        ];
-        return $this->connection->executeQuery($query, $parameters);
+        $query = "SELECT * FROM players WHERE username = :username;";
+        $this->con->executeQuery($query, array(':username' => array($username, PDO::PARAM_STR)));
+        $results = $this->con->getResults();
+        if ($results == NULL) {
+            return false;
+        }
+        return $results[0];
     }
 
-    public function deletePlayer(int $id): bool
+    public function getPlayerByID(int $id)
     {
-        $query = "DELETE FROM players WHERE id = :id";
-        $parameters = [':id' => [$id, \PDO::PARAM_INT]];
-        return $this->connection->executeQuery($query, $parameters);
+        $query = "SELECT * FROM players WHERE id = :id;";
+        $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
+        $results = $this->con->getResults();
+        if ($results == NULL) {
+            return false;
+        }
+        return $results[0];
     }
 
+    public function getPlayers()
+    {
+        $query = "SELECT * FROM players;";
+        $this->con->executeQuery($query);
+        $results = $this->con->getResults();
+
+        return $results;
+    }
+
+    public function updatePlayer($id, $player)
+    {
+        $query = "UPDATE players 
+                  SET username = :username, email = :email, password = :password, avatar_url = :avatar_url, is_moderator = :is_moderator 
+                  WHERE id = :id;";
+        $this->con->executeQuery(
+            $query,
+            array(
+                ':id' => array($id, PDO::PARAM_INT),
+                ':username' => array($player['username'], PDO::PARAM_STR),
+                ':email' => array($player['email'], PDO::PARAM_STR),
+                ':password' => array(md5($player['password']), PDO::PARAM_STR), // À améliorer avec password_hash
+                ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
+                ':is_moderator' => array($player['is_moderator'], PDO::PARAM_BOOL)
+            )
+        );
+    }
+
+    public function updatePlayerPassword($id, $password)
+    {
+        $query = "UPDATE players SET password = :password WHERE id = :id;";
+        $this->con->executeQuery(
+            $query,
+            array(
+                ':id' => array($id, PDO::PARAM_INT),
+                ':password' => array(md5($password), PDO::PARAM_STR) // À améliorer avec password_hash
+            )
+        );
+    }
+
+    public function deletePlayerByID($id)
+    {
+        $query = "DELETE FROM players WHERE id = :id;";
+        $this->con->executeQuery(
+            $query,
+            array(
+                ':id' => array($id, PDO::PARAM_INT)
+            )
+        );
+    }
+
+    public function verifyPlayer($player)
+    {
+        $query = "SELECT players.id FROM players 
+                  WHERE username = :username AND password = :password;";
+        $this->con->executeQuery(
+            $query,
+            array(
+                ':username' => array($player['username'], PDO::PARAM_STR),
+                ':password' => array(md5($player['password']), PDO::PARAM_STR) // À améliorer avec password_verify
+            )
+        );
+        $results = $this->con->getResults();
+        return $results ? $results[0]['id'] : null;
+    }
 }
