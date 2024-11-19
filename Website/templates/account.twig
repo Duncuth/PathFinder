@@ -5,33 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - PathFinder</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
-<body class="bg-dark text-white">
-<div class="container vh-100">
-    <div class="row mt-5">
-        <!-- Profil Information -->
-        <div class="col-md-12">
-            <div class="d-flex justify-content-between align-items-center card bg-light text-dark p-3 mb-4">
-                <h5>Historique</h5>
-                <div class="d-flex align-items-center">
-                    <!-- Pseudo -->
-                    <h4 class="me-3 mb-0">{{ user.pseudo }}</h4>
-                    <!-- Image de profil -->
-                    <img src="{{ asset('media/icon_profile.png') }}" alt="Image Profil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                    <!-- Bouton déconnexion -->
-                    <form action="{{ path('logout') }}" method="post">
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Déconnexion</button>
-                    </form>
-                </div>
+<body style="background-color: #f0f0e9;" class="vh-100">
+
+    <!-- Bouton de retour -->
+    <a href="/" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
+        <i class="bi bi-arrow-left"></i> Retour
+    </a>
+
+    <!-- Contenu principal -->
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card p-5 shadow-lg text-dark col-md-8 col-lg-6">
+        <h2 class="mb-4 text-center fw-bold">Profil Utilisateur</h2>
+
+        <!-- Onglets -->
+        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Informations</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">Historique</button>
+            </li>
+        </ul>
+
+        <!-- Contenu des onglets -->
+        <div class="tab-content mt-4" id="profileTabsContent">
+            <!-- Informations -->
+            <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <form>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="username" placeholder="Entrez votre nom" value="{{ user.pseudo }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Entrez votre email" value="{{ user.email }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="submit" class="btn btn-primary w-45">Sauvegarder</button>
+                        <button type="button" class="btn btn-danger w-45">Supprimer le compte</button>
+                    </div>
+                </form>
             </div>
-        </div>
-        <!-- Historique -->
-        <div class="col-md-12">
-            <div class="card bg-light text-dark p-3">
-                <div class="history-list" style="max-height: 300px; overflow-y: auto;">
+            <!-- Historique -->
+            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                <h5 class="mb-3 fw-bold">Historique des parties</h5>
+                <div class="history-list" style="max-height: 200px; overflow-y: auto;">
                     <ul class="list-group">
                         {% for partie in historique %}
-                        <li class="list-group-item">{{ partie }}</li>
+                            <li class="list-group-item">{{ partie }}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -39,5 +66,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
