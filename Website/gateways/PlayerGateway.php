@@ -106,21 +106,48 @@ class PlayerGateway
      */
     public function updatePlayer($id, $player)
     {
-        $query = "UPDATE Player 
-                  SET username = :username, email = :email, password = :password, avatar_url = :avatar_url, is_moderator = :is_moderator 
-                  WHERE id = :id;";
-        $this->con->executeQuery(
-            $query,
-            array(
-                ':id' => array($id, PDO::PARAM_INT),
-                ':username' => array($player['username'], PDO::PARAM_STR),
-                ':email' => array($player['email'], PDO::PARAM_STR),
-                ':password' => array(md5($player['password']), PDO::PARAM_STR), // À améliorer avec password_hash
-                ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
-                ':is_moderator' => array($player['is_moderator'], PDO::PARAM_BOOL)
-            )
-        );
+        // Construire la requête SQL de manière dynamique
+        $fields = [];
+        $params = [':id' => array($id, PDO::PARAM_INT)];
+
+        if (!empty($player['username'])) {
+            $fields[] = "username = :username";
+            $params[':username'] = array($player['username'], PDO::PARAM_STR);
+        }
+
+        if (!empty($player['email'])) {
+            $fields[] = "email = :email";
+            $params[':email'] = array($player['email'], PDO::PARAM_STR);
+        }
+
+        if (!empty($player['password'])) {
+            $fields[] = "password = :password";
+            $params[':password'] = array(password_hash($player['password'], PASSWORD_DEFAULT), PDO::PARAM_STR);
+        }
+
+        if (!empty($player['avatar_url'])) {
+            $fields[] = "avatar_url = :avatar_url";
+            $params[':avatar_url'] = array($player['avatar_url'], PDO::PARAM_STR);
+        }
+
+        if (isset($player['is_moderator'])) {
+            $fields[] = "is_moderator = :is_moderator";
+            $params[':is_moderator'] = array($player['is_moderator'], PDO::PARAM_BOOL);
+        }
+
+        // Si aucun champ à mettre à jour, retourner faux
+        if (empty($fields)) {
+            return false;
+        }
+
+        // Construire la requête SQL finale
+        $query = "UPDATE Player SET " . implode(", ", $fields) . " WHERE id = :id;";
+        var_dump($query);
+        var_dump($params);
+        // Exécuter la requête
+        return $this->con->executeQuery($query, $params);
     }
+
 
     /**
      * Updates a player's password in the database.
