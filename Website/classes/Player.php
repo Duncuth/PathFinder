@@ -5,47 +5,84 @@ namespace classes;
 class Player
 {
     private int $id;
-    private string $nickname;
-    private string $pass;
-    private int $score;
+    private string $username;
+    private string $email;
+    private string $password;
+    private ?string $avatarUrl;
+    private bool $isModerator;
 
-    private function __construct(int $id, string $nickname, string $pass)
-    {
+    public function __construct(
+        int $id,
+        string $username,
+        string $email,
+        string $password,
+        ?string $avatarUrl,
+        bool $isModerator
+    ) {
         $this->id = $id;
-        $this->nickname = $nickname;
-        $this->pass = $pass;
+        $this->username = $username;
+        $this->email = $email;
+        $this->password = $password;
+        $this->avatarUrl = $avatarUrl;
+        $this->isModerator = $isModerator;
     }
+
+    // Getters
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNickname(): string
+    public function getUsername(): string
     {
-        return $this->nickname;
+        return $this->username;
     }
 
-
-    public function getPass(): string
+    public function getEmail(): string
     {
-        return $this->pass;
+        return $this->email;
     }
 
-    public function setPass(string $pass): void
+    public function getPassword(): string
     {
-        $this->pass = $pass;
+        return $this->password;
     }
 
-    public function getScore(): int
+    public function getAvatarUrl(): ?string
     {
-        return $this->score;
+        return $this->avatarUrl;
     }
 
-    public function setScore(int $score): void
+    public function isModerator(): bool
     {
-        $this->score = $score;
+        return $this->isModerator;
     }
 
+    // Setters
 
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function setAvatarUrl(?string $avatarUrl): void
+    {
+        $this->avatarUrl = $avatarUrl;
+    }
+
+    public function setModerator(bool $isModerator): void
+    {
+        $this->isModerator = $isModerator;
+    }
 }
