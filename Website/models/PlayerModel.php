@@ -147,6 +147,33 @@ class PlayerModel
         return null;
     }
 
+/**
+ * Retrieve all player statistics sorted by score.
+ *
+ * This method fetches all player statistics from the PlayerStatsGateway,
+ * sorts them by score, and returns an array of PlayerStats objects.
+ *
+ * @return PlayerStats[]|null An array of PlayerStats objects if data is found, null otherwise.
+ */
+public function getPlayerStatsSortedByScore()
+{
+    $statsData = $this->gwPlayerStats->getAllPlayerStatsSortedByScore();
+    if ($statsData) {
+        $playerStats = [];
+        foreach ($statsData as $stats) {
+            $playerStats[] = new PlayerStats(
+                $stats['id'],
+                $stats['player_id'],
+                $stats['games_played'],
+                $stats['games_won'],
+                $stats['total_score']
+            );
+        }
+        return $playerStats;
+    }
+    return null;
+}
+
     /**
      * Update the statistics of a player.
      *

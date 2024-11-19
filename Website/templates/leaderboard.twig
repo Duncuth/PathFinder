@@ -28,11 +28,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for index, joueur in classement %}
+                    {% for index, player in players %}
                         <tr>
                             <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ joueur.pseudo }}</td>
-                            <td>{{ joueur.score }}</td>
+                            <td>{{ player.id }}</td>
+                            <td>{{ player.totalScore }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

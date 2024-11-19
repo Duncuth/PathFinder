@@ -2,7 +2,9 @@
 
 namespace controllers;
 
+use classes\PlayerStats;
 use Exception;
+use models\PlayerModel;
 
 class ControllerPlayer
 {
@@ -49,7 +51,14 @@ class ControllerPlayer
 
     public function leaderboard() : void
     {
-        echo $this->twig->render($this->vues["leaderboard"]);
+        $liste = [
+            new PlayerStats(1, 1, 10, 5, 100),
+            new PlayerStats(2, 2, 20, 10, 200),
+            // Add more PlayerStats instances as needed
+        ];
+        echo $this->twig->render($this->vues["leaderboard"], [
+            "players" => $liste
+        ]);
     }   
 
     public function joinGame() : void
