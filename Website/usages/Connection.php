@@ -21,6 +21,7 @@ class Connection extends PDO {
         return $this->stmt->execute();
     }
 
+
     public function getResults() : array {
         return $this->stmt->fetchall();
     }

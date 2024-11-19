@@ -34,19 +34,21 @@ class PlayerGateway
      */
     public function addPlayer($player)
     {
-        $query = "INSERT INTO players (username, email, password, avatar_url, is_moderator) 
+            $query = "INSERT INTO Player (username, email, password, avatar_url, is_moderator) 
                   VALUES (:username, :email, :password, :avatar_url, :is_moderator);";
-        $this->con->executeQuery(
-            $query,
-            array(
-                ':username' => array($player['username'], PDO::PARAM_STR),
-                ':email' => array($player['email'], PDO::PARAM_STR),
-                ':password' => array(md5($player['password']), PDO::PARAM_STR), // À améliorer avec password_hash
-                ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
-                ':is_moderator' => array($player['is_moderator'], PDO::PARAM_BOOL)
-            )
-        );
+
+            $this->con->executeQuery(
+                $query,
+                array(
+                    ':username' => array($player['username'], PDO::PARAM_STR),
+                    ':email' => array($player['email'], PDO::PARAM_STR),
+                    ':password' => array(password_hash($player['password'], PASSWORD_DEFAULT), PDO::PARAM_STR),
+                    ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
+                    ':is_moderator' => array((int)$player['is_moderator'], PDO::PARAM_INT)
+                )
+            );
     }
+
 
     /**
      * Retrieves a player by their username.
