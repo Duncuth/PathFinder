@@ -57,30 +57,10 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["joinGame"]);
     }
 
-    public function adminUser() : void
-    {
-        echo $this->twig->render($this->vues["adminUser"]);
-    }
-
-    public function adminAdministrators() : void
-    {
-        echo $this->twig->render($this->vues["adminAdministrators"]);
-    }
-
     public function gamemode() : void
     {
         echo $this->twig->render($this->vues["gamemode"]);
     }   
-
-    public function graphManagement() : void
-    {
-        echo $this->twig->render($this->vues["graphManagement"]);
-    }
-
-    public function adminGraph() : void
-    {
-        echo $this->twig->render($this->vues["adminGraph"]);
-    }
 
     public function account() : void
     {
