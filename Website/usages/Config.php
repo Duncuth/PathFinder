@@ -16,3 +16,6 @@ $vues["register"] = "register.twig";
 $vues["joinGame"] = "joinGame.twig";
 $vues["adminUser"] = "adminUser.twig";
 $vues["adminAdministrators"] = "adminAdministrators.twig";
+$vues["adminGraph"] = "adminGraph.twig";
+$vues["graphManagement"] = "graphManagement.twig";
+$vues["account"] = "account.twig";

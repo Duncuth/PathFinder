@@ -18,9 +18,10 @@ class FrontController
             //$router->setBasePath('/');
 
             // Define routes
-            $router->map('GET', '/', 'ControllerPlayer#adminAdministrators'); // Route for the home page
-            $router->map('GET', '/error', 'ControllerPlayer#error'); // Route for the error page
+            $router->map('GET', '/', 'ControllerPlayer#account'); // Route for the home page
+            $router->map('GET', '/error', 'ControllerPlayer#error');  // Route for the error page
             $router->map('GET|POST', '/[a:action]', 'ControllerPlayer'); // Route for the deconnexion page
+            $router->map('GET|POST', '/[a:action]', 'ControllerAdmin');
             // Match the current request
             $match = $router->match();
 

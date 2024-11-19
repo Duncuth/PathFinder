@@ -72,5 +72,18 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["gamemode"]);
     }   
 
+    public function graphManagement() : void
+    {
+        echo $this->twig->render($this->vues["graphManagement"]);
+    }
 
+    public function adminGraph() : void
+    {
+        echo $this->twig->render($this->vues["adminGraph"]);
+    }
+
+    public function account() : void
+    {
+        echo $this->twig->render($this->vues["account"]);
+    }
 }
