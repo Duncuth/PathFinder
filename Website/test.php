@@ -3,12 +3,12 @@
 // TEST !!
 require __DIR__ . '/vendor/autoload.php';
 
-use gateways\GatewayPlayer;
+use gateways\PlayerGateway;
 use classes\Player;
 
 try {
     // Créer une instance de GatewayPlayer
-    $playerGateway = new GatewayPlayer();
+    $playerGateway = new PlayerGateway();
 
     // Ajouter un nouveau joueur
     $newPlayerData = [

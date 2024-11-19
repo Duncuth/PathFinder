@@ -2,7 +2,7 @@
 
 namespace models;
 
-use gateways\GatewayPlayer;
+use gateways\PlayerGateway;
 use gateways\PlayerStatsGateway;
 use classes\Player;
 use classes\PlayerStats;
@@ -14,7 +14,7 @@ class PlayerModel
 
     public function __construct()
     {
-        $this->gwPlayer = new GatewayPlayer();
+        $this->gwPlayer = new PlayerGateway();
         $this->gwPlayerStats = new PlayerStatsGateway();
     }
 

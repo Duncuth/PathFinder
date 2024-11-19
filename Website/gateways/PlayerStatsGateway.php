@@ -5,10 +5,22 @@ namespace gateways;
 use usages\Connection;
 use \PDO;
 
+/**
+ * Class PlayerStatsGateway
+ *
+ * This class provides methods to interact with the player statistics in the database.
+ */
 class PlayerStatsGateway
 {
+    /**
+     * @var Connection $con The database connection instance.
+     */
     private $con;
 
+    /**
+     * PlayerStatsGateway constructor.
+     * Initializes the database connection using global configuration variables.
+     */
     public function __construct()
     {
         global $dsn, $user, $pass;
@@ -18,7 +30,12 @@ class PlayerStatsGateway
         $this->con = new Connection($dsn, $user, $pass);
     }
 
-    // Ajouter des statistiques pour un joueur
+    /**
+     * Adds player statistics to the database.
+     *
+     * @param array $stats An associative array containing player statistics.
+     * @return void
+     */
     public function addPlayerStats($stats): void
     {
         $query = "INSERT INTO playerstats (player_id, games_played, games_won, total_score) 
@@ -34,7 +51,12 @@ class PlayerStatsGateway
         );
     }
 
-    // Récupérer les statistiques d'un joueur par son ID
+    /**
+     * Retrieves player statistics by player ID.
+     *
+     * @param int $playerId The ID of the player.
+     * @return array|null An associative array of player statistics or null if not found.
+     */
     public function getPlayerStatsByPlayerId(int $playerId): ?array
     {
         $query = "SELECT * FROM playerstats WHERE player_id = :player_id;";
@@ -43,7 +65,11 @@ class PlayerStatsGateway
         return $results ? $results[0] : null;
     }
 
-    // Récupérer toutes les statistiques
+    /**
+     * Retrieves all player statistics.
+     *
+     * @return array An array of associative arrays containing player statistics.
+     */
     public function getAllPlayerStats(): array
     {
         $query = "SELECT * FROM playerstats;";
@@ -51,7 +77,13 @@ class PlayerStatsGateway
         return $this->con->getResults();
     }
 
-    // Mettre à jour les statistiques d'un joueur
+    /**
+     * Updates player statistics in the database.
+     *
+     * @param int $playerId The ID of the player.
+     * @param array $stats An associative array containing updated player statistics.
+     * @return void
+     */
     public function updatePlayerStats($playerId, $stats): void
     {
         $query = "UPDATE playerstats 
@@ -68,7 +100,12 @@ class PlayerStatsGateway
         );
     }
 
-    // Supprimer les statistiques d'un joueur
+    /**
+     * Deletes player statistics by player ID.
+     *
+     * @param int $playerId The ID of the player.
+     * @return void
+     */
     public function deletePlayerStatsByPlayerId(int $playerId): void
     {
         $query = "DELETE FROM playerstats WHERE player_id = :player_id;";

@@ -5,10 +5,22 @@ namespace gateways;
 use usages\Connection;
 use \PDO;
 
+/**
+ * Class GraphGateway
+ *
+ * This class provides methods to interact with the graphs in the database.
+ */
 class GraphGateway
 {
+    /**
+     * @var Connection $con The database connection instance.
+     */
     private $con;
 
+    /**
+     * GraphGateway constructor.
+     * Initializes the database connection using global configuration variables.
+     */
     public function __construct()
     {
         global $dsn, $user, $pass;
@@ -18,7 +30,12 @@ class GraphGateway
         $this->con = new Connection($dsn, $user, $pass);
     }
 
-    // Ajouter un graphe
+    /**
+     * Adds a new graph to the database.
+     *
+     * @param array $graph An associative array containing graph details.
+     * @return void
+     */
     public function addGraph($graph): void
     {
         $query = "INSERT INTO graph (name, vertex_count, edge_count, status) 
@@ -34,7 +51,12 @@ class GraphGateway
         );
     }
 
-    // Récupérer un graphe par ID
+    /**
+     * Retrieves a graph by ID.
+     *
+     * @param int $id The ID of the graph.
+     * @return array|null An associative array of graph details or null if not found.
+     */
     public function getGraphById(int $id): ?array
     {
         $query = "SELECT * FROM graph WHERE id = :id;";
@@ -43,7 +65,11 @@ class GraphGateway
         return $results ? $results[0] : null;
     }
 
-    // Récupérer tous les graphes
+    /**
+     * Retrieves all graphs.
+     *
+     * @return array An array of associative arrays containing graph details.
+     */
     public function getAllGraphs(): array
     {
         $query = "SELECT * FROM graph;";
@@ -51,7 +77,13 @@ class GraphGateway
         return $this->con->getResults();
     }
 
-    // Mettre à jour un graphe
+    /**
+     * Updates a graph in the database.
+     *
+     * @param int $id The ID of the graph.
+     * @param array $graph An associative array containing updated graph details.
+     * @return void
+     */
     public function updateGraph($id, $graph): void
     {
         $query = "UPDATE graph 
@@ -69,7 +101,12 @@ class GraphGateway
         );
     }
 
-    // Supprimer un graphe par ID
+    /**
+     * Deletes a graph by ID.
+     *
+     * @param int $id The ID of the graph.
+     * @return void
+     */
     public function deleteGraph(int $id): void
     {
         $query = "DELETE FROM graph WHERE id = :id;";
