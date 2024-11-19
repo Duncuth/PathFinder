@@ -29,7 +29,7 @@ class FrontController
             if (!$match) {
                 echo "404 oui"; // Redirect to a 404 error page
                 die;
-            } 
+            }
             
             if ($match) {
                 $controller = $match['target'];
