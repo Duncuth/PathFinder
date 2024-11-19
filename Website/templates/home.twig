@@ -16,24 +16,24 @@
         <!-- Logo -->
         <img src="./media/newLogo.png" alt="PathFinder Logo" class="logo">
 
-        {% if idPlayerConnected and player.isModerator %}
+        {% if isPlayer and player.isModerator %}
             <a href="/login" class="position-absolute top-0 end-0 m-3">
                 <img src="./media/iconProfile.png" alt="Profile Icon" class="icon" width="40">
             </a>
             <!-- New Game Button -->
             <a href="/gameModeChoice">
-                <button type="button" class="btn btn-Class btn-new-game mb-3">New Game</button>
+                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game mb-3">New Game</button>
             </a>
 
             <a href="/">
-                <button type="button" class="btn btn-Class btn-new-game">Edition des graphes</button>
+                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Edition des graphes</button>
             </a>
 
             <a href="/GraphManagement">
-                <button type="button" class="btn btn-Class btn-new-game">Gestion des graphes</button>
+                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Gestion des graphes</button>
             </a>
 
-        {% elseif idPlayerConnected %}
+        {% elseif isPlayer %}
             <!-- Profile Icon (Top-right) -->
             <a href="/login" class="position-absolute top-0 end-0 m-3">
                 <img src="./media/iconProfile.png" alt="Profile Icon" class="icon" width="40">
@@ -41,11 +41,11 @@
 
             <!-- New Game Button -->
             <a href="/gamemode">
-                <button type="button" class="btn btn-Class btn-new-game mb-3">New Game</button>
+                <button type="button" class="btn btnHome  btn-secondary btn-lg btn-new-game mb-3">New Game</button>
             </a>
 
             <a href="/">
-                <button type="button" class="btn btn-Class btn-new-game">Edition des graphes</button>
+                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Edition des graphes</button>
             </a>
 
         {% else  %}
