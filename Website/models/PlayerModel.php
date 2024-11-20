@@ -108,11 +108,11 @@ class PlayerModel
      * Delete a player by ID.
      *
      * @param int $id The ID of the player to delete.
-     * @return void
+     * @return bool
      */
-    public function deletePlayerByID($id)
+    public function deletePlayerByID(int $id) : bool
     {
-        $this->gwPlayer->deletePlayerByID($id);
+        return $this->gwPlayer->deletePlayerByID($id);
     }
 
     /**
@@ -196,4 +196,26 @@ public function getPlayerStatsSortedByScore()
     {
         $this->gwPlayerStats->deletePlayerStatsByPlayerId($playerId);
     }
+
+
+    /**
+     * Check if a player is a moderator.
+     *
+     * This method calls the PlayerGateway to check if the player with the given ID has moderator status.
+     * If an error occurs during the process, it logs the error and returns false.
+     *
+     * @param int $playerId The ID of the player to check.
+     * @return bool True if the player is a moderator, false otherwise.
+     */
+    public function isModerator(int $playerId): bool
+    {
+        try {
+            // Call the Gateway method to retrieve the status
+            // Return the result
+            return $this->gwPlayer->checkModeratorStatus($playerId);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
 }

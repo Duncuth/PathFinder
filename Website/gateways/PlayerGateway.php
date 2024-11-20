@@ -150,35 +150,17 @@ class PlayerGateway
         return $this->con->executeQuery($query, $params);
     }
 
-    /**
-     * Updates a player's password in the database.
-     *
-     * @param int $id The ID of the player.
-     * @param string $password The new password of the player.
-     * @return void
-     */
-    public function updatePlayerPassword($id, $password)
-    {
-        $query = "UPDATE Player SET password = :password WHERE id = :id;";
-        $this->con->executeQuery(
-            $query,
-            array(
-                ':id' => array($id, PDO::PARAM_INT),
-                ':password' => array(md5($password), PDO::PARAM_STR) // To be improved with password_hash
-            )
-        );
-    }
 
     /**
      * Deletes a player from the database by their ID.
      *
      * @param int $id The ID of the player.
-     * @return void
+     * @return bool
      */
-    public function deletePlayerByID(int $id): void
+    public function deletePlayerByID(int $id): bool
     {
         $query = "DELETE FROM Player WHERE id = :id;";
-        $this->con->executeQuery(
+        return $this->con->executeQuery(
             $query,
             array(
                 ':id' => array($id, PDO::PARAM_INT)
@@ -209,4 +191,25 @@ class PlayerGateway
 
         return null;
     }
+
+    /**
+     * Check if a player is a moderator.
+     *
+     * This method queries the database to check if the player with the given ID has moderator status.
+     *
+     * @param int $playerId The ID of the player to check.
+     * @return bool True if the player is a moderator, false otherwise.
+     */
+    public function checkModeratorStatus(int $playerId): bool
+    {
+        $query = "SELECT is_moderator FROM Player WHERE id = :id";
+        $this->con->executeQuery($query, [':id' => [$playerId, PDO::PARAM_INT]]);
+        $result = $this->con->getResults();
+
+
+        return isset($result[0]['is_moderator']) && (bool)$result[0]['is_moderator'];
+    }
+
+
+
 }
