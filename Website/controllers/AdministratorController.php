@@ -139,7 +139,7 @@ class AdministratorController
      *
      * @param array $param Parameters for adding an administrator.
      */
-    function addAdministrator($param)
+    function addAdministrator(array $param): void
     {
         try {
             if (!$_SESSION('idAdminConnected') !== null) {
@@ -150,7 +150,7 @@ class AdministratorController
             $username = \usages\DataFilter::sanitizeString($_POST['username']);
             $password = \usages\DataFilter::sanitizeString($_POST['password']);
 
-            if (!isset($username) || !isset($password) || empty($username) || empty($password)) {
+            if (!isset($username) || !isset($password)) {
                 $_SESSION["error"] = "Veuillez remplir tous les champs.";
                 header("Location:/admin/adminAdministrators");
             } else {
@@ -239,7 +239,7 @@ class AdministratorController
      *
      * @param array $param Parameters for deleting a player.
      */
-    public function deletePlayer($param): void {
+    public function deletePlayer(array $param): void {
         try {
             if (!$_SESSION('idAdminConnected') !== null) {
                 $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";

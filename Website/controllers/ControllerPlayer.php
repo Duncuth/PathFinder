@@ -86,6 +86,10 @@ class ControllerPlayer
      */
     public function graphManagement() : void
     {
+        if (!isset($_SESSION['idPlayerConnected'])) {
+            $_SESSION['error'] = "Vous devez être connecté pour accéder à cette page.";
+            header("Location:/loginPlayer");
+        }
         echo $this->twig->render($this->vues["graphManagement"]);
     }
 
@@ -107,11 +111,6 @@ class ControllerPlayer
     public function settings() : void
     {
         echo $this->twig->render($this->vues["settings"]);
-    }
-
-    public function adminAdministrators() : void
-    {
-        echo $this->twig->render($this->vues["adminAdministrators"]);
     }
 
     /**
@@ -154,6 +153,11 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["gamemode"]);
     }
 
+    /**
+     * Render the game view with static graph data.
+     *
+     * @return void
+     */
     public function game() : void
     {
         $graphs = [
@@ -239,7 +243,6 @@ class ControllerPlayer
                 ]);
                 return;
             }
-
 
             // Prepare data for the model
             $playerData = [
