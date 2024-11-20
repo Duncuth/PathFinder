@@ -257,4 +257,25 @@ class AdministratorController
         }
     }
 
+    /**
+     * Logout the administrator.
+     *
+     * Clears the admin session and redirects to the login page.
+     *
+     * @return void
+     */
+    public function logout(): void
+    {
+        // Vérifiez si un administrateur est connecté
+        if (isset($_SESSION['idAdminConnected'])) {
+            unset($_SESSION['idAdminConnected']); // Supprime l'identifiant de l'admin
+            $_SESSION['success'] = "Vous avez été déconnecté avec succès.";
+        }
+
+        // Redirection vers la page de connexion
+        header("Location: /login");
+        exit;
+    }
+
+
 }
