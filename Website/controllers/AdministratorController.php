@@ -7,6 +7,11 @@ use models\PlayerModel;
 use \PDOException;
 use models\AdministratorModel;
 
+/**
+ * Class AdministratorController
+ *
+ * This controller handles administrative actions such as managing players and administrators.
+ */
 class AdministratorController
 {
     private $mdAdministrator;
@@ -14,6 +19,10 @@ class AdministratorController
     private $twig;
     private $vues;
 
+    /**
+     * Constructor for AdministratorController.
+     * Initializes models and session.
+     */
     function __construct()
     {
         global $vues, $twig;
@@ -24,16 +33,22 @@ class AdministratorController
 
             $this->mdAdministrator = new AdministratorModel();
             $this->mdPlayer = new PlayerModel();
-            
-
-
         } catch (PDOException $e) {
+            // Handle PDO exceptions
         } catch (Exception $e2) {
-            // Gérez d'autres erreurs ici
+            // Handle general exceptions
         }
     }
 
+    /**
+     * Displays the admin player management page.
+     * Requires admin authentication.
+     */
     public function adminPlayer() : void {
+        if (!$_SESSION('idAdminConnected') !== null) {
+            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+            header("Location:/admin/adminPlayer");
+        }
         $players = $this->mdPlayer->getAllPlayers();
         if ($players != null) {
             echo $this->twig->render($this->vues["adminPlayer"], ['players' => $players]);
@@ -44,6 +59,10 @@ class AdministratorController
         }
     }
 
+    /**
+     * Handles admin login.
+     * Validates credentials and sets session variables.
+     */
     public function loginAdmin() : void {
         try {
             $username = \usages\DataFilter::sanitizeString($_POST['username'] ?? '');
@@ -83,7 +102,15 @@ class AdministratorController
         }
     }
 
+    /**
+     * Displays the admin administrators management page.
+     * Requires admin authentication.
+     */
     public function adminAdministrators() : void {
+        if (!$_SESSION('idAdminConnected') !== null) {
+            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+            header("Location:/admin/adminPlayer");
+        }
         $admins = $this->mdAdministrator->getAllAdministrators();
         if ($admins != null) {
             echo $this->twig->render($this->vues["adminAdministrators"], ['admins' => $admins]);
@@ -92,40 +119,59 @@ class AdministratorController
             echo $this->twig->render($this->vues["adminAdministrators"]);
             unset($_SESSION["error"]);
         }
-    } 
+    }
 
+    /**
+     * Displays the admin graph page.
+     * Requires admin authentication.
+     */
     public function adminGraph() : void {
+        if (!$_SESSION('idAdminConnected') !== null) {
+            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+            header("Location:/admin/adminPlayer");
+        }
         echo $this->twig->render($this->vues["adminGraph"]);
-    }   
+    }
 
+    /**
+     * Adds a new administrator.
+     * Requires admin authentication.
+     *
+     * @param array $param Parameters for adding an administrator.
+     */
     function addAdministrator($param)
     {
         try {
-        $username = \usages\DataFilter::sanitizeString($_POST['username']);
-        $password = \usages\DataFilter::sanitizeString($_POST['password']);
-
-        if (!isset($username) || !isset($password) || empty($username) || empty($password)) {
-            $_SESSION["error"] = "Veuillez remplir tous les champs.";
-            header("Location:/admin/adminAdministrators");
-        } else {
-            $Admin = [
-                'username' => $username,
-                'password' => $password,
-            ];
-            if ($this->mdAdministrator->verifyAdministrator($Admin) != null) {
-                $_SESSION["error"] = "Cet admin existe déjà.";
-                echo $this->twig->render($this->vues["adminAdministrators"],
-                    [
-                        "error" => $_SESSION["error"]
-                    ]);
-            } else {
-                $this->mdAdministrator->addAdministrator($Admin);
-                echo $this->twig->render($this->vues["adminAdministrators"],
-                    [
-                        "success" => "Admin ajouté avec succès."
-                    ]);
+            if (!$_SESSION('idAdminConnected') !== null) {
+                $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+                header("Location:/admin/adminPlayer");
             }
-        }
+
+            $username = \usages\DataFilter::sanitizeString($_POST['username']);
+            $password = \usages\DataFilter::sanitizeString($_POST['password']);
+
+            if (!isset($username) || !isset($password) || empty($username) || empty($password)) {
+                $_SESSION["error"] = "Veuillez remplir tous les champs.";
+                header("Location:/admin/adminAdministrators");
+            } else {
+                $Admin = [
+                    'username' => $username,
+                    'password' => $password,
+                ];
+                if ($this->mdAdministrator->verifyAdministrator($Admin) != null) {
+                    $_SESSION["error"] = "Cet admin existe déjà.";
+                    echo $this->twig->render($this->vues["adminAdministrators"],
+                        [
+                            "error" => $_SESSION["error"]
+                        ]);
+                } else {
+                    $this->mdAdministrator->addAdministrator($Admin);
+                    echo $this->twig->render($this->vues["adminAdministrators"],
+                        [
+                            "success" => "Admin ajouté avec succès."
+                        ]);
+                }
+            }
         }
         catch (Exception $e) {
             $_SESSION["error"] = "Erreur lors de l'ajout de l'admin.";
@@ -133,13 +179,22 @@ class AdministratorController
                 [
                     "error" => $_SESSION["error"]
                 ]);
-
         }
     }
 
+    /**
+     * Adds a new player.
+     * Requires admin authentication.
+     */
     public function addPlayer(): void
     {
         try {
+
+            if (!$_SESSION('idAdminConnected') !== null) {
+                $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+                header("Location:/admin/adminPlayer");
+            }
+            
             // Retrieve form data
             $username = $_POST['username'] ?? null;
             $email = $_POST['email'] ?? null;
@@ -178,8 +233,18 @@ class AdministratorController
         }
     }
 
+    /**
+     * Deletes a player.
+     * Requires admin authentication.
+     *
+     * @param array $param Parameters for deleting a player.
+     */
     public function deletePlayer($param): void {
         try {
+            if (!$_SESSION('idAdminConnected') !== null) {
+                $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+                header("Location:/admin/adminPlayer");
+            }
             // Delete the player by ID
             $deleted = $this->mdPlayer->deletePlayerByID($param["id"]);
             if ($deleted) {
@@ -195,74 +260,5 @@ class AdministratorController
             header("Location:/admin/adminPlayer");
         }
     }
-
-//    public function updatePlayer(): void
-//    {
-//        try {
-//            // Vérifier si l'administrateur est connecté
-//            if (!isset($_SESSION['idAdminConnected'])) {
-//                $_SESSION['error'] = "Vous devez être connecté en tant qu'administrateur pour modifier un compte.";
-//                echo $this->twig->render($this->vues["login"], [
-//                    'error' => $_SESSION['error']
-//                ]);
-//                unset($_SESSION['error']);
-//                exit;
-//            }
-//
-//            // Récupérer et filtrer les données POST
-//            $newUsername = \usages\DataFilter::sanitizeString($_POST['username'] ?? null);
-//            $newEmail = \usages\DataFilter::validateEmail($_POST['email'] ?? null);
-//            $newPassword = \usages\DataFilter::sanitizeString($_POST['password'] ?? null);
-//
-//
-//            // Vérifier si des données à mettre à jour sont fournies
-//            if (empty($newUsername) && empty($newEmail) && empty($newPassword)) {
-//                $_SESSION['error'] = "Aucune donnée valide à mettre à jour.";
-//                echo $this->twig->render($this->vues["adminPlayer"], [
-//                    'error' => $_SESSION['error']
-//                ]);
-//                unset($_SESSION['error']);
-//                exit;
-//            }
-//
-//            // Construire les données à mettre à jour
-//            $dataToUpdate = [];
-//            if (!empty($newUsername)) {
-//                $dataToUpdate['username'] = $newUsername;
-//            }
-//            if (!empty($newEmail)) {
-//                $dataToUpdate['email'] = $newEmail;
-//            }
-//            if (!empty($newPassword)) {
-//                $dataToUpdate['password'] = password_hash($newPassword, PASSWORD_DEFAULT);
-//            }
-//
-//            // Charger le modèle et effectuer la mise à jour
-//            $modelPlayer = new \models\PlayerModel();
-//            $updated = $modelPlayer->updatePlayer((int) $playerId, $dataToUpdate);
-//
-//            // Gestion des retours de la mise à jour
-//            if ($updated) {
-//                $_SESSION['success'] = "Le compte du joueur a été mis à jour avec succès.";
-//            } else {
-//                $_SESSION['error'] = "Aucune modification n'a été effectuée.";
-//            }
-//
-//            echo $this->twig->render($this->vues["adminPlayer"], [
-//                'error' => $_SESSION['error'] ?? null,
-//                'success' => $_SESSION['success'] ?? null
-//            ]);
-//            unset($_SESSION['error'], $_SESSION['success']);
-//            exit;
-//        } catch (Exception $e) {
-//            // Gestion des exceptions
-//            $_SESSION['error'] = "Une erreur inattendue est survenue : " . $e->getMessage();
-//            echo $this->twig->render($this->vues["adminPlayer"], [
-//                'error' => $_SESSION['error']
-//            ]);
-//            unset($_SESSION['error']);
-//            exit;
-//        }
-//    }
 
 }
