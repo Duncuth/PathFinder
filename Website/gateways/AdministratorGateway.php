@@ -44,7 +44,7 @@ class AdministratorGateway
             $query,
             array(
                 ':username' => array($admin['username'], PDO::PARAM_STR),
-                ':password' => array(md5($admin['password']), PDO::PARAM_STR) // À améliorer avec password_hash
+                ':password' => array(password_hash($admin['password'], PASSWORD_DEFAULT), PDO::PARAM_STR) // À améliorer avec password_hash
             )
         );
     }
