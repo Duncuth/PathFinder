@@ -19,7 +19,7 @@
 
     <div class="d-flex justify-content-between">
       <h2 class="mb-0" style="font-size: 2.6rem;">Gestion des administrateurs</h2>
-      <button type="button" class="btn btn-success mr-auto d-inline" style="margin-top: 1.7rem;">
+      <button type="button" class="btn btn-success mr-auto d-inline" style="margin-top: 1.7rem;" data-bs-toggle="modal" data-bs-target="#modalAdministrators">
         <i class="bi bi-plus"></i> Ajouter un administrateur
       </button>
     </div>
@@ -33,11 +33,13 @@
         </tr>
       </thead>
       <tbody>
+      {% for admin in administrators %}
         <tr>
-            <td class="ps-4 fw-bold">1</td>
-            <td class="ps-4">Joueur1</td>
-            <td class="ps-4">joueur1@example.com</td>
+            <td class="ps-4 fw-bold">{{admin.id}}</td>
+            <td class="ps-4">{{admin.username}}</td>
+            <td class="ps-4">{{admin.email}}</td>
         </tr>
+      {% endfor %}
       </tbody>
     </table>
     <div class="container mt-3 d-flex justify-content-between">
@@ -46,5 +48,43 @@
         </div>
   </div>
 
+  <div class="modal fade" id="modalAdministrators">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- En-tête de la modal -->
+            <div class="modal-header text-dark">
+                <h5 class="modal-title fw-bold" id="modalAdministratorsLabel">Ajouter un administrateur</h5>
+            </div>
+            <!-- Formulaire -->
+            <form method="POST" action="/admin/administrators/add">
+                <div class="modal-body text-dark">
+                    <!-- Champ Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label text-dark">Email :</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Entrez l'email" required>
+                    </div>
+                    <!-- Champ Nom d'utilisateur -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label text-dark">Nom d'utilisateur :</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Entrez un nom d'utilisateur" required>
+                    </div>
+                    <!-- Champ Mot de passe -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label text-dark">Mot de passe :</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Entrez un mot de passe" required>
+                    </div>
+                </div>
+                <!-- Pied de la modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

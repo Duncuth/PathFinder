@@ -108,6 +108,11 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["settings"]);
     }
 
+    public function adminAdministrators() : void
+    {
+        echo $this->twig->render($this->vues["adminAdministrators"]);
+    }
+
     /**
      * Render the leaderboard view.
      *
@@ -120,6 +125,7 @@ class ControllerPlayer
             new PlayerStats(2, 2, 20, 10, 200),
             // Add more PlayerStats instances as needed
         ];
+        $result = (new PlayerModel())->getPlayerStatsSortedByScore();
         echo $this->twig->render($this->vues["leaderboard"], [
             "players" => $liste
         ]);

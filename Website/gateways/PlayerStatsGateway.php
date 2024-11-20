@@ -77,20 +77,21 @@ class PlayerStatsGateway
         return $this->con->getResults();
     }
 
-/**
- * Retrieves all player statistics sorted by total score in descending order.
- *
- * This method executes a SQL query to fetch all player statistics from the database,
- * sorts them by the total score in descending order, and returns the results.
- *
- * @return array An array of associative arrays containing player statistics.
- */
-public function getAllPlayerStatsSortedByScore(): array
-{
-    $query = "SELECT * FROM playerstats ORDER BY total_score DESC;";
-    $this->con->executeQuery($query);
-    return $this->con->getResults();
-}
+    /**
+     * Retrieves all player statistics sorted by total score in descending order.
+     *
+     * This method executes a SQL query to fetch all player statistics from the database,
+     * sorts them by the total score in descending order, and returns the results.
+     *
+     * @return array An array of associative arrays containing player statistics.
+     */
+    public function getAllPlayerStatsSortedByScore(): array
+    {
+        $query = "SELECT * FROM playerstats ORDER BY total_score DESC;";
+        $this->con->executeQuery($query);
+        $result = $this->con->getResults();
+        return $result[0];
+    }
 
     /**
      * Updates player statistics in the database.

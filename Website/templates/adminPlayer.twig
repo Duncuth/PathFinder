@@ -19,7 +19,7 @@
 
     <div class="d-flex justify-content-between">
     <h2 class="mb-0" style="font-size: 2.6rem;">Gestion des joueurs</h2>
-    <button type="button" class="btn btn-success mr-auto d-inline" style="margin-top: 1.7rem;"><i class="bi bi-plus"></i> Ajouter un joueur</button>
+    <button type="button" class="btn btn-success mr-auto d-inline" style="margin-top: 1.7rem;" data-bs-toggle="modal" data-bs-target="#modalPlayers"><i class="bi bi-plus"></i> Ajouter un joueur</button>
     </div>
 
     <table class="table table-striped table-white mt-2" style="max-height: 33rem; overflow-y: auto;">
@@ -55,5 +55,44 @@
     </div>
   </div>
 
+  <div class="modal fade" id="modalPlayers" tabindex="-1" aria-labelledby="modalPlayersLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- En-tête de la modal -->
+            <div class="modal-header text-dark">
+                <h5 class="modal-title fw-bold" id="modalPlayersLabel">Ajouter un joueur</h5>
+            </div>
+            <!-- Formulaire -->
+            <form method="POST" action="/admin/players/add">
+                <div class="modal-body text-dark">
+                    <!-- Champ Email -->
+                    <div class="mb-3">
+                        <label for="playerEmail" class="form-label text-dark">Email :</label>
+                        <input type="email" class="form-control" id="playerEmail" name="email" placeholder="Entrez l'email du joueur" required>
+                    </div>
+                    <!-- Champ Nom d'utilisateur -->
+                    <div class="mb-3">
+                        <label for="playerUsername" class="form-label text-dark">Nom d'utilisateur :</label>
+                        <input type="text" class="form-control" id="playerUsername" name="username" placeholder="Entrez un nom d'utilisateur" required>
+                    </div>
+                    <!-- Champ Mot de passe -->
+                    <div class="mb-3">
+                        <label for="playerPassword" class="form-label text-dark">Mot de passe :</label>
+                        <input type="password" class="form-control" id="playerPassword" name="password" placeholder="Entrez un mot de passe" required>
+                    </div>
+                </div>
+                <!-- Pied de la modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <!-- Scripts Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
