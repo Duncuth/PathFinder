@@ -126,7 +126,6 @@ class AdministratorModel
                 $admin['password']
             );
         }
-        var_dump($admins);
         return $admins;
     }
 }

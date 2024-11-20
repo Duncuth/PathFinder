@@ -90,9 +90,12 @@ class AdministratorController
         } else {
             $_SESSION["error"] = "Aucun admin trouvé.";
             echo $this->twig->render($this->vues["adminAdministrators"]);
-            unset($_SESSION["error"]);
         }
     } 
+
+    /*public function adminAdministrators() : void {
+        echo $this->twig->render($this->vues["adminAdministrators"]);
+    }*/
 
     public function adminGraph() : void {
         echo $this->twig->render($this->vues["adminGraph"]);

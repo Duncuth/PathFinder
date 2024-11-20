@@ -139,7 +139,7 @@ class AdministratorGateway
      */
     public function getAllAdministrators(): array
     {
-        $query = "SELECT * FROM admin;";
+        $query = "SELECT * FROM Admin;";
         $this->con->executeQuery($query);
         return $this->con->getResults();
     }
