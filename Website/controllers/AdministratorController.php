@@ -45,10 +45,11 @@ class AdministratorController
      * Requires admin authentication.
      */
     public function adminPlayer() : void {
-//        if (!$_SESSION('idAdminConnected') !== null) {
-//            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
-//            header("Location:/admin/adminPlayer");
-//        }
+
+        if (!isset($_SESSION['idAdminConnected'])) {
+            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+            header("Location:/login");
+        }
         $players = $this->mdPlayer->getAllPlayers();
         if ($players != null) {
             echo $this->twig->render($this->vues["adminPlayer"], ['players' => $players]);
@@ -92,6 +93,7 @@ class AdministratorController
             $_SESSION['idAdminConnected'] = $adminId;
             $_SESSION['username'] = $username;
             $_SESSION['success'] = "Connexion réussie. Bienvenue, " . $username . "!";
+            header("Location:/admin/adminPlayer");
         } catch (Exception $e) {
             // Handle general errors
             $_SESSION['error'] = "Une erreur inattendue est survenue.";
@@ -107,10 +109,10 @@ class AdministratorController
      * Requires admin authentication.
      */
     public function adminAdministrators() : void {
-//        if (!$_SESSION('idAdminConnected') !== null) {
-//            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
-//            header("Location:/admin/adminPlayer");
-//        }
+        if (!isset($_SESSION['idAdminConnected'])) {
+            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+            header("Location:/login");
+        }
         $admins = $this->mdAdministrator->getAllAdministrators();
         if ($admins != null) {
             echo $this->twig->render($this->vues["adminAdministrators"], ['admins' => $admins]);
@@ -125,9 +127,9 @@ class AdministratorController
      * Requires admin authentication.
      */
     public function adminGraph() : void {
-        if (!$_SESSION('idAdminConnected') !== null) {
+        if (!isset($_SESSION['idAdminConnected'])) {
             $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
-            header("Location:/admin/adminPlayer");
+            header("Location:/login");
         }
         echo $this->twig->render($this->vues["adminGraph"]);
     }
@@ -141,9 +143,9 @@ class AdministratorController
     function addAdministrator(array $param): void
     {
         try {
-            if (!$_SESSION('idAdminConnected') !== null) {
+            if (!isset($_SESSION['idAdminConnected'])) {
                 $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
-                header("Location:/admin/adminPlayer");
+                header("Location:/login");
             }
 
             $username = \usages\DataFilter::sanitizeString($_POST['username']);
@@ -165,10 +167,7 @@ class AdministratorController
                         ]);
                 } else {
                     $this->mdAdministrator->addAdministrator($Admin);
-                    echo $this->twig->render($this->vues["adminAdministrators"],
-                        [
-                            "success" => "Admin ajouté avec succès."
-                        ]);
+                    header("Location:/admin/adminAdministrators");
                 }
             }
         }
@@ -189,9 +188,9 @@ class AdministratorController
     {
         try {
 
-            if (!$_SESSION('idAdminConnected') !== null) {
+            if (!isset($_SESSION['idAdminConnected'])) {
                 $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
-                header("Location:/admin/adminPlayer");
+                header("Location:/login");
             }
             
             // Retrieve form data
@@ -219,9 +218,7 @@ class AdministratorController
                 'is_moderator' => false
             ];
             // Call the model to add the player
-            $modelPlayer = new \models\PlayerModel();
-            $modelPlayer->addPlayer($playerData);
-
+            $this->mdPlayer->addPlayer($playerData);
             // Redirect with success message
             $_SESSION['success'] = "Ajout d'un joueur réussie !";
             header("Location:/admin/adminPlayer");
@@ -240,9 +237,9 @@ class AdministratorController
      */
     public function deletePlayer(array $param): void {
         try {
-            if (!$_SESSION('idAdminConnected') !== null) {
+            if (!isset($_SESSION['idAdminConnected'])) {
                 $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
-                header("Location:/admin/adminPlayer");
+                header("Location:/login");
             }
             // Delete the player by ID
             $deleted = $this->mdPlayer->deletePlayerByID($param["id"]);

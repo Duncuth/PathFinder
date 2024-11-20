@@ -114,23 +114,27 @@ class AdministratorGateway
     /**
      * Verifies an administrator's credentials.
      *
-     * @param array $admin An associative array containing administrator credentials.
-     * @return int|null The ID of the administrator if credentials are valid, null otherwise.
+     * @param array $admin Contains 'username' and 'password' for verification.
+     * @return int|null Returns the administrator's ID if credentials are valid, null otherwise.
      */
-    public function verifyAdministrator($admin): ?int
+    public function verifyAdmin(array $admin): ?int
     {
-        $query = "SELECT Admin.id FROM Admin 
-                  WHERE username = :username AND password = :password;";
+        $query = "SELECT id, password FROM Admin WHERE username = :username;";
         $this->con->executeQuery(
             $query,
             array(
-                ':username' => array($admin['username'], PDO::PARAM_STR),
-                ':password' => array(password_hash($admin['password'], PASSWORD_DEFAULT), PDO::PARAM_STR)
+                ':username' => array($admin['username'], PDO::PARAM_STR)
             )
         );
+
         $results = $this->con->getResults();
-        return $results ? $results[0]['id'] : null;
+        if ($results && password_verify($admin['password'], $results[0]['password'])) {
+            return $results[0]['id']; // Return the admin ID if successful
+        }
+
+        return null;
     }
+
 
     /**
      * Retrieves all administrators from the database.

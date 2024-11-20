@@ -46,7 +46,7 @@ class AdministratorModel
      */
     public function verifyAdministrator(array $adminData): ?int
     {
-        return $this->gwAdministrator->verifyAdministrator($adminData);
+        return $this->gwAdministrator->verifyAdmin($adminData);
     }
 
     /**
