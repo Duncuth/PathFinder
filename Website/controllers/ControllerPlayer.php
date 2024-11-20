@@ -4,6 +4,7 @@ namespace controllers;
 
 use classes\PlayerStats;
 use Exception;
+use gateways\PlayerStatsGateway;
 use models\PlayerModel;
 
 /**
@@ -120,14 +121,16 @@ class ControllerPlayer
      */
     public function leaderboard() : void
     {
-        $liste = [
-            new PlayerStats(1, 1, 10, 5, 100),
-            new PlayerStats(2, 2, 20, 10, 200),
-            // Add more PlayerStats instances as needed
-        ];
-        $result = (new PlayerModel())->getPlayerStatsSortedByScore();
+        $playerStats = (new PlayerModel())->getPlayerStatsSortedByScore();
+        $stats=[];
+        foreach ($playerStats as $player) {
+            $stats[] = [
+                "username" => (new PlayerModel())->getPlayerByID($player->getPlayerId())->getUsername(),
+                "totalScore" => $player->getTotalScore()
+            ];
+        }
         echo $this->twig->render($this->vues["leaderboard"], [
-            "players" => $liste
+            "players" => $stats
         ]);
     }
 
@@ -182,27 +185,20 @@ class ControllerPlayer
     public function registerPlayer(): void
     {
         try {
-            // Retrieve form data
-            $username = $_POST['username'] ?? null;
-            $email = $_POST['email'] ?? null;
-            $password = $_POST['password'] ?? null;
+            // Retrieve and sanitize form data
+            $username = \usages\DataFilter::sanitizeString($_POST['username'] ?? '');
+            $email = \usages\DataFilter::validateEmail($_POST['email'] ?? '');
+            $password = \usages\DataFilter::sanitizeString($_POST['password'] ?? '');
 
             // Validate fields
             if (empty($username) || empty($email) || empty($password)) {
-                $_SESSION['error'] = "Tous les champs sont requis.";
+                $_SESSION['error'] = "All fields are required.";
                 echo $this->twig->render($this->vues["register"], [
                     'error' => $_SESSION['error']
                 ]);
                 return;
             }
 
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $_SESSION['error'] = "Adresse email invalide.";
-                echo $this->twig->render($this->vues["register"], [
-                    'error' => $_SESSION['error']
-                ]);
-                return;
-            }
 
             // Prepare data for the model
             $playerData = [
@@ -237,9 +233,9 @@ class ControllerPlayer
     public function loginPlayer(): void
     {
         try {
-            // Retrieve POST data
-            $username = $_POST['username'] ?? null;
-            $password = $_POST['password'] ?? null;
+            // Retrieve and sanitize POST data
+            $username = \usages\DataFilter::sanitizeString($_POST['username'] ?? '');
+            $password = \usages\DataFilter::sanitizeString($_POST['password'] ?? '');
 
             // Validate fields
             if (empty($username) || empty($password)) {
@@ -314,11 +310,13 @@ class ControllerPlayer
                 exit;
             }
 
-            $newUsername = $_POST['username'] ?? null;
-            $newEmail = $_POST['email'] ?? null;
-            $newPassword = $_POST['password'] ?? null;
+            // Retrieve and sanitize POST data
+            $newUsername = \usages\DataFilter::sanitizeString($_POST['username'] ?? null);
+            $newEmail = \usages\DataFilter::validateEmail($_POST['email'] ?? null);
+            $newPassword = \usages\DataFilter::sanitizeString($_POST['password'] ?? null);
             $playerId = $_SESSION['idPlayerConnected'];
 
+            // Check if any data is provided
             if (empty($newUsername) && empty($newEmail) && empty($newPassword)) {
                 $_SESSION['error'] = "Aucune donnée valide à mettre à jour.";
                 echo $this->twig->render($this->vues["account"], [
@@ -335,14 +333,6 @@ class ControllerPlayer
             }
 
             if (!empty($newEmail)) {
-                if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
-                    $_SESSION['error'] = "L'adresse email est invalide.";
-                    echo $this->twig->render($this->vues["account"], [
-                        'error' => $_SESSION['error']
-                    ]);
-                    unset($_SESSION['error'], $_SESSION['success']);
-                    exit;
-                }
                 $dataToUpdate['email'] = $newEmail;
             }
 

@@ -32,21 +32,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-            <td class="ps-4 fw-bold">1</td>
-            <td class="ps-4">Joueur1</td>
-            <td class="ps-4">joueur1@example.com</td>
-            <td>
-                <div class="d-flex gap-3"  style="height: 32px;">
-                    <button class="btn btn-primary btn-sm">
-                        <i class="bi bi-pencil"></i> Modifier
-                    </button>
-                    <button class="btn btn-danger btn-sm">
-                        <i class="bi bi-trash"></i> Supprimer
-                    </button>
-                </div>
-            </td>
-        </tr>
+      {% for player in players %}
+          <tr>
+              <td class="ps-4 fw-bold">{{ player.id }}</td>
+              <td class="ps-4">{{ player.username }}</td>
+              <td class="ps-4">{{ player.email }}</td>
+              <td>
+                  <div class="d-flex gap-3"  style="height: 32px;">
+                      <button class="btn btn-primary btn-sm">
+                          <i class="bi bi-pencil"></i> Modifier
+                      </button>
+                      <button class="btn btn-danger btn-sm">
+                          <i class="bi bi-trash"></i> Supprimer
+                      </button>
+                  </div>
+              </td>
+          </tr>
+      {% endfor %}
       </tbody>
     </table>
     <div class="container mt-3 d-flex justify-content-between">

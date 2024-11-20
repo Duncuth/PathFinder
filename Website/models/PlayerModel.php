@@ -92,17 +92,6 @@ class PlayerModel
         return $this->gwPlayer->updatePlayer($id, $playerData);
     }
 
-    /**
-     * Update the password of a player.
-     *
-     * @param int $id The ID of the player to update.
-     * @param string $password The new password for the player.
-     * @return void
-     */
-    public function updatePlayerPassword($id, $password)
-    {
-        $this->gwPlayer->updatePlayerPassword($id, $password);
-    }
 
     /**
      * Delete a player by ID.
@@ -216,6 +205,37 @@ class PlayerModel
         } catch (Exception $e) {
             return false;
         }
+
+    }
+
+    /**
+     * Retrieve all players.
+     *
+     * Fetches all players from the database using the PlayerGateway and returns them as an array of Player objects.
+     *
+     * @return Player[]|null An array of Player objects if data is found, null otherwise.
+     */
+    public function getAllPlayers(): ?array
+    {
+        // Fetch raw data from the Gateway
+        $playersData = $this->gwPlayer->getPlayers();
+        // If no data is found, return null
+        if (empty($playersData)) {
+            return null;
+        }
+        // Transform each database record into a Player object
+        $players = [];
+        foreach ($playersData as $playerData) {
+                $players[] = new Player(
+                    $playerData['id'],
+                    $playerData['username'],
+                    $playerData['email'],
+                    $playerData['password'],
+                    $playerData['avatar_url'],
+                    $playerData['is_moderator']
+                );
+        }
+        return $players;
     }
 
 }
