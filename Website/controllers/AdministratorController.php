@@ -148,18 +148,12 @@ class AdministratorController
             // Validate fields
             if (empty($username) || empty($email) || empty($password)) {
                 $_SESSION['error'] = "Tous les champs sont requis.";
-                echo $this->twig->render($this->vues["adminPlayer"], [
-                    'error' => $_SESSION['error']
-                ]);
-                return;
+                header("Location:/admin/adminPlayer");
             }
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['error'] = "Adresse email invalide.";
-                echo $this->twig->render($this->vues["adminPlayer"], [
-                    'error' => $_SESSION['error']
-                ]);
-                return;
+                header("Location:/admin/adminPlayer");
             }
 
             // Prepare data for the model
@@ -175,19 +169,12 @@ class AdministratorController
             $modelPlayer->addPlayer($playerData);
 
             // Redirect with success message
-            $_SESSION['success'] = "Ajour d'un joueur réussie !";
-            echo $this->twig->render($this->vues["adminAdministrators"], [
-                'success' => $_SESSION['success']
-            ]);
+            $_SESSION['success'] = "Ajout d'un joueur réussie !";
+            header("Location:/admin/adminPlayer");
 
         } catch (Exception $e) {
             $_SESSION['error'] = "Une erreur est survenue lors de l'ajout du joueur.";
-            echo $this->twig->render($this->vues["adminAdministrators"], [
-                'error' => $_SESSION['error']
-            ]);
+            header("Location:/admin/adminPlayer");
         }
-
     }
-
-
 }
