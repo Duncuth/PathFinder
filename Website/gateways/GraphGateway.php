@@ -112,4 +112,5 @@ class GraphGateway
         $query = "DELETE FROM graph WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
     }
+
 }

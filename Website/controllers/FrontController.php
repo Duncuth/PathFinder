@@ -24,6 +24,9 @@ class FrontController
             $router->map('POST', '/login/[a:action]', 'ControllerPlayer');
             $router->map('GET|POST', '/admin/[a:action]', 'AdministratorController');
             $router->map('POST', '/admin/administrators/[a:action]', 'AdministratorController');
+            $router->map('POST', '/admin/players/[a:action]', 'AdministratorController');
+            $router->map('GET|PUT|POST', '/admin/players/[a:action]/[i:id]', 'AdministratorController');
+
             // Match the current request
             $match = $router->match();
 
