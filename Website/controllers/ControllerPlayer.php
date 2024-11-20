@@ -164,6 +164,9 @@ class ControllerPlayer
         if ($_SESSION["idPlayerConnected"] != null) {
             $mdPlayer = new PlayerModel();
             $player = $mdPlayer->getPlayerByID($_SESSION["idPlayerConnected"]);
+            if (!isset($_SESSION['error'])) {
+                $_SESSION['error'] = '';
+            }
             echo $this->twig->render(
                 $this->vues["account"],
                 [
@@ -270,6 +273,9 @@ class ControllerPlayer
             // Login successful: Store user in session
             if($modelPlayer->isModerator($playerId)){
                 $_SESSION['isModerator'] = true;
+            }
+            if (!isset($_SESSION['isModerator'])) {
+                $_SESSION['isModerator'] = false;
             }
             $_SESSION['idPlayerConnected'] = $playerId;
             $_SESSION['username'] = $username;
