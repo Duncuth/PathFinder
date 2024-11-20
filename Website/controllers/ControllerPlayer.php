@@ -97,6 +97,11 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["settings"]);
     }
 
+    public function adminAdministrators() : void
+    {
+        echo $this->twig->render($this->vues["adminAdministrators"]);
+    }
+
     /**
      * Render the leaderboard view.
      *
