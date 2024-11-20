@@ -186,6 +186,10 @@ class PlayerModel
         $this->gwPlayerStats->deletePlayerStatsByPlayerId($playerId);
     }
 
+    public function getHistoryByPlayerId($playerId)
+    {
+        return $this->gwPlayer->getHistoryByPlayerId($playerId);
+    }
 
     /**
      * Check if a player is a moderator.
@@ -237,5 +241,4 @@ class PlayerModel
         }
         return $players;
     }
-
 }

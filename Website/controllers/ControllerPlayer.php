@@ -86,6 +86,10 @@ class ControllerPlayer
      */
     public function graphManagement() : void
     {
+        if (!isset($_SESSION['idPlayerConnected'])) {
+            $_SESSION['error'] = "Vous devez être connecté pour accéder à cette page.";
+            header("Location:/loginPlayer");
+        }
         echo $this->twig->render($this->vues["graphManagement"]);
     }
 
@@ -107,11 +111,6 @@ class ControllerPlayer
     public function settings() : void
     {
         echo $this->twig->render($this->vues["settings"]);
-    }
-
-    public function adminAdministrators() : void
-    {
-        echo $this->twig->render($this->vues["adminAdministrators"]);
     }
 
     /**
@@ -154,6 +153,11 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["gamemode"]);
     }
 
+    /**
+     * Render the game view with static graph data.
+     *
+     * @return void
+     */
     public function game() : void
     {
         $graphs = [
@@ -187,10 +191,28 @@ class ControllerPlayer
         if ($_SESSION["idPlayerConnected"] != null) {
             $mdPlayer = new PlayerModel();
             $player = $mdPlayer->getPlayerByID($_SESSION["idPlayerConnected"]);
+            $historyModel = (new PlayerModel())->getHistoryByPlayerId($_SESSION["idPlayerConnected"]);
+
+            $history =  [];
+            foreach ($historyModel as $historyItem) {
+                if ($historyItem["opponent_id"] == null) {
+                    $opponent_username = $historyItem["opponent_name"];
+                } else {
+                    $opponent_username = (new PlayerModel())->getPlayerByID($historyItem["opponent_id"])->getUsername();
+                }
+
+                $history[] = [
+                    "player_username" => (new PlayerModel())->getPlayerByID($historyItem["player_id"])->getUsername(),
+                    "opponent_username" => $opponent_username,
+                    "game" => $historyItem
+                ];
+            }
+
             echo $this->twig->render(
                 $this->vues["account"],
                 [
                     'player' => $player,
+                    'history' => $history,
                     'error' => $_SESSION["error"],
                 ]
             );
@@ -221,7 +243,6 @@ class ControllerPlayer
                 ]);
                 return;
             }
-
 
             // Prepare data for the model
             $playerData = [

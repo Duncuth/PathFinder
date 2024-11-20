@@ -102,6 +102,13 @@ class PlayerGateway
         return $results;
     }
 
+    public function getHistoryByPlayerID(int $id): array
+    {
+        $query = "SELECT * FROM Game WHERE player_id = :id OR opponent_id = :id ORDER BY created_at DESC;";
+        $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
+        $results = $this->con->getResults();
+        return $results;
+    }
     /**
      * Updates a player's details in the database.
      *
