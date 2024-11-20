@@ -38,8 +38,6 @@ class ControllerPlayer
         } catch (Exception $e) {
             // Handle exception
         }
-
-
     }
 
     /**
@@ -112,7 +110,7 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["leaderboard"], [
             "players" => $liste
         ]);
-    }   
+    }
 
     /**
      * Render the joinGame view.
@@ -276,8 +274,11 @@ class ControllerPlayer
         }
     }
 
-
-
+    /**
+     * Update the account information of a player.
+     *
+     * @return void
+     */
     public function updateAccount(): void
     {
         try {
@@ -363,10 +364,14 @@ class ControllerPlayer
         }
     }
 
+    /**
+     * Log out the current player.
+     *
+     * @return void
+     */
     public function logout(): void
     {
         try {
-
             session_unset();
             session_destroy();
 
@@ -385,7 +390,4 @@ class ControllerPlayer
             exit;
         }
     }
-
-
-
 }
