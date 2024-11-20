@@ -363,5 +363,29 @@ class ControllerPlayer
         }
     }
 
+    public function logout(): void
+    {
+        try {
+
+            session_unset();
+            session_destroy();
+
+            // Rediriger l'utilisateur vers la page de connexion
+            $_SESSION['success'] = "Vous avez été déconnecté avec succès.";
+            echo $this->twig->render($this->vues["login"], [
+                'success' => $_SESSION['success']
+            ]);
+            exit;
+        } catch (Exception $e) {
+            // Gestion des erreurs
+            $_SESSION['error'] = "Une erreur est survenue lors de la déconnexion.";
+            echo $this->twig->render($this->vues["login"], [
+                'error' => $_SESSION['error']
+            ]);
+            exit;
+        }
+    }
+
+
 
 }

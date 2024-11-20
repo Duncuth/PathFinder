@@ -142,8 +142,6 @@ class PlayerGateway
 
         // Construire la requête SQL finale
         $query = "UPDATE Player SET " . implode(", ", $fields) . " WHERE id = :id;";
-        var_dump($query);
-        var_dump($params);
         // Exécuter la requête
         return $this->con->executeQuery($query, $params);
     }
