@@ -81,7 +81,57 @@ class AdministratorController
         }
     }
 
-    
+    public function addPlayer(): void
+    {
+        try {
+            // Retrieve form data
+            $username = $_POST['username'] ?? null;
+            $email = $_POST['email'] ?? null;
+            $password = $_POST['password'] ?? null;
+
+            // Validate fields
+            if (empty($username) || empty($email) || empty($password)) {
+                $_SESSION['error'] = "Tous les champs sont requis.";
+                echo $this->twig->render($this->vues["adminPlayer"], [
+                    'error' => $_SESSION['error']
+                ]);
+                return;
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['error'] = "Adresse email invalide.";
+                echo $this->twig->render($this->vues["adminPlayer"], [
+                    'error' => $_SESSION['error']
+                ]);
+                return;
+            }
+
+            // Prepare data for the model
+            $playerData = [
+                'username' => $username,
+                'email' => $email,
+                'password' => $password, // Hashing handled in the model
+                'avatar_url' => null,
+                'is_moderator' => false
+            ];
+            // Call the model to add the player
+            $modelPlayer = new \models\PlayerModel();
+            $modelPlayer->addPlayer($playerData);
+
+            // Redirect with success message
+            $_SESSION['success'] = "Ajour d'un joueur réussie !";
+            echo $this->twig->render($this->vues["adminAdministrators"], [
+                'success' => $_SESSION['success']
+            ]);
+
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Une erreur est survenue lors de l'ajout du joueur.";
+            echo $this->twig->render($this->vues["adminAdministrators"], [
+                'error' => $_SESSION['error']
+            ]);
+        }
+
+    }
 
 
 }
