@@ -81,8 +81,8 @@
                 <h5 class="mb-3 fw-bold">Historique des parties</h5>
                 <div class="history-list" style="max-height: 400px; overflow-y: auto;">
                     <ul class="list-group">
-                        {% for partie in historique %}
-                            <li class="list-group-item">{{ partie }}</li>
+                        {% for historyItem in history %}
+                            <li class="list-group-item">{{ historyItem.player_username }} (score : {{ historyItem.game.player_score }} points) - {{ historyItem.opponent_username }} (score : {{ historyItem.game.opponent_score }} points)</li>
                         {% endfor %}
                     </ul>
                 </div>
