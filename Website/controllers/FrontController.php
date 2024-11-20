@@ -22,7 +22,8 @@ class FrontController
             $router->map('GET', '/error', 'ControllerPlayer#error');  // Route for the error page
             $router->map('GET|POST', '/[a:action]', 'ControllerPlayer'); // Route for the deconnexion page
             $router->map('POST', '/login/[a:action]', 'ControllerPlayer');
-            $router->map('GET|POST', '/admin/[a:action]', 'ControllerAdmin');
+            $router->map('GET|POST', '/admin/[a:action]', 'AdministratorController');
+            $router->map('POST', '/admin/administrators/[a:action]', 'AdministratorController');
             // Match the current request
             $match = $router->match();
 

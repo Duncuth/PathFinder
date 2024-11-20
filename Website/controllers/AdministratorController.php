@@ -18,29 +18,32 @@ class AdministratorController
         global $vues, $twig;
         session_start();
         try {
+            $this->twig = $twig;
+            $this->vues = $vues;
 
-            if ($_SESSION["idAdminConnected"] != null) {
-                $this->twig = $twig;
-                $this->vues = $vues;
+            $this->mdAdministrator = new AdministratorModel();
 
-                $this->mdAdministrator = new AdministratorModel();
+            
 
-                $administrators = $this->mdAdministrator->getAdministrators();
 
-                echo $twig->render($vues["adminAdministrators"], [
-                    'administrators' => $administrators,
-                    'error' => $_SESSION["error"],
-                ]);
-                $_SESSION["error"] = null;
-            } else {
-                header("Location:/loginAdmin");
-            }
         } catch (PDOException $e) {
             // Gérez les erreurs PDO ici
         } catch (Exception $e2) {
             // Gérez d'autres erreurs ici
         }
     }
+
+    public function adminPlayer() : void {
+        echo $this->twig->render($this->vues["adminPlayer"]);
+    }
+
+    public function adminAdministrators() : void {
+        echo $this->twig->render($this->vues["adminAdministrators"]);
+    } 
+
+    public function adminGraph() : void {
+        echo $this->twig->render($this->vues["adminGraph"]);
+    }   
 
     function addAdministrator($param)
     {
