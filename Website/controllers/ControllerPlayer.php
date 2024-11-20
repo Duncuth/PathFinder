@@ -154,6 +154,29 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["gamemode"]);
     }
 
+    public function game() : void
+    {
+        $graphs = [
+            [
+                'id' => 1,
+                'name' => 'Graphe Statique 1',
+                'vertex_count' => 5,
+                'edge_count' => 7,
+                'status' => 'active',
+            ],
+            [
+                'id' => 2,
+                'name' => 'Graphe Statique 2',
+                'vertex_count' => 8,
+                'edge_count' => 10,
+                'status' => 'inactive',
+            ],
+        ];
+
+        // Render the Twig template with static graph data
+        echo $this->twig->render($this->vues["gameAsGuest"], ['data' => $graphs]);
+    }
+
     /**
      * Render the account view.
      *
