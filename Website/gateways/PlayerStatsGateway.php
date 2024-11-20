@@ -87,10 +87,10 @@ class PlayerStatsGateway
      */
     public function getAllPlayerStatsSortedByScore(): array
     {
-        $query = "SELECT * FROM playerstats ORDER BY total_score DESC;";
+        $query = "SELECT * FROM PlayerStats ORDER BY total_score DESC;";
         $this->con->executeQuery($query);
         $result = $this->con->getResults();
-        return $result[0];
+        return $result;
     }
 
     /**

@@ -38,7 +38,7 @@ class PlayerGateway
      */
     public function addPlayer(array $player): void
     {
-        $query = "INSERT INTO Player (username, email, password, avatar_url, is_moderator) 
+        $query = "INSERT INTO Player (username, email, password, avatar_url, is_moderator)
                   VALUES (:username, :email, :password, :avatar_url, :is_moderator);";
 
         $this->con->executeQuery(
@@ -81,6 +81,7 @@ class PlayerGateway
         $query = "SELECT * FROM Player WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
         $results = $this->con->getResults();
+
         if ($results == NULL) {
             return false;
         }

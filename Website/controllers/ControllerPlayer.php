@@ -4,6 +4,7 @@ namespace controllers;
 
 use classes\PlayerStats;
 use Exception;
+use gateways\PlayerStatsGateway;
 use models\PlayerModel;
 
 /**
@@ -120,14 +121,16 @@ class ControllerPlayer
      */
     public function leaderboard() : void
     {
-        $liste = [
-            new PlayerStats(1, 1, 10, 5, 100),
-            new PlayerStats(2, 2, 20, 10, 200),
-            // Add more PlayerStats instances as needed
-        ];
-        $result = (new PlayerModel())->getPlayerStatsSortedByScore();
+        $playerStats = (new PlayerModel())->getPlayerStatsSortedByScore();
+        $stats=[];
+        foreach ($playerStats as $player) {
+            $stats[] = [
+                "username" => (new PlayerModel())->getPlayerByID($player->getPlayerId())->getUsername(),
+                "totalScore" => $player->getTotalScore()
+            ];
+        }
         echo $this->twig->render($this->vues["leaderboard"], [
-            "players" => $liste
+            "players" => $stats
         ]);
     }
 
