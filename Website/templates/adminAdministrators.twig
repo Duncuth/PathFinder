@@ -49,20 +49,15 @@
   </div>
 
   <div class="modal fade" id="modalAdministrators">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <!-- En-tête de la modal -->
             <div class="modal-header text-dark">
                 <h5 class="modal-title fw-bold" id="modalAdministratorsLabel">Ajouter un administrateur</h5>
             </div>
             <!-- Formulaire -->
-            <form method="POST" action="/admin/administrators/add">
+            <form method="POST" action="/admin/administrators/addAdministrator">
                 <div class="modal-body text-dark">
-                    <!-- Champ Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label text-dark">Email :</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Entrez l'email" required>
-                    </div>
                     <!-- Champ Nom d'utilisateur -->
                     <div class="mb-3">
                         <label for="username" class="form-label text-dark">Nom d'utilisateur :</label>

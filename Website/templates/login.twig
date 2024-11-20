@@ -48,7 +48,46 @@
         <a href="/register">
             <button type="button" class="btn btn-outline-info mt-4 w-100">Créer un compte</button>
         </a>
+
+        <button type="button" class="btn btn-secondary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#modalAdminConnection">Administrateurs</button>
+
     </div>
+
+    <div class="modal fade" id="modalAdminConnection" tabindex="-1" aria-labelledby="modalAdminLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- En-tête de la modal -->
+                <div class="modal-header text-dark">
+                    <h5 class="modal-title fw-bold" id="modalAdminLabel">Connexion Administrateur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <!-- Formulaire -->
+                <form method="POST" action="/loginAdmin">
+                    <div class="modal-body text-dark">
+                        <!-- Champ pseudo -->
+                        <div class="mb-4">
+                            <label for="pseudo" class="form-label fw-bold">Pseudo</label>
+                            <input type="text" class="form-control" id="pseudo" name="username" placeholder="Entrez votre pseudo" required>
+                        </div>
+                        <!-- Champ mot de passe -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-bold">Mot de passe</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+                        </div>
+                    </div>
+                    <!-- Boutons -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+  <!-- Scripts Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </div>
 </body>
 </html>

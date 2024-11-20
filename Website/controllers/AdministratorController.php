@@ -47,25 +47,19 @@ class AdministratorController
 
     function addAdministrator($param)
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $_SESSION["error"] = "Méthode non autorisée.";
-            header("Location:/admin/administrators");
-        } else {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+        try {
+        $username = \usages\DataFilter::sanitizeString($_POST['username']);
+        $password = $_POST['password'];
 
-            $username = trim($_POST['username']);
-            $email = trim($_POST['email']);
-            $password = trim($_POST['password']);
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
 
-            if (!isset($username) || !isset($email) || !isset($password) || empty($username) || empty($email) || empty($password)) {
+            if (!isset($username) || !isset($password) || empty($username) || empty($password)) {
                 $_SESSION["error"] = "Veuillez remplir tous les champs.";
-                header("Location:/admin/administrators");
+                header("Location:/admin/adminAdministrators");
             } else {
                 $Admin = [
                     'username' => $username,
-                    'email' => $email,
                     'password' => $password,
                 ];
                 if ($this->mdAdministrator->verifyAdministratorByName($Admin) != null) {
@@ -73,9 +67,17 @@ class AdministratorController
                     header("Location:/admin/administrators");
                 } else {
                     $this->mdAdministrator->addAdministrator($Admin);
-                    header("Location:/admin/administrators");
+                    header("Location:/admin/adminAdministrators");
                 }
             }
+        }
+        catch (Exception $e) {
+            $_SESSION["error"] = "Erreur lors de l'ajout de l'admin.";
+            echo $this->twig->render($this->vues["adminAdministrators"],
+                [
+                    "error" => $_SESSION["error"]
+                ]);
+
         }
     }
 
