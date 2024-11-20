@@ -107,10 +107,10 @@ class AdministratorController
      * Requires admin authentication.
      */
     public function adminAdministrators() : void {
-        if (!$_SESSION('idAdminConnected') !== null) {
-            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
-            header("Location:/admin/adminPlayer");
-        }
+//        if (!$_SESSION('idAdminConnected') !== null) {
+//            $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
+//            header("Location:/admin/adminPlayer");
+//        }
         $admins = $this->mdAdministrator->getAllAdministrators();
         if ($admins != null) {
             echo $this->twig->render($this->vues["adminAdministrators"], ['admins' => $admins]);
