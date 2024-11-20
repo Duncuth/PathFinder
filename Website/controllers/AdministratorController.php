@@ -208,4 +208,74 @@ class AdministratorController
             exit;
         }
     }
+
+//    public function updatePlayer(): void
+//    {
+//        try {
+//            // Vérifier si l'administrateur est connecté
+//            if (!isset($_SESSION['idAdminConnected'])) {
+//                $_SESSION['error'] = "Vous devez être connecté en tant qu'administrateur pour modifier un compte.";
+//                echo $this->twig->render($this->vues["login"], [
+//                    'error' => $_SESSION['error']
+//                ]);
+//                unset($_SESSION['error']);
+//                exit;
+//            }
+//
+//            // Récupérer et filtrer les données POST
+//            $newUsername = \usages\DataFilter::sanitizeString($_POST['username'] ?? null);
+//            $newEmail = \usages\DataFilter::validateEmail($_POST['email'] ?? null);
+//            $newPassword = \usages\DataFilter::sanitizeString($_POST['password'] ?? null);
+//
+//
+//            // Vérifier si des données à mettre à jour sont fournies
+//            if (empty($newUsername) && empty($newEmail) && empty($newPassword)) {
+//                $_SESSION['error'] = "Aucune donnée valide à mettre à jour.";
+//                echo $this->twig->render($this->vues["adminPlayer"], [
+//                    'error' => $_SESSION['error']
+//                ]);
+//                unset($_SESSION['error']);
+//                exit;
+//            }
+//
+//            // Construire les données à mettre à jour
+//            $dataToUpdate = [];
+//            if (!empty($newUsername)) {
+//                $dataToUpdate['username'] = $newUsername;
+//            }
+//            if (!empty($newEmail)) {
+//                $dataToUpdate['email'] = $newEmail;
+//            }
+//            if (!empty($newPassword)) {
+//                $dataToUpdate['password'] = password_hash($newPassword, PASSWORD_DEFAULT);
+//            }
+//
+//            // Charger le modèle et effectuer la mise à jour
+//            $modelPlayer = new \models\PlayerModel();
+//            $updated = $modelPlayer->updatePlayer((int) $playerId, $dataToUpdate);
+//
+//            // Gestion des retours de la mise à jour
+//            if ($updated) {
+//                $_SESSION['success'] = "Le compte du joueur a été mis à jour avec succès.";
+//            } else {
+//                $_SESSION['error'] = "Aucune modification n'a été effectuée.";
+//            }
+//
+//            echo $this->twig->render($this->vues["adminPlayer"], [
+//                'error' => $_SESSION['error'] ?? null,
+//                'success' => $_SESSION['success'] ?? null
+//            ]);
+//            unset($_SESSION['error'], $_SESSION['success']);
+//            exit;
+//        } catch (Exception $e) {
+//            // Gestion des exceptions
+//            $_SESSION['error'] = "Une erreur inattendue est survenue : " . $e->getMessage();
+//            echo $this->twig->render($this->vues["adminPlayer"], [
+//                'error' => $_SESSION['error']
+//            ]);
+//            unset($_SESSION['error']);
+//            exit;
+//        }
+//    }
+
 }
