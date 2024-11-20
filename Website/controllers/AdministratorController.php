@@ -3,13 +3,14 @@
 namespace controllers;
 
 use \Exception;
+use models\PlayerModel;
 use \PDOException;
 use models\AdministratorModel;
 
 class AdministratorController
 {
     private $mdAdministrator;
-
+    private $mdPlayer;
     private $twig;
     private $vues;
 
@@ -22,19 +23,64 @@ class AdministratorController
             $this->vues = $vues;
 
             $this->mdAdministrator = new AdministratorModel();
-
+            $this->mdPlayer = new PlayerModel();
             
 
 
         } catch (PDOException $e) {
-            // Gérez les erreurs PDO ici
         } catch (Exception $e2) {
             // Gérez d'autres erreurs ici
         }
     }
 
     public function adminPlayer() : void {
-        echo $this->twig->render($this->vues["adminPlayer"]);
+        $players = $this->mdPlayer->getAllPlayers();
+        if ($players != null) {
+            echo $this->twig->render($this->vues["adminPlayer"], ['players' => $players]);
+        } else {
+            $_SESSION["error"] = "Aucun joueur trouvé.";
+            echo $this->twig->render($this->vues["adminPlayer"]);
+            unset($_SESSION["error"]);
+        }
+    }
+
+    public function loginAdmin() : void {
+        try {
+            $username = \usages\DataFilter::sanitizeString($_POST['username'] ?? '');
+            $password = \usages\DataFilter::sanitizeString($_POST['password'] ?? '');
+
+            // Validate fields
+            if (empty($username) || empty($password)) {
+                $_SESSION['error'] = "Tous les champs sont requis.";
+                echo $this->twig->render($this->vues["login"], [
+                    'error' => $_SESSION['error']
+                ]);
+                unset($_SESSION['error']);
+                return;
+            }
+            $adminData = [
+                'username' => $username,
+                'password' => $password
+            ];
+            $adminId = $this->mdAdministrator->verifyAdministrator($adminData);
+            if ($adminId == null) {
+                $_SESSION['error'] = "Nom d'utilisateur ou mot de passe incorrect.";
+                echo $this->twig->render($this->vues["login"], [
+                    'error' => $_SESSION['error']
+                ]);
+                unset($_SESSION['error']);
+            }
+            $_SESSION['idAdminConnected'] = $adminId;
+            $_SESSION['username'] = $username;
+            $_SESSION['success'] = "Connexion réussie. Bienvenue, " . $username . "!";
+        } catch (Exception $e) {
+            // Handle general errors
+            $_SESSION['error'] = "Une erreur inattendue est survenue.";
+            echo $this->twig->render($this->vues["login"], [
+                'error' => $_SESSION['error']
+            ]);
+            unset($_SESSION['error']);
+        }
     }
 
     public function adminAdministrators() : void {

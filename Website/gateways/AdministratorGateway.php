@@ -119,13 +119,13 @@ class AdministratorGateway
      */
     public function verifyAdministrator($admin): ?int
     {
-        $query = "SELECT admin.id FROM admin 
+        $query = "SELECT Admin.id FROM Admin 
                   WHERE username = :username AND password = :password;";
         $this->con->executeQuery(
             $query,
             array(
                 ':username' => array($admin['username'], PDO::PARAM_STR),
-                ':password' => array(md5($admin['password']), PDO::PARAM_STR) // À améliorer avec password_verify
+                ':password' => array(password_hash($admin['password'], PASSWORD_DEFAULT), PDO::PARAM_STR)
             )
         );
         $results = $this->con->getResults();

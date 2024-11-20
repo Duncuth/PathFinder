@@ -44,7 +44,7 @@ class AdministratorModel
      * @param array $adminData The credentials of the administrator to verify.
      * @return int|null The ID of the administrator if verified, null otherwise.
      */
-    public function verifyAdministrator($adminData): ?int
+    public function verifyAdministrator(array $adminData): ?int
     {
         return $this->gwAdministrator->verifyAdministrator($adminData);
     }
