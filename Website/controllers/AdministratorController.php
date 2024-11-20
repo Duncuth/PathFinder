@@ -177,4 +177,35 @@ class AdministratorController
             header("Location:/admin/adminPlayer");
         }
     }
+
+    public function deletePlayer() {
+        try {
+            // Load the PlayerModel
+            $modelPlayer = new \models\PlayerModel();
+
+            // Delete the player by ID
+            $deleted = $modelPlayer->deletePlayerById($playerId);
+
+            if ($deleted) {
+                $_SESSION['success'] = "Votre compte a été supprimé avec succès.";
+                header("Location:/admin/adminPlayer");
+                unset($_SESSION['success']);
+                exit;
+            } else {
+                $_SESSION['error'] = "Une erreur est survenue lors de la suppression de votre compte.";
+                echo $this->twig->render($this->vues["account"], [
+                    'error' => $_SESSION['error']
+                ]);
+                unset($_SESSION['error']);
+                exit;
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Une erreur inattendue est survenue : " . $e->getMessage();
+            echo $this->twig->render($this->vues["account"], [
+                'error' => $_SESSION['error']
+            ]);
+            unset($_SESSION['error']);
+            exit;
+        }
+    }
 }

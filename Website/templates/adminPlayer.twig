@@ -39,7 +39,7 @@
               <td class="ps-4">{{ player.email }}</td>
               <td>
                   <div class="d-flex gap-3"  style="height: 32px;">
-                      <button class="btn btn-primary btn-sm">
+                      <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalModifPlayers">
                           <i class="bi bi-pencil"></i> Modifier
                       </button>
                       <button class="btn btn-danger btn-sm">
@@ -81,6 +81,46 @@
                     <div class="mb-3">
                         <label for="playerPassword" class="form-label text-dark">Mot de passe :</label>
                         <input type="password" class="form-control" id="playerPassword" name="password" placeholder="Entrez un mot de passe" required>
+                    </div>
+                </div>
+                <!-- Pied de la modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalModifPlayers">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!-- En-tête de la modal -->
+            <div class="modal-header text-dark">
+                <h5 class="modal-title fw-bold" id="modalModifPlayerLabel">Modifier le joueur</h5>
+            </div>
+            <!-- Formulaire -->
+            <form method="POST" action="/admin/players/updatePlayer">
+                <div class="modal-body text-dark">
+                    <!-- Champ Email -->
+                    <div class="mb-3">
+                        <label for="playerEmail" class="form-label text-dark">Email :</label>
+                        <input type="email" class="form-control" id="playerEmail" name="email" placeholder="Entrez l'email du joueur" required>
+                    </div>
+                    <!-- Champ Nom d'utilisateur -->
+                    <div class="mb-3">
+                        <label for="playerUsername" class="form-label text-dark">Nom d'utilisateur :</label>
+                        <input type="text" class="form-control" id="playerUsername" name="username" placeholder="Entrez un nom d'utilisateur" required>
+                    </div>
+                    <!-- Champ Mot de passe -->
+                    <div class="mb-3">
+                        <label for="playerPassword" class="form-label text-dark">Mot de passe :</label>
+                        <input type="password" class="form-control" id="playerPassword" name="password" placeholder="Entrez un mot de passe" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" class="form-check-input" id="isModerator" name="isModerator">
+                        <label for="isModerator" class="form-check-label text-dark">Moderateur</label>
                     </div>
                 </div>
                 <!-- Pied de la modal -->
