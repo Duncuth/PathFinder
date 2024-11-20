@@ -107,6 +107,7 @@ class ControllerPlayer
             new PlayerStats(2, 2, 20, 10, 200),
             // Add more PlayerStats instances as needed
         ];
+        $result = (new PlayerModel())->getPlayerStatsSortedByScore();
         echo $this->twig->render($this->vues["leaderboard"], [
             "players" => $liste
         ]);
