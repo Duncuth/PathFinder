@@ -85,11 +85,11 @@ class PlayerModel
      *
      * @param int $id The ID of the player to update.
      * @param array $playerData The new data for the player.
-     * @return void
+     * @return bool
      */
     public function updatePlayer($id, $playerData)
     {
-        $this->gwPlayer->updatePlayer($id, $playerData);
+        return $this->gwPlayer->updatePlayer($id, $playerData);
     }
 
     /**

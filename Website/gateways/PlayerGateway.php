@@ -12,6 +12,9 @@ use \PDO;
  */
 class PlayerGateway
 {
+    /**
+     * @var Connection $con The database connection instance.
+     */
     private $con;
 
     /**
@@ -31,24 +34,24 @@ class PlayerGateway
      * Adds a new player to the database.
      *
      * @param array $player Associative array containing player details.
+     * @return void
      */
-    public function addPlayer($player)
+    public function addPlayer(array $player): void
     {
-            $query = "INSERT INTO Player (username, email, password, avatar_url, is_moderator) 
+        $query = "INSERT INTO Player (username, email, password, avatar_url, is_moderator) 
                   VALUES (:username, :email, :password, :avatar_url, :is_moderator);";
 
-            $this->con->executeQuery(
-                $query,
-                array(
-                    ':username' => array($player['username'], PDO::PARAM_STR),
-                    ':email' => array($player['email'], PDO::PARAM_STR),
-                    ':password' => array(password_hash($player['password'], PASSWORD_DEFAULT), PDO::PARAM_STR),
-                    ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
-                    ':is_moderator' => array((int)$player['is_moderator'], PDO::PARAM_INT)
-                )
-            );
+        $this->con->executeQuery(
+            $query,
+            array(
+                ':username' => array($player['username'], PDO::PARAM_STR),
+                ':email' => array($player['email'], PDO::PARAM_STR),
+                ':password' => array(password_hash($player['password'], PASSWORD_DEFAULT), PDO::PARAM_STR),
+                ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
+                ':is_moderator' => array((int)$player['is_moderator'], PDO::PARAM_INT)
+            )
+        );
     }
-
 
     /**
      * Retrieves a player by their username.
@@ -56,7 +59,7 @@ class PlayerGateway
      * @param string $username The username of the player.
      * @return array|false The player details or false if not found.
      */
-    public function getPlayerByUsername(string $username)
+    public function getPlayerByUsername(string $username): false|array
     {
         $query = "SELECT * FROM Player WHERE username = :username;";
         $this->con->executeQuery($query, array(':username' => array($username, PDO::PARAM_STR)));
@@ -73,7 +76,7 @@ class PlayerGateway
      * @param int $id The ID of the player.
      * @return array|false The player details or false if not found.
      */
-    public function getPlayerByID(int $id)
+    public function getPlayerByID(int $id): false|array
     {
         $query = "SELECT * FROM Player WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
@@ -89,7 +92,7 @@ class PlayerGateway
      *
      * @return array The list of all players.
      */
-    public function getPlayers()
+    public function getPlayers(): array
     {
         $query = "SELECT * FROM Player;";
         $this->con->executeQuery($query);
@@ -103,23 +106,48 @@ class PlayerGateway
      *
      * @param int $id The ID of the player.
      * @param array $player Associative array containing updated player details.
+     * @return bool True if the update was successful, false otherwise.
      */
-    public function updatePlayer($id, $player)
+    public function updatePlayer(int $id, array $player): bool
     {
-        $query = "UPDATE Player 
-                  SET username = :username, email = :email, password = :password, avatar_url = :avatar_url, is_moderator = :is_moderator 
-                  WHERE id = :id;";
-        $this->con->executeQuery(
-            $query,
-            array(
-                ':id' => array($id, PDO::PARAM_INT),
-                ':username' => array($player['username'], PDO::PARAM_STR),
-                ':email' => array($player['email'], PDO::PARAM_STR),
-                ':password' => array(md5($player['password']), PDO::PARAM_STR), // À améliorer avec password_hash
-                ':avatar_url' => array($player['avatar_url'], PDO::PARAM_STR),
-                ':is_moderator' => array($player['is_moderator'], PDO::PARAM_BOOL)
-            )
-        );
+        // Build the SQL query dynamically
+        $fields = [];
+        $params = [':id' => array($id, PDO::PARAM_INT)];
+
+        if (!empty($player['username'])) {
+            $fields[] = "username = :username";
+            $params[':username'] = array($player['username'], PDO::PARAM_STR);
+        }
+
+        if (!empty($player['email'])) {
+            $fields[] = "email = :email";
+            $params[':email'] = array($player['email'], PDO::PARAM_STR);
+        }
+
+        if (!empty($player['password'])) {
+            $fields[] = "password = :password";
+            $params[':password'] = array(password_hash($player['password'], PASSWORD_DEFAULT), PDO::PARAM_STR);
+        }
+
+        if (!empty($player['avatar_url'])) {
+            $fields[] = "avatar_url = :avatar_url";
+            $params[':avatar_url'] = array($player['avatar_url'], PDO::PARAM_STR);
+        }
+
+        if (isset($player['is_moderator'])) {
+            $fields[] = "is_moderator = :is_moderator";
+            $params[':is_moderator'] = array($player['is_moderator'], PDO::PARAM_BOOL);
+        }
+
+        // If no fields to update, return false
+        if (empty($fields)) {
+            return false;
+        }
+
+        // Build the final SQL query
+        $query = "UPDATE Player SET " . implode(", ", $fields) . " WHERE id = :id;";
+        // Execute the query
+        return $this->con->executeQuery($query, $params);
     }
 
     /**
@@ -127,6 +155,7 @@ class PlayerGateway
      *
      * @param int $id The ID of the player.
      * @param string $password The new password of the player.
+     * @return void
      */
     public function updatePlayerPassword($id, $password)
     {
@@ -135,7 +164,7 @@ class PlayerGateway
             $query,
             array(
                 ':id' => array($id, PDO::PARAM_INT),
-                ':password' => array(md5($password), PDO::PARAM_STR) // À améliorer avec password_hash
+                ':password' => array(md5($password), PDO::PARAM_STR) // To be improved with password_hash
             )
         );
     }
@@ -144,8 +173,9 @@ class PlayerGateway
      * Deletes a player from the database by their ID.
      *
      * @param int $id The ID of the player.
+     * @return void
      */
-    public function deletePlayerByID($id)
+    public function deletePlayerByID(int $id): void
     {
         $query = "DELETE FROM Player WHERE id = :id;";
         $this->con->executeQuery(
@@ -162,7 +192,7 @@ class PlayerGateway
      * @param array $player Associative array containing player credentials.
      * @return int|null The ID of the player if credentials are valid, null otherwise.
      */
-    public function verifyPlayer($player)
+    public function verifyPlayer(array $player): ?int
     {
         $query = "SELECT id, password FROM Player WHERE username = :username;";
         $this->con->executeQuery(
@@ -174,10 +204,9 @@ class PlayerGateway
 
         $results = $this->con->getResults();
         if ($results && password_verify($player['password'], $results[0]['password'])) {
-            return $results[0]['id']; // Retourne l'ID du joueur en cas de succès
+            return $results[0]['id']; // Return the player ID if successful
         }
 
         return null;
     }
-
 }

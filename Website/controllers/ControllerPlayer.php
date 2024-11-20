@@ -38,8 +38,6 @@ class ControllerPlayer
         } catch (Exception $e) {
             // Handle exception
         }
-
-
     }
 
     /**
@@ -117,7 +115,7 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["leaderboard"], [
             "players" => $liste
         ]);
-    }   
+    }
 
     /**
      * Render the joinGame view.
@@ -146,7 +144,20 @@ class ControllerPlayer
      */
     public function account() : void
     {
-        echo $this->twig->render($this->vues["account"]);
+        if ($_SESSION["idPlayerConnected"] != null) {
+            $mdPlayer = new PlayerModel();
+            $player = $mdPlayer->getPlayerByID($_SESSION["idPlayerConnected"]);
+            echo $this->twig->render(
+                $this->vues["account"],
+                [
+                    'player' => $player,
+                    'error' => $_SESSION["error"],
+                ]
+            );
+            $_SESSION["error"]=null;
+        } else {
+            header("Location:/loginPlayer");
+        }
     }
 
     /**
@@ -265,6 +276,123 @@ class ControllerPlayer
                 'error' => $_SESSION['error']
             ]);
             unset($_SESSION['error']);
+        }
+    }
+
+    /**
+     * Update the account information of a player.
+     *
+     * @return void
+     */
+    public function updateAccount(): void
+    {
+        try {
+            // Vérifier si l'utilisateur est connecté
+            if (!isset($_SESSION['idPlayerConnected'])) {
+                $_SESSION['error'] = "Vous devez être connecté pour modifier votre compte.";
+                echo $this->twig->render($this->vues["login"], [
+                    'error' => $_SESSION['error']
+                ]);
+                unset($_SESSION['error'], $_SESSION['success']);
+                exit;
+            }
+
+            // Récupérer les données du formulaire
+            $newUsername = $_POST['username'] ?? null;
+            $newEmail = $_POST['email'] ?? null;
+            $newPassword = $_POST['password'] ?? null;
+
+            $playerId = $_SESSION['idPlayerConnected'];
+
+            // Vérifier que les données sont valides
+            if (empty($newUsername) && empty($newEmail) && empty($newPassword)) {
+                $_SESSION['error'] = "Aucune donnée valide à mettre à jour.";
+                echo $this->twig->render($this->vues["account"], [
+                    'error' => $_SESSION['error']
+                ]);
+                unset($_SESSION['error'], $_SESSION['success']);
+                exit;
+            }
+
+            $dataToUpdate = [];
+
+            // Validation du pseudo
+            if (!empty($newUsername)) {
+                $dataToUpdate['username'] = $newUsername;
+            }
+
+            // Validation de l'email
+            if (!empty($newEmail)) {
+                if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['error'] = "L'adresse email est invalide.";
+                    echo $this->twig->render($this->vues["account"], [
+                        'error' => $_SESSION['error']
+                    ]);
+                    unset($_SESSION['error'], $_SESSION['success']);
+                    exit;
+                }
+                $dataToUpdate['email'] = $newEmail;
+            }
+
+            // Validation du mot de passe
+            if (!empty($newPassword)) {
+                $dataToUpdate['password'] = $newPassword;
+            }
+
+            // Charger le modèle
+            $modelPlayer = new \models\PlayerModel();
+
+            // Mettre à jour les informations
+            $updated = $modelPlayer->updatePlayer($playerId, $dataToUpdate);
+
+            if ($updated) {
+                $_SESSION['success'] = "Votre compte a été mis à jour avec succès.";
+            } else {
+                $_SESSION['error'] = "Aucune modification n'a été effectuée.";
+            }
+
+            // Rediriger vers la page du compte
+            echo $this->twig->render($this->vues["account"], [
+                'error' => $_SESSION['error'] ?? null,
+                'success' => $_SESSION['success'] ?? null
+            ]);
+            unset($_SESSION['error'], $_SESSION['success']);
+            exit;
+        } catch (Exception $e) {
+            // Gestion des erreurs
+            $_SESSION['error'] = "Une erreur inattendue est survenue : " . $e->getMessage();
+            echo $this->twig->render($this->vues["account"], [
+                'error' => $_SESSION['error']
+            ]);
+            unset($_SESSION['error'], $_SESSION['success']);
+            exit;
+        }
+    }
+
+    /**
+     * Log out the current player.
+     *
+     * @return void
+     */
+    public function logout(): void
+    {
+        try {
+            session_unset();
+            session_destroy();
+
+            // Rediriger l'utilisateur vers la page de connexion
+            $_SESSION['success'] = "Vous avez été déconnecté avec succès.";
+            echo $this->twig->render($this->vues["login"], [
+                'success' => $_SESSION['success']
+            ]);
+            exit;
+        } catch (Exception $e) {
+            // Gestion des erreurs
+            $_SESSION['error'] = "Une erreur est survenue lors de la déconnexion.";
+            echo $this->twig->render($this->vues["login"], [
+                'error' => $_SESSION['error']
+            ]);
+            exit;
         }
     }
 }
