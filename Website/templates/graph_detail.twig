@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Graphe - PathFinder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #f0f0e9;">
+
+<!-- Bouton retour -->
+<a href="/joinGame" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
+    <i class="bi bi-arrow-left"></i> Retour
+</a>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">{{ graph.name|e }}</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Détails du Graphe</h5>
+            <p class="card-text">Nombre de sommets : {{ graph.vertex_count }}</p>
+            <p class="card-text">Nombre d'arcs : {{ graph.edge_count }}</p>
+            <p class="card-text">Statut : {{ graph.status|capitalize }}</p>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-4 text-center">
+        <a href="/graph/play/{{ graph.id }}" class="btn btn-primary btn-lg">
+            <i class="bi bi-controller"></i> Jouer ce graphe
+        </a>
+        <a href="/graph/edit/{{ graph.id }}" class="btn btn-secondary btn-lg">
+            <i class="bi bi-pencil"></i> Modifier ce graphe
+        </a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
