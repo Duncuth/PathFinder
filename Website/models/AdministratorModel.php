@@ -109,4 +109,24 @@ class AdministratorModel
     {
         $this->gwAdministrator->deleteAdministrator($id);
     }
+
+    /**
+     * Retrieve all administrators.
+     *
+     * @return array The list of all administrators.
+     */
+    public function getAllAdministrators(): array
+    {
+        $adminData = $this->gwAdministrator->getAllAdministrators();
+        $admins = [];
+        foreach ($adminData as $admin) {
+            $admins[] = new Administrator(
+                $admin['id'],
+                $admin['username'],
+                $admin['password']
+            );
+        }
+        var_dump($admins);
+        return $admins;
+    }
 }

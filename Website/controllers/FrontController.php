@@ -28,7 +28,7 @@ class FrontController
             $match = $router->match();
 
             if (!$match) {
-                echo "404 oui"; // Redirect to a 404 error page
+                echo "404 azi"; // Redirect to a 404 error page
                 die;
             }
             

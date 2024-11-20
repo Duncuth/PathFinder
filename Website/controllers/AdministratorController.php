@@ -84,7 +84,14 @@ class AdministratorController
     }
 
     public function adminAdministrators() : void {
-        echo $this->twig->render($this->vues["adminAdministrators"]);
+        $admins = $this->mdAdministrator->getAllAdministrators();
+        if ($admins != null) {
+            echo $this->twig->render($this->vues["adminAdministrators"], ['admins' => $admins]);
+        } else {
+            $_SESSION["error"] = "Aucun admin trouvé.";
+            echo $this->twig->render($this->vues["adminAdministrators"]);
+            unset($_SESSION["error"]);
+        }
     } 
 
     public function adminGraph() : void {
@@ -95,27 +102,30 @@ class AdministratorController
     {
         try {
         $username = \usages\DataFilter::sanitizeString($_POST['username']);
-        $password = $_POST['password'];
+        $password = \usages\DataFilter::sanitizeString($_POST['password']);
 
-        $username = trim($_POST['username']);
-        $password = trim($_POST['password']);
-
-            if (!isset($username) || !isset($password) || empty($username) || empty($password)) {
-                $_SESSION["error"] = "Veuillez remplir tous les champs.";
-                header("Location:/admin/adminAdministrators");
+        if (!isset($username) || !isset($password) || empty($username) || empty($password)) {
+            $_SESSION["error"] = "Veuillez remplir tous les champs.";
+            header("Location:/admin/adminAdministrators");
+        } else {
+            $Admin = [
+                'username' => $username,
+                'password' => $password,
+            ];
+            if ($this->mdAdministrator->verifyAdministrator($Admin) != null) {
+                $_SESSION["error"] = "Cet admin existe déjà.";
+                echo $this->twig->render($this->vues["adminAdministrators"],
+                    [
+                        "error" => $_SESSION["error"]
+                    ]);
             } else {
-                $Admin = [
-                    'username' => $username,
-                    'password' => $password,
-                ];
-                if ($this->mdAdministrator->verifyAdministratorByName($Admin) != null) {
-                    $_SESSION["error"] = "Cet admin existe déjà.";
-                    header("Location:/admin/administrators");
-                } else {
-                    $this->mdAdministrator->addAdministrator($Admin);
-                    header("Location:/admin/adminAdministrators");
-                }
+                $this->mdAdministrator->addAdministrator($Admin);
+                echo $this->twig->render($this->vues["adminAdministrators"],
+                    [
+                        "success" => "Admin ajouté avec succès."
+                    ]);
             }
+        }
         }
         catch (Exception $e) {
             $_SESSION["error"] = "Erreur lors de l'ajout de l'admin.";
