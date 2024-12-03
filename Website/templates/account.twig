@@ -10,11 +10,11 @@
 <body style="background-color: #f0f0e9;" class="vh-100">
 
 <!-- Bouton de retour -->
-<a href="/" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
+<a href="{{ basePath }}" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
     <i class="bi bi-arrow-left"></i> Retour
 </a>
 
-<a href="/logout" class="btn btn-outline-danger btn-lg px-3 py-2 position-absolute top-0 end-0 m-3">
+<a href="{{ basePath }}/logout" class="btn btn-outline-danger btn-lg px-3 py-2 position-absolute top-0 end-0 m-3">
     <i class="bi bi-box-arrow-right"></i> Déconnexion
 </a>
 
@@ -53,7 +53,7 @@
             <!-- Informations -->
             <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
                 <h5 class="mb-4 fw-bold text-center">Mettre à jour mes informations</h5>
-                <form method="POST" action="/updateAccount">
+                <form method="POST" action="{{ basePath }}/updateAccount">
                     <!-- Nom -->
                     <div class="mb-4 d-flex flex-column align-items-center">
                         <label for="username" class="form-label w-75 text-start">Pseudo</label>
@@ -92,7 +92,7 @@
             <div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options-tab">
                 <h5 class="mb-5 fw-bold text-center">Options du compte</h5>
                 <!-- Supprimer le compte -->
-                <form method="POST" action="/deleteAccount">
+                <form method="POST" action="{{ basePath }}/deleteAccount">
                     <div class="d-flex justify-content-center mt-4">
                         <button type="submit" class="btn btn-danger w-50">
                             <i class="bi bi-trash"></i> Supprimer le compte

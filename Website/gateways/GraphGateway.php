@@ -38,15 +38,15 @@ class GraphGateway
      */
     public function addGraph($graph): void
     {
-        $query = "INSERT INTO graph (name, vertex_count, edge_count, status) 
-                  VALUES (:name, :vertex_count, :edge_count, :status);";
+        $query = "INSERT INTO Graph (name, vertex_count, edge_count, difficulty) 
+                  VALUES (:name, :vertex_count, :edge_count, :difficulty);";
         $this->con->executeQuery(
             $query,
             array(
                 ':name' => array($graph['name'], PDO::PARAM_STR),
                 ':vertex_count' => array($graph['vertex_count'], PDO::PARAM_INT),
                 ':edge_count' => array($graph['edge_count'], PDO::PARAM_INT),
-                ':status' => array($graph['status'], PDO::PARAM_STR)
+                ':difficulty' => array($graph['difficulty'], PDO::PARAM_STR)
             )
         );
     }
@@ -59,10 +59,24 @@ class GraphGateway
      */
     public function getGraphById(int $id): ?array
     {
-        $query = "SELECT * FROM graph WHERE id = :id;";
+        $query = "SELECT * FROM Graph WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
         $results = $this->con->getResults();
         return $results ? $results[0] : null;
+    }
+
+    public function getVerticesByGraphId(int $graphId): array
+    {
+        $query = "SELECT * FROM Vertex WHERE graph_id = :graph_id";
+        $this->con->executeQuery($query, [':graph_id' => [$graphId, PDO::PARAM_INT]]);
+        return $this->con->getResults();
+    }
+
+    public function getEdgesByGraphId(int $graphId): array
+    {
+        $query = "SELECT * FROM Edge WHERE graph_id = :graph_id";
+        $this->con->executeQuery($query, [':graph_id' => [$graphId, PDO::PARAM_INT]]);
+        return $this->con->getResults();
     }
 
     /**
@@ -72,7 +86,7 @@ class GraphGateway
      */
     public function getAllGraphs(): array
     {
-        $query = "SELECT * FROM graph;";
+        $query = "SELECT * FROM Graph;";
         $this->con->executeQuery($query);
         return $this->con->getResults();
     }
@@ -86,7 +100,7 @@ class GraphGateway
      */
     public function updateGraph($id, $graph): void
     {
-        $query = "UPDATE graph 
+        $query = "UPDATE Graph 
                   SET name = :name, vertex_count = :vertex_count, edge_count = :edge_count, status = :status 
                   WHERE id = :id;";
         $this->con->executeQuery(
@@ -109,7 +123,7 @@ class GraphGateway
      */
     public function deleteGraph(int $id): void
     {
-        $query = "DELETE FROM graph WHERE id = :id;";
+        $query = "DELETE FROM Graph WHERE id = :id;";
         $this->con->executeQuery($query, array(':id' => array($id, PDO::PARAM_INT)));
     }
 

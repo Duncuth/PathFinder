@@ -10,7 +10,7 @@
 <body class="vh-100" style="background-color: #1f2937; color: #ffffff;">
 
     <!-- Bouton de déconnexion -->
-    <a href="/admin/logout" class="btn btn-outline-danger btn-lg px-2 py-1 position-absolute top-0 start-0 m-3">
+    <a href="{{ basePath }}/admin/logout" class="btn btn-outline-danger btn-lg px-2 py-1 position-absolute top-0 start-0 m-3">
         <i class="bi bi-box-arrow-right"></i> Déconnexion
     </a>
 
@@ -49,8 +49,8 @@
             </tbody>
         </table>
         <div class="container mt-3 d-flex justify-content-between">
-            <a type="button" href="/admin/adminAdministrators" class="btn btn-secondary">← Administrateurs</a>
-            <a type="button" href="/admin/adminPlayer" class="btn btn-secondary">Joueurs →</a>
+            <a type="button" href="{{ basePath }}/admin/adminAdministrators" class="btn btn-secondary">← Administrateurs</a>
+            <a type="button" href="{{ basePath }}/admin/adminPlayer" class="btn btn-secondary">Joueurs →</a>
         </div>
     </div>
 

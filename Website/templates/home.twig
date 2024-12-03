@@ -7,73 +7,59 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="{{ basePath }}/css/index.css">
 </head>
 <body style="background-color: #f0f0e9">
-    <div class="container-fluid center-content text-center">
-        <!-- Logo -->
-        <img src="./media/newLogo.png" alt="PathFinder Logo" class="logo">
+<div class="container-fluid center-content text-center">
+    <!-- Logo -->
+    <img src="{{ basePath }}/media/newLogo.png" alt="PathFinder Logo" class="logo">
 
-        {% if isPlayer and isModerator %}
-            <a href="/account" class="position-absolute top-0 end-0 m-3">
-                <img src="./media/iconProfile.png" alt="Profile Icon" class="icon" width="40">
-            </a>
-            <!-- New Game Button -->
-            <a href="/gamemode">
-                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game mb-3">Nouvelle partie</button>
-            </a>
-
-            <a href="/">
-                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Edition des graphes</button>
-            </a>
-
-            <a href="/GraphManagement">
-                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Gestion des graphes</button>
-            </a>
-
-        {% elseif isPlayer %}
-            <!-- Profile Icon (Top-right) -->
-            <a href="/account" class="position-absolute top-0 end-0 m-3">
-                <img src="./media/iconProfile.png" alt="Profile Icon" class="icon" width="40">
-            </a>
-
-            <!-- New Game Button -->
-            <a href="/gamemode">
-                <button type="button" class="btn btnHome  btn-secondary btn-lg btn-new-game mb-3">Nouvelle partie</button>
-            </a>
-
-            <a href="/">
-                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Edition des graphes</button>
-            </a>
-
-        {% else  %}
-            {#<!-- Username input -->
-            <div class="mb-3 w-50 mx-auto">
-                <input type="text" class="form-control text-center" style="height: 39px;" id="username" placeholder="Enter your username" aria-label="Username Input">
-            </div>
-            
-            <!-- New Game Button -->
-            <a href="/gamemode">
-                <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game ">Nouvelle partie</button>
-            </a>#}
-
-            <a href="/login" role="button" style=" width: 150px; height: 40px;" class="btn btn-secondary btn-lg position-absolute top-0 end-0 m-3 d-flex justify-content-center align-items-center">
-                CONNEXION
-            </a>
-
-        {% endif %}
-
-        <!-- Settings Icon (Bottom-right) -->
-        <a href="/settings" class="position-absolute bottom-0 end-0 m-3">
-            <img src="./media/iconSettings.png" alt="Settings Icon" class="settings" width="40">
+    {% if isPlayer and isModerator %}
+        <!-- Profile Icon -->
+        <a href="{{ basePath }}/account" class="position-absolute top-0 end-0 m-3">
+            <img src="{{ basePath }}/media/iconProfile.png" alt="Profile Icon" class="icon" width="40">
         </a>
-
-        <!-- Trophy Icon (Bottom-left) -->
-        <a href="/leaderboard" class="position-absolute bottom-0 start-0 m-3">
-            <img src="./media/iconTrophy.png" alt="Trophy Icon" class="trophy" width="40">
+        <!-- New Game Button -->
+        <a href="{{ basePath }}/gamemode">
+            <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game mb-3">Nouvelle partie</button>
         </a>
-    </div>
+        <!-- Graph Editing -->
+        <a href="{{ basePath }}/settings">
+            <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Edition des graphes</button>
+        </a>
+    {% elseif isPlayer %}
+        <!-- Profile Icon -->
+        <a href="{{ basePath }}/account" class="position-absolute top-0 end-0 m-3">
+            <img src="{{ basePath }}/media/iconProfile.png" alt="Profile Icon" class="icon" width="40">
+        </a>
+        <!-- New Game Button -->
+        <a href="{{ basePath }}/gamemode">
+            <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game mb-3">Nouvelle partie</button>
+        </a>
+    {% else %}
+        <!-- Username Input -->
+        <div class="mb-3 w-50 mx-auto">
+            <input type="text" class="form-control text-center" style="height: 39px;" id="username" placeholder="Enter your username">
+        </div>
+        <!-- New Game Button -->
+        <a href="{{ basePath }}/gamemode">
+            <button type="button" class="btn btnHome btn-secondary btn-lg btn-new-game">Nouvelle partie</button>
+        </a>
+        <!-- Login Button -->
+        <a href="{{ basePath }}/login" class="btn btn-secondary btn-lg position-absolute top-0 end-0 m-3 d-flex justify-content-center align-items-center">
+            CONNEXION
+        </a>
+    {% endif %}
+
+    <!-- Settings Icon -->
+    <a href="{{ basePath }}/settings" class="position-absolute bottom-0 end-0 m-3">
+        <img src="{{ basePath }}/media/iconSettings.png" alt="Settings Icon" class="settings" width="40">
+    </a>
+
+    <!-- Trophy Icon -->
+    <a href="{{ basePath }}/leaderboard" class="position-absolute bottom-0 start-0 m-3">
+        <img src="{{ basePath }}/media/iconTrophy.png" alt="Trophy Icon" class="trophy" width="40">
+    </a>
+</div>
 </body>
 </html>

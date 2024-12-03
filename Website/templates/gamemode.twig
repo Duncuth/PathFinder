@@ -10,7 +10,7 @@
 <body class="vh-100" style="background-color: #f0f0e9;">
 
 <!-- Bouton retour -->
-  <a href="/" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
+  <a href="{{ basePath }}" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
     <i class="bi bi-arrow-left"></i> Retour
   </a>
 
@@ -22,8 +22,8 @@
 
     <!-- Boutons de choix du mode de jeu -->
     <div class="d-grid gap-5 w-100" style="max-width: 650px;">
-      <a href="/joinGame" class="btn btn-primary btn-lg" style="padding: 1.5rem 2rem; font-size: 1.5rem;">Joueur contre joueur</a>
-      <a href="/gameModePlayerVsComputer" class="btn btn-primary btn-lg" style="padding: 1.5rem 2rem; font-size: 1.5rem;">Joueur contre ordinateur</a>
+      <a href="{{ basePath }}/joinGame" class="btn btn-primary btn-lg" style="padding: 1.5rem 2rem; font-size: 1.5rem;">Joueur contre joueur</a>
+      <a href="{{ basePath }}/gameModePlayerVsComputer" class="btn btn-primary btn-lg" style="padding: 1.5rem 2rem; font-size: 1.5rem;">Joueur contre ordinateur</a>
     </div>
   </div>
 

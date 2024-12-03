@@ -23,41 +23,28 @@ class AdministratorController
      * Constructor for AdministratorController.
      * Initializes models and session.
      */
-    function __construct()
+    function __construct(\Twig\Environment $twig)
     {
-        global $vues, $twig;
+        global $vues;
         session_start();
-        try {
-            $this->twig = $twig;
-            $this->vues = $vues;
-
-            $this->mdAdministrator = new AdministratorModel();
-            $this->mdPlayer = new PlayerModel();
-        } catch (PDOException $e) {
-            // Handle PDO exceptions
-        } catch (Exception $e2) {
-            // Handle general exceptions
-        }
+        $this->twig = $twig;
+        $this->vues = $vues;
+        $this->mdAdministrator = new AdministratorModel();
+        $this->mdPlayer = new PlayerModel();
     }
 
     /**
      * Displays the admin player management page.
      * Requires admin authentication.
      */
-    public function adminPlayer() : void {
-
+    public function adminPlayer() : void
+    {
         if (!isset($_SESSION['idAdminConnected'])) {
             $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
             header("Location:/login");
         }
         $players = $this->mdPlayer->getAllPlayers();
-        if ($players != null) {
-            echo $this->twig->render($this->vues["adminPlayer"], ['players' => $players]);
-        } else {
-            $_SESSION["error"] = "Aucun joueur trouvé.";
-            echo $this->twig->render($this->vues["adminPlayer"]);
-            unset($_SESSION["error"]);
-        }
+        echo $this->twig->render($this->vues["adminPlayer"], ['players' => $players]);
     }
 
     /**

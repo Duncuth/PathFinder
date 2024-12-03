@@ -10,7 +10,7 @@
 <body class="vh-100" style="background-color: #1f2937; color: #ffffff;">
 
     <!-- Bouton de déconnexion -->
-    <a href="/admin/logout" class="btn btn-outline-danger btn-lg px-2 py-1 position-absolute top-0 start-0 m-3">
+    <a href="{{ basePath }}/admin/logout" class="btn btn-outline-danger btn-lg px-2 py-1 position-absolute top-0 start-0 m-3">
         <i class="bi bi-box-arrow-right"></i> Déconnexion
     </a>
 
@@ -55,7 +55,7 @@
                 <h5 class="modal-title fw-bold" id="modalAdministratorsLabel">Ajouter un administrateur</h5>
             </div>
             <!-- Formulaire -->
-            <form method="POST" action="/admin/administrators/addAdministrator">
+            <form method="POST" action="{{ basePath }}/admin/administrators/addAdministrator">
                 <div class="modal-body text-dark">
                     <!-- Champ Nom d'utilisateur -->
                     <div class="mb-3">

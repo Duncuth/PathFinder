@@ -6,6 +6,7 @@ use classes\PlayerStats;
 use Exception;
 use gateways\PlayerStatsGateway;
 use models\PlayerModel;
+use gateways\GraphGateway;
 
 /**
  * Class ControllerPlayer
@@ -25,23 +26,21 @@ class ControllerPlayer
     private $twig;
 
     private $mdlPlayer;
+    private $gateway;
 
     /**
      * ControllerPlayer constructor.
      *
      * Initializes the views and Twig environment.
      */
-    public function __construct()
+    public function __construct(\Twig\Environment $twig)
     {
-        global $vues, $twig;
+        global $vues;
         session_start();
-        try {
-            $this->twig = $twig;
-            $this->vues = $vues;
-            $this->mdlPlayer = new PlayerModel();
-        } catch (Exception $e) {
-            // Handle exception
-        }
+        $this->twig = $twig;
+        $this->vues = $vues;
+        $this->mdlPlayer = new PlayerModel();
+        $this->gateway = new GraphGateway();
     }
 
     /**
@@ -146,6 +145,104 @@ class ControllerPlayer
         echo $this->twig->render($this->vues["joinGame"]);
     }
 
+    public function play(array $params): void
+    {
+        $player1Id = $_SESSION['idPlayerConnected'] ?? null;
+        $player1 = $player1Id ? $this->mdlPlayer->getPlayerByID($player1Id) : null;
+
+        if (!$player1) {
+            header("Location: /login");
+            exit;
+        }
+
+        $player2 = $_SESSION['player2'] ?? [
+            'name' => 'Invité',
+            'id' => null
+        ];
+
+        $graphId = $params['id'];
+
+        // Récupération des sommets et arêtes
+        $vertices = $this->gateway->getVerticesByGraphId($graphId);
+        $edges = $this->gateway->getEdgesByGraphId($graphId);
+
+        // Préparation des données du graphe pour D3.js
+        $graphData = [
+            'nodes' => array_map(function ($vertex) {
+                return [
+                    'id' => $vertex['id'],
+                    'label' => $vertex['label']
+                ];
+            }, $vertices),
+            'edges' => array_map(function ($edge) {
+                return [
+                    'source' => $edge['vertex_start_id'],
+                    'target' => $edge['vertex_end_id']
+                ];
+            }, $edges)
+        ];
+
+        echo $this->twig->render($this->vues["play"], [
+            'graph' => json_encode($graphData),
+            'player1' => $player1,
+            'player2' => $player2,
+            'currentPlayer' => $player1
+        ]);
+    }
+
+    public function secondPlayer(): void
+    {
+        // Vérifie si un pseudo a été soumis via POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+
+            // Si aucun pseudo n'est saisi, attribue un nom par défaut
+            if (!$username || trim($username) === '') {
+                $username = 'Invité';
+            }
+
+            // Stocker le pseudo dans la session pour le joueur 2
+            $_SESSION['player2'] = [
+                'name' => $username,
+                'id' => null // Pas d'ID pour un invité
+            ];
+
+            // Redirige vers la page de jeu
+            header('Location: ' . $_SERVER['HTTP_ORIGIN'] . '/PathFinder/Website/game');
+            exit;
+        }
+
+        // Si la méthode n'est pas POST, affiche la page du formulaire
+        echo $this->twig->render($this->vues["secondPlayer"]);
+    }
+
+    private function prepareGraphData(array $vertices, array $edges): array
+    {
+        $nodes = [];
+        $links = [];
+
+        // Convertir les sommets en nœuds pour vis.js
+        foreach ($vertices as $vertex) {
+            $nodes[] = [
+                'id' => $vertex['id'],
+                'label' => $vertex['label']
+            ];
+        }
+
+        // Convertir les arcs en liens pour vis.js
+        foreach ($edges as $edge) {
+            $links[] = [
+                'from' => $edge['vertex_start_id'],
+                'to' => $edge['vertex_end_id']
+            ];
+        }
+
+        return [
+            'nodes' => $nodes,
+            'edges' => $links
+        ];
+    }
+
     /**
      * Render the gamemode view.
      *
@@ -169,14 +266,14 @@ class ControllerPlayer
                 'name' => 'Graphe Statique 1',
                 'vertex_count' => 5,
                 'edge_count' => 7,
-                'status' => 'active',
+                'difficulty' => 'easy',
             ],
             [
                 'id' => 2,
                 'name' => 'Graphe Statique 2',
                 'vertex_count' => 8,
                 'edge_count' => 10,
-                'status' => 'inactive',
+                'difficulty' => 'hard',
             ],
         ];
 

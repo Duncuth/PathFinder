@@ -8,4 +8,5 @@ $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig   = new \Twig\Environment($loader, [
     'cache' => false,
 ]);
-$controller = new controllers\FrontController();
+
+$controller = new controllers\FrontController($twig);

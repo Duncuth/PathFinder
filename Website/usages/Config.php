@@ -19,5 +19,6 @@ $vues["adminAdministrators"] = "adminAdministrators.twig";
 $vues["adminGraph"] = "adminGraph.twig";
 $vues["graphManagement"] = "graphManagement.twig";
 $vues["account"] = "account.twig";
-$vues["gameAsGuest"] = "game.twig";
+$vues["gameAsGuest"] = "selectGraph.twig";
 $vues["graph"] = "graph_detail.twig";
+$vues["play"] = "play.twig";

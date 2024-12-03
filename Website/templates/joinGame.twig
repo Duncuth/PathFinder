@@ -10,7 +10,7 @@
 <body class="vh-100" style="background-color: #f0f0e9;">
 
 <!-- Bouton retour -->
-<a href="/gamemode" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
+<a href="{{ basePath }}/gamemode" class="btn btn-outline-dark btn-lg px-3 py-2 position-absolute top-0 start-0 m-3">
   <i class="bi bi-arrow-left"></i> Retour
 </a>
 
@@ -22,23 +22,18 @@
         <p class="mb-4 mt-2 text-muted" style="font-size: 1.3rem;">Jouez en tant qu'invité ou connectez-vous pour sauvegarder votre progression.</p>
 
         <!-- Formulaire d'entrée du pseudo -->
-        <div class="mb-4 mt-2 w-50">
-            <input type="text" class="form-control form-control-lg text-center" id="username" placeholder="Entrez votre pseudo (invité)" 
-            aria-label="Username Input">
-        </div>
-
-        <!-- Boutons d'action -->
-        <div class="d-flex mt-2 gap-4">
-            <!-- Jouer en tant qu'invité -->
-            <a href="/game" class="btn btn-secondary btn-lg px-5 py-3">
-            Jouer en tant qu'invité
-            </a>
-
-            <!-- Se connecter -->
-            <a href="/login" class="btn btn-primary btn-lg px-5 py-3">
-            Se connecter
-            </a>
-        </div>
+        <form method="POST" action="{{ basePath }}/secondPlayer" class="mb-4 mt-2 w-50">
+            <input type="text" name="username" class="form-control form-control-lg text-center" id="username"
+                   placeholder="Entrez votre pseudo (invité)" aria-label="Username Input">
+            <div class="d-flex mt-4 gap-4 justify-content-center">
+                <button type="submit" class="btn btn-secondary btn-lg px-5 py-3">
+                    Jouer en tant qu'invité
+                </button>
+                <a href="{{ basePath }}/login" class="btn btn-primary btn-lg px-5 py-3">
+                    Se connecter
+                </a>
+            </div>
+        </form>
 
     </div>
 

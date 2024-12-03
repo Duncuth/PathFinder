@@ -10,7 +10,7 @@
 <body class="vh-100" style="background-color: #1f2937; color: #ffffff;">
 
     <!-- Bouton de déconnexion -->
-    <a href="/admin/logout" class="btn btn-outline-danger btn-lg px-2 py-1 position-absolute top-0 start-0 m-3">
+    <a href="{{ basePath }}/admin/logout" class="btn btn-outline-danger btn-lg px-2 py-1 position-absolute top-0 start-0 m-3">
       <i class="bi bi-box-arrow-right"></i> Déconnexion
     </a>
 
@@ -43,7 +43,7 @@
               <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalModifPlayers">
                 <i class="bi bi-pencil"></i> Modifier
               </button>
-              <a type="button" href="/admin/players/deletePlayer/{{ player.id }}" class="btn btn-danger btn-sm">
+              <a type="button" href="{{ basePath }}/admin/players/deletePlayer/{{ player.id }}" class="btn btn-danger btn-sm">
                 <i class="bi bi-trash"></i> Supprimer
               </a>
             </div>
@@ -53,8 +53,8 @@
       </tbody>
     </table>
     <div class="container mt-3 d-flex justify-content-between">
-      <a type="button" href="/admin/adminGraph" class="btn btn-secondary">← Graphes</a>
-      <a type="button" href="/admin/adminAdministrators" class="btn btn-secondary">Administrateurs →</a>
+      <a type="button" href="{{ basePath }}/admin/adminGraph" class="btn btn-secondary">← Graphes</a>
+      <a type="button" href="{{ basePath }}/admin/adminAdministrators" class="btn btn-secondary">Administrateurs →</a>
     </div>
   </div>
 
@@ -66,7 +66,7 @@
             <h5 class="modal-title fw-bold" id="modalPlayersLabel">Ajouter un joueur</h5>
         </div>
           <!-- Formulaire -->
-          <form method="POST" action="/admin/players/addPlayer">
+          <form method="POST" action="{{ basePath }}/admin/players/addPlayer">
             <div class="modal-body text-dark">
               <!-- Champ Email -->
               <div class="mb-3">
@@ -102,7 +102,7 @@
             <h5 class="modal-title fw-bold" id="modalModifPlayerLabel">Modifier le joueur</h5>
         </div>
         <!-- Formulaire -->
-        <form method="POST" action="/admin/players/updatePlayer">
+        <form method="POST" action="{{ basePath }}/admin/players/updatePlayer">
           <div class="modal-body text-dark">
             <!-- Champ Email -->
             <div class="mb-3">

@@ -53,7 +53,7 @@ class GraphModel
                 $graphData['name'],
                 $graphData['vertex_count'],
                 $graphData['edge_count'],
-                $graphData['status']
+                $graphData['difficulty']
             );
         }
         return null;
@@ -74,7 +74,7 @@ class GraphModel
                 $graphData['name'],
                 $graphData['vertex_count'],
                 $graphData['edge_count'],
-                $graphData['status']
+                $graphData['difficulty']
             );
         }
         return $graphs;
