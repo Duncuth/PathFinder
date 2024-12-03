@@ -312,7 +312,7 @@ class ControllerPlayer
                 [
                     'player' => $player,
                     'history' => $history,
-                    'error' => $_SESSION["error"],
+                    'error' => $_SESSION["error"] ?? NULL,
                 ]
             );
             $_SESSION["error"]=null;
@@ -423,7 +423,7 @@ class ControllerPlayer
                 'isPlayer' => true,
                 'username' => $username,
                 'success' => $_SESSION['success'],
-                'isModerator' => $_SESSION['isModerator']
+                'isModerator' => $_SESSION['isModerator'] ?? NULL
             ]);
 
         } catch (Exception $e) {

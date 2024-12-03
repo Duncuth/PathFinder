@@ -14,7 +14,7 @@ class FrontController
         $this->twig = $twig;
         try {
             $router = new AltoRouter();
-            $basePath = '/PathFinder/Website';
+            $basePath = '';
             $router->setBasePath($basePath);
             $twig->addGlobal('basePath', $basePath);
 
